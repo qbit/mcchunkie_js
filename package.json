@@ -1,0 +1,21 @@
+{
+  "author": "Aaron Bieber <qbit@qbit.io> (http://qbit.io)",
+  "name": "mcchunkie",
+  "description": "IRC Bot",
+  "version": "0.0.1",
+  "homepage": "https://github.com/qbit/mcchunkie",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/qbit/mcchunkie.git"
+  },
+  "dependencies": {
+    "irc": "~0.3.4",
+    "classifier": "~0.1.0",
+    "nconf": "~0.5.1"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
