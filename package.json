@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "irc": "~0.3.4",
-    "classifier": "~0.1.0",
     "nconf": "~0.5.1"
   },
   "devDependencies": {},
