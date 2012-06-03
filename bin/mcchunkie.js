@@ -2,8 +2,11 @@
 
 'use strict';
 var irc = require( 'irc' ),
+	fs = require( 'fs ' ),
 	nconf = require( 'nconf' ),
 	config = __dirname + '/../config.json',
+	plugins = __dirname + '/../plugins',
+	running_plugins = {},
 	args = require( 'optimist' )
 		.usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
 		.demand( [ 'n', 's', 'c' ] )
@@ -25,44 +28,36 @@ channels.forEach( function( c ) {
 	chanCount++;
 });
 
-function toHumanDate( str ) {
-	var d = new Date( str );
-	return d.toString('dddd MMMM dS, yyyy') + ' at ' + d.toString('h:mm tt');
-}
-
-function sendMsg( cmd, from ) {
-	var l, st = '', ii, ll;
-	for ( l in urls ) {
-		if ( urls.hasOwnProperty( l ) ) {
-			ll = urls[l].phrases.length;
-			for ( ii = 0; ii < ll; ii++ ) {
-				if ( urls[l].phrases[ ii ] === cmd ) {
-					st = '';
-					if ( urls[l].date ) {
-						st += 'last update for "' + l + '" was ' +
-							toHumanDate( urls[l].date );
-					} else {
-						st += 'Nothing recorded for "' + cmd + '"';
-					}
-					client.say( from, st );
-				}
+function loadPlugin( file ) {
+	fs.readFile( file, function( err, data ) {
+		if ( data ) {
+			try {
+				running_plugins[ file ] = eval( data.toString() );
+			} catch( e ) {
+				console.log( 'Syntax error in "' + file + '"\n' + e );
 			}
 		}
-	}
+	});
 }
 
-function processMsg( from, msg ) {
-	var a, i, l, c = '';
-	if ( msg.match( args.n + ':' ) ) {
-		a = msg.split( ' ' );
-		l = a.length;
-		for ( i = 1; i < l; i++ ) {
-			c += a[i] + ' ';
+function loadPlugins( dir ) {
+	fs.readdir( plugins, function( err, files ) {
+		var i,l = files.length, file;
+
+		for ( i = 0; i < l; i++ ) {
+			file = plugins + files[i];
+			if ( file.indexOf( '~' ) === -1 ) {
+				loadPlugin( file );
+			}
 		}
-		c = c.trim();
-		sendMsg( c, from );
-	}
+	});
 }
+
+loadPlugins( plugins );
+
+fs.watch( plugins, function( e, file ) {
+	loadPlugins( plugins );
+});
 
 function update() {
 	nconf.file( { file: config } );
@@ -74,23 +69,19 @@ function update() {
 	// console.log( urls );
 }
 
-function createMon( m ) {
-	mon.create( 'http', m );
+function processMsg( o ) {
+	var to, from, msg, i;
 
-	mon.on( m.name, function( r ) {
-		nconf.set( 'urls:' + r.name + ':date', r.date );
+	to = o.to;
+	from = o.from;
+	msg = o.msg;
 
-		nconf.save();
-
-		channels.forEach( function( c ) {
-			client.say( c, urls[ r.name ].msg );
-		});
-	});
-
-	monitors.push( mon.monitor() );
+	for ( i in running_plugins ) {
+		if ( running_plugins.hasOwnProperty( i ) ) { 
+			running_plugins[i]( args.n, to, from, msg );
+		}
+	}
 }
-
-update();
 
 client = new irc.Client( args.s, args.n, { 
 	channels: channels, 
@@ -103,11 +94,11 @@ client.addListener( 'error', function( err ) {
 });
 
 client.addListener( 'message', function( from, to, msg ) {
-	processMsg( to, msg );
+	processMsg( { to: to, msg: msg } );
 });
 
 client.addListener( 'pm', function( from, msg ) {
-	processMsg( from, args.n + ': ' + msg );
+	processMsg( { to: from, msg: args.n + ': ' + msg } );
 });
 
 client.addListener( 'invite', function( chan, from ) {
@@ -117,16 +108,9 @@ client.addListener( 'invite', function( chan, from ) {
 	});
 });
 
+update();
+
 setInterval( function() {
 	update();
 }, 3000);
 
-var name, o;
-for ( name in urls ) {
-	if ( urls.hasOwnProperty( name ) ) {
-		o = urls[ name ];
-		o.name = name;
-
-		createMon( o );
-	}
-}
