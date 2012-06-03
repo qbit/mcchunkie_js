@@ -14,7 +14,9 @@
     "nmon": "~0.2.1",
     "pushover-notifications": "~0.1.0",
     "Sentimental": "0.0.2",
-    "nconf": "~0.5.1"
+    "nconf": "~0.5.1",
+    "datejs": "0.0.2",
+    "express": "~2.5.9"
   },
   "devDependencies": {},
   "optionalDependencies": {},

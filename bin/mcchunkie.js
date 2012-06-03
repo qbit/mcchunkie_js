@@ -13,8 +13,9 @@ var irc = require( 'irc' ),
 	analyze = require( 'Sentimental' ).analyze,
 	positivity = require( 'Sentimental' ).positivity,
 	negativity = require( 'Sentimental' ).negativity,
+	datejs = require( 'datejs' ),
 	po = require( 'pushover-notifications' ),
-	current_dates = {}, dates, urls, responses, client, 
+	urls, responses, client, 
 	channels, chanCount = 0, monitors = [],
 	lineCount, negCount, posCount;
 
@@ -24,15 +25,48 @@ channels.forEach( function( c ) {
 	chanCount++;
 });
 
-function processMsg( to, from, msg ) {
-	if ( msg.indexOf( args.n ) ) {
+function toHumanDate( str ) {
+	var d = new Date( str );
+	return d.toString('dddd MMMM dS, yyyy') + ' at ' + d.toString('h:mm tt');
+}
+
+function sendMsg( cmd, from ) {
+	var l, st = '', ii, ll;
+	for ( l in urls ) {
+		if ( urls.hasOwnProperty( l ) ) {
+			ll = urls[l].phrases.length;
+			for ( ii = 0; ii < ll; ii++ ) {
+				if ( urls[l].phrases[ ii ] === cmd ) {
+					st = '';
+					if ( urls[l].date ) {
+						st += 'last update for "' + l + '" was ' +
+							toHumanDate( urls[l].date );
+					} else {
+						st += 'Nothing recorded for "' + cmd + '"';
+					}
+					client.say( from, st );
+				}
+			}
+		}
+	}
+}
+
+function processMsg( from, msg ) {
+	var a, i, l, c = '';
+	if ( msg.match( args.n + ':' ) ) {
+		a = msg.split( ' ' );
+		l = a.length;
+		for ( i = 1; i < l; i++ ) {
+			c += a[i] + ' ';
+		}
+		c = c.trim();
+		sendMsg( c, from );
 	}
 }
 
 function update() {
 	nconf.file( { file: config } );
 
-	dates = nconf.get( 'dates' );
 	urls = nconf.get( 'urls' );
 	responses = nconf.get( 'responses' );
 
@@ -44,8 +78,7 @@ function createMon( m ) {
 	mon.create( 'http', m );
 
 	mon.on( m.name, function( r ) {
-		current_dates[ r.name ] = r.date;
-		nconf.set( 'dates:' + r.name, r.date );
+		nconf.set( 'urls:' + r.name + ':date', r.date );
 
 		nconf.save();
 
@@ -55,8 +88,6 @@ function createMon( m ) {
 	});
 
 	monitors.push( mon.monitor() );
-
-	// console.log( monitors );
 }
 
 update();
@@ -66,12 +97,17 @@ client = new irc.Client( args.s, args.n, {
 	userName: args.n 
 }); 
 
-client.addListener( 'message', function( from, to, msg ) {
-	processMsg( from, to, msg );
+client.addListener( 'error', function( err ) {
+	console.log( err );
+	throw err;
 });
 
-client.addListener( 'pm', function( from, to, msg ) {
-	processMsg( from, to, msg );
+client.addListener( 'message', function( from, to, msg ) {
+	processMsg( to, msg );
+});
+
+client.addListener( 'pm', function( from, msg ) {
+	processMsg( from, args.n + ': ' + msg );
 });
 
 client.addListener( 'invite', function( chan, from ) {
