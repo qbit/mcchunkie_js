@@ -13,10 +13,10 @@ The callback should be passed null, to, from, and resp.
 
 Example:
 
-'''
+````javascript
 (function( botname, to, from, msg, cb ) {
   // Plugin to reverse every msg that is passed in.
   var resp = msg.split("").reverse().join("");
   cb.call( null, to, from, resp );
 });
-'''
+````
