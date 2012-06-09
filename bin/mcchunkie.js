@@ -3,24 +3,13 @@
 'use strict';
 var irc = require( 'irc' ),
   fs = require( 'fs ' ),
-  nconf = require( 'nconf' ),
-  config = __dirname + '/../config.json',
   plugins = __dirname + '/../plugins',
   running_plugins = {},
   args = require( 'optimist' )
     .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
     .demand( [ 'n', 's', 'c' ] )
     .argv,
-  nmon = require( 'nmon' ),
-  mon = new nmon(),
-  analyze = require( 'Sentimental' ).analyze,
-  positivity = require( 'Sentimental' ).positivity,
-  negativity = require( 'Sentimental' ).negativity,
-  datejs = require( 'datejs' ),
-  po = require( 'pushover-notifications' ),
-  urls, responses, client, 
-  channels, chanCount = 0, monitors = [],
-  lineCount, negCount, posCount;
+  client, channels, chanCount = 0;
 
 channels = args.c.split( ',' );
 channels.forEach( function( c ) {
@@ -59,16 +48,6 @@ fs.watch( plugins, function( e, file ) {
   loadPlugins( plugins );
 });
 
-function update() {
-  nconf.file( { file: config } );
-
-  urls = nconf.get( 'urls' );
-  responses = nconf.get( 'responses' );
-
-  //TODO need to add the ability to stop mon's and also add new ones
-  // console.log( urls );
-}
-
 function processMsg( o ) {
   var to, from, msg, i;
 
@@ -89,7 +68,6 @@ client = new irc.Client( args.s, args.n, {
 }); 
 
 client.addListener( 'error', function( err ) {
-  console.log( err );
   throw err;
 });
 
@@ -104,13 +82,6 @@ client.addListener( 'pm', function( from, msg ) {
 client.addListener( 'invite', function( chan, from ) {
   channels.push( chan );
   client.join( chan, function() {
-    client.say( from, "I have joined " + chan );
+    console.log( 'joined ' + chan + ' because ' + from + ' invited me' );
   });
 });
-
-update();
-
-setInterval( function() {
-  update();
-}, 3000);
-
