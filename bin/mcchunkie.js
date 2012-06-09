@@ -32,6 +32,7 @@ function loadPlugin( file ) {
 }
 
 function loadPlugins( dir ) {
+  running_plugins = {};
   fs.readdir( plugins, function( err, files ) {
     var i,l = files.length, file;
 
