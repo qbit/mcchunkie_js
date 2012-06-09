@@ -1,4 +1,4 @@
-(function( botname, to, from, msg, cb ) {
+(function( botname, to, from, msg, store, cb ) {
 	'use strict';
   var resp;
   msg = msg.trim();

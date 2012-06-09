@@ -5,6 +5,7 @@ var irc = require( 'irc' ),
   fs = require( 'fs' ),
   plugins = __dirname + '/../plugins',
   running_plugins = {},
+  storage = {},
   args = require( 'optimist' )
     .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
     .demand( [ 'n', 's', 'c' ] )
@@ -22,6 +23,7 @@ function loadPlugin( file ) {
     if ( data ) {
       try {
         running_plugins[ file ] = eval( data.toString() );
+        storage[ file ] = {};
       } catch( e ) {
         console.log( 'Syntax error in "' + file + '"\n' + e );
       }
@@ -63,7 +65,7 @@ function processMsg( o ) {
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) { 
-      running_plugins[i]( args.n, to, from, msg, reply );
+      running_plugins[i]( args.n, to, from, msg, storage[i], reply );
     }
   }
 }
