@@ -1,6 +1,7 @@
 (function( botname, to, from, msg, cb ) {
 	'use strict';
   var resp;
+  msg = msg.trim();
 	if ( msg === botname + ': o/'  || msg === 'o/ ' + botname ) {
 		resp = '\\o';
 	}
