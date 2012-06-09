@@ -3,7 +3,7 @@
   var resp;
   msg = msg.trim();
 	if ( msg === botname + ': wb'  || msg === 'wb ' + botname ) {
-		resp = 'shanks ' + from + '!';
+		resp = 'thanks ' + from + '!';
 	}
 
   cb.call( null, to, from, resp );
