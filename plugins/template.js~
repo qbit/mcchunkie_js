@@ -1,0 +1,7 @@
+(function( helper, to, from, msg, store, cb ) {
+	'use strict';
+  var resp;
+  if ( helper.isRelevant( msg ) ) {
+  }
+  cb.call( null, to, from, resp );
+});
