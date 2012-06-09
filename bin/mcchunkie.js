@@ -3,6 +3,9 @@
 'use strict';
 var irc = require( 'irc' ),
   fs = require( 'fs' ),
+  http = require( 'http' ),
+  url = require( 'url' ),
+  helpers,
   plugins = __dirname + '/../plugins',
   running_plugins = {},
   storage = {},
@@ -11,6 +14,29 @@ var irc = require( 'irc' ),
     .demand( [ 'n', 's', 'c' ] )
     .argv,
   client, channels, chanCount = 0;
+
+helpers = { 
+  botname: args.n,
+  httpGet: function( u, cb ) {
+    u = url.parse( u );
+    http.get( u, function( res ) {
+      var d = [];
+      res.on( 'data', function( chunk ) {
+        d.push( chunk );
+      }).on( 'end', function() {
+        cb.call( null, null, d.join() );
+      });
+    }).on( 'error', function( er ) {
+      cb.call( null, er );
+    });
+  },
+  isRelevant: function( msg ) {
+    if ( msg.indexOf( this.botname ) > -1 ) {
+      return true;
+    }
+    return false;
+  }
+};
 
 channels = args.c.split( ',' );
 channels.forEach( function( c ) {
@@ -38,7 +64,7 @@ function loadPlugins( dir ) {
 
     for ( i = 0; i < l; i++ ) {
       file = plugins + '/' + files[i];
-      if ( file.indexOf( '~' ) === -1 ) {
+      if ( file.indexOf( '~' ) === -1 && file.indexOf( '.js' ) > -1 ) {
         loadPlugin( file );
       }
     }
@@ -66,7 +92,7 @@ function processMsg( o ) {
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) { 
-      running_plugins[i]( args.n, to, from, msg, storage[i], reply );
+      running_plugins[i]( helpers, to, from, msg, storage[i], reply );
     }
   }
 }

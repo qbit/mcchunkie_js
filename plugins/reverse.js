@@ -1,7 +1,8 @@
-(function( botname, to, from, msg, storage, cb ) {
+(function( helpers, to, from, msg, storage, cb ) {
   // Plugin to reverse every msg that is passed in.
-  if ( msg.indexOf( botname ) > -1 && msg.indexOf( 'reverse' ) > -1 ) {
-    msg = msg.replace( botname, '' );
+  'use strict';
+  if ( helpers.isRelevant( msg ) && msg.indexOf( 'reverse' ) > -1 ) {
+    msg = msg.replace( helpers.botname, '' );
     msg = msg.replace( ':', '' );
     msg = msg.replace( 'reverse', '' );
 

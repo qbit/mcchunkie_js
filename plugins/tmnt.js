@@ -1,4 +1,4 @@
-(function( botname, to, from, msg, store, cb ) {
+(function( helper, to, from, msg, store, cb ) {
 	'use strict';
   var resp, phrases = [
     "Yee haw! Ninja cowboy!",
@@ -10,7 +10,7 @@
     "SHREDDER!"
   ];
 
-  if ( msg.indexOf( botname ) > -1 && msg.indexOf( 'tmnt' ) ) {
+  if ( helper.isRelevant( msg ) && msg.indexOf( 'tmnt' ) > -1 ) {
     resp = phrases[ Math.floor( Math.random() * phrases.length ) ];
   }
 

@@ -1,0 +1,13 @@
+(function( helper, to, from, msg, store, cb ) {
+	'use strict';
+  var resp;
+  if ( helper.isRelevant( msg ) ) {
+    if ( msg.indexOf( 'http_test' ) > -1 ) {
+      helper.httpGet( 'http://www.google.com', function( err, data ) {
+        console.log( data.toString() );
+      });
+    }
+  }
+
+  cb.call( null, to, from, resp );
+});
