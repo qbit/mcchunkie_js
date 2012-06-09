@@ -2,7 +2,7 @@
 
 'use strict';
 var irc = require( 'irc' ),
-  fs = require( 'fs ' ),
+  fs = require( 'fs' ),
   plugins = __dirname + '/../plugins',
   running_plugins = {},
   args = require( 'optimist' )
@@ -34,7 +34,7 @@ function loadPlugins( dir ) {
     var i,l = files.length, file;
 
     for ( i = 0; i < l; i++ ) {
-      file = plugins + files[i];
+      file = plugins + '/' + files[i];
       if ( file.indexOf( '~' ) === -1 ) {
         loadPlugin( file );
       }
@@ -48,8 +48,14 @@ fs.watch( plugins, function( e, file ) {
   loadPlugins( plugins );
 });
 
+function reply( to, from, resp ) {
+  if ( resp ) {
+    client.say( to, resp );
+  }
+}
+
 function processMsg( o ) {
-  var to, from, msg, i;
+  var to, from, msg, i, resp;
 
   to = o.to;
   from = o.from;
@@ -57,7 +63,7 @@ function processMsg( o ) {
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) { 
-      running_plugins[i]( args.n, to, from, msg );
+      running_plugins[i]( args.n, to, from, msg, reply );
     }
   }
 }
@@ -72,7 +78,7 @@ client.addListener( 'error', function( err ) {
 });
 
 client.addListener( 'message', function( from, to, msg ) {
-  processMsg( { to: to, msg: msg } );
+  processMsg( { to: to, from: from, msg: msg } );
 });
 
 client.addListener( 'pm', function( from, msg ) {
