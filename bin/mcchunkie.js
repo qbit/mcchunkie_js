@@ -17,6 +17,9 @@ var irc = require( 'irc' ),
 
 helpers = { 
   botname: args.n,
+  rand: function( len ) {
+    return Math.floor( Math.random() * len );
+  },
   httpGet: function( u, cb ) {
     u = url.parse( u );
     http.get( u, function( res ) {
