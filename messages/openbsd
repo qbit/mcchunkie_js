@@ -1,0 +1,5 @@
+(function() {
+  return {
+    'message': 'New $1 for $2!'
+  };
+});

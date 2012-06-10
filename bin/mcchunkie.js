@@ -5,15 +5,50 @@ var irc = require( 'irc' ),
   fs = require( 'fs' ),
   http = require( 'http' ),
   url = require( 'url' ),
+  drev = require( 'drev' ),
   helpers,
   plugins = __dirname + '/../plugins',
+  messages = __dirname + '/../messages',
   running_plugins = {},
+  running_messages = {},
   storage = {},
   args = require( 'optimist' )
     .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
     .demand( [ 'n', 's', 'c' ] )
     .argv,
   client, channels, chanCount = 0;
+
+storage.shared = {};
+
+drev.on( args.n, function( data ) {
+  var o = data.toString().split( '^' ), i, l, value, msg;
+
+  value = o[ o.length - 1 ];
+  if ( running_messages[ o[0] ] ) {
+    msg = running_messages[ o[0] ].message;
+    for ( i = 1, l = o.length; i < l; i++ ) {
+      msg = msg.replace( '$' + i, o[i] );
+    //   if ( o.hasOwnProperty( i ) ) {
+    //     storage.shared[i] = o[i];
+
+    //     if ( running_messages[i] ) {
+    //       m = running_messages[i];
+    //       for ( a in o[i] ) {
+    //         
+    //       }
+    //     }
+    //   }
+    }
+  }
+
+  console.log( msg );
+  channels.forEach( function( c ) {
+    client.say( c, msg );
+  });
+
+});
+
+drev.start();
 
 helpers = { 
   botname: args.n,
@@ -47,12 +82,20 @@ channels.forEach( function( c ) {
   chanCount++;
 });
 
-function loadPlugin( file ) {
+function loadPlugin( file, ismsg ) {
   fs.readFile( file, function( err, data ) {
+    var t, n;
     if ( data ) {
       try {
-        running_plugins[ file ] = eval( data.toString() );
-        storage[ file ] = {};
+        if ( ismsg ) {
+          t = eval( data.toString() );
+          n = file.split( '/' );
+          n = n[ n.length - 1 ];
+          running_messages[ n ] = t();
+        } else {
+          running_plugins[ file ] = eval( data.toString() );
+          storage[ file ] = {};
+        }
       } catch( e ) {
         console.log( 'Syntax error in "' + file + '"\n' + e );
       }
@@ -60,24 +103,38 @@ function loadPlugin( file ) {
   });
 }
 
-function loadPlugins( dir ) {
-  running_plugins = {};
-  fs.readdir( plugins, function( err, files ) {
+function loadPlugins( dir, harsh ) {
+
+  if ( harsh ) {
+    running_plugins = {};
+  } else {
+    running_messages = {};
+  }
+
+  fs.readdir( dir, function( err, files ) {
     var i,l = files.length, file;
 
     for ( i = 0; i < l; i++ ) {
-      file = plugins + '/' + files[i];
-      if ( file.indexOf( '~' ) === -1 && file.indexOf( '.js' ) > -1 ) {
-        loadPlugin( file );
+      file = dir + '/' + files[i];
+      if ( file.indexOf( '~' ) === -1 ) {
+        if ( harsh ) {
+          if ( file.indexOf( '.js' ) > -1 ) {
+            loadPlugin( file );
+          }
+        } else {
+          loadPlugin( file, true );
+        }
       }
     }
   });
 }
 
-loadPlugins( plugins );
+loadPlugins( plugins, true );
+loadPlugins( messages, false );
 
 fs.watch( plugins, function( e, file ) {
-  loadPlugins( plugins );
+  loadPlugins( plugins, true );
+  loadPlugins( messages, false );
 });
 
 function reply( to, from, resp ) {
