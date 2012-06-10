@@ -1,6 +1,6 @@
-(function( helper, to, from, msg, store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
-  var resp = '', parts, category, subcat, i, f, count = 0, c, teststore;
+  var resp = '', parts, category, subcat, i, f, count = 0, c, teststore, o;
   /*
   teststore = {
     openbsd: {
@@ -29,28 +29,30 @@
       category = parts[0];
       subcat = parts[1];
 
-      if ( ! store[ category ] ) {
+      if ( ! store[ category ] && ! sh_store[ category ] ) {
         resp = "Sorry "+ from +', I am not currently monitoring '+parts[0]+'.';
       } else {
-        if( subcat && store[ category ][ subcat ] ) {
-          for ( i in store[category][subcat] ) {
-            c = store[category][subcat][i];
+        o = store[ category ] || sh_store[ category ];
+        console.log( o );
+        if( subcat && o[ subcat ] ) {
+          for ( i in o[subcat] ) {
+            c = o[subcat][i];
             if ( count === 0 ) {
-              resp += i + ': ' + c;
+              resp += i + ': ' + c.date;
             } else {
-              resp += ', ' + i + ': ' + c;
+              resp += ', ' + i + ': ' + c.date;
             }
             count++;
           }
         } else {
-          for ( i in store[category] ) {
-            c = store[category][i];
+          for ( i in o ) {
+            c = o[i];
             count = 0;
             for ( f in c ) {
               if ( count === 0 ) {
-                resp += i + ' -> ' + f + ': ' + c[f];
+                resp += f + ' -> ' + i + ': ' + c[f].date;
               } else {
-                resp += ', ' + f + ': ' + c[f];
+                resp += ', ' + i + ': ' + c[f].date;
               }
               count++;
             }

@@ -6,9 +6,11 @@ var irc = require( 'irc' ),
   http = require( 'http' ),
   url = require( 'url' ),
   drev = require( 'drev' ),
+  nconf = require( 'nconf' ),
   helpers,
   plugins = __dirname + '/../plugins',
   messages = __dirname + '/../messages',
+  storage_file = __dirname + '/../shared_storage.json',
   running_plugins = {},
   running_messages = {},
   storage = {},
@@ -18,33 +20,51 @@ var irc = require( 'irc' ),
     .argv,
   client, channels, chanCount = 0;
 
-storage.shared = {};
+nconf.file( { file: storage_file } );
+
+function loadStorage( fn ) {
+  storage.shared = {};
+  fs.readFile( storage_file, function (err, data) {
+    if ( data ) {
+      storage.shared = JSON.parse( data.toString() );
+      if ( fn ) { 
+        fn.call();
+      }
+    }
+  });
+}
+
+loadStorage();
 
 drev.on( args.n, function( data ) {
-  var o = data.toString().split( '^' ), i, l, value, msg;
+  var o = data.toString().split( '^' ), i, l, value, msg, str;
 
   value = o[ o.length - 1 ];
-  if ( running_messages[ o[0] ] ) {
-    msg = running_messages[ o[0] ].message;
-    for ( i = 1, l = o.length; i < l; i++ ) {
-      msg = msg.replace( '$' + i, o[i] );
-    //   if ( o.hasOwnProperty( i ) ) {
-    //     storage.shared[i] = o[i];
 
-    //     if ( running_messages[i] ) {
-    //       m = running_messages[i];
-    //       for ( a in o[i] ) {
-    //         
-    //       }
-    //     }
-    //   }
-    }
-  }
+  str = data.toString()
+    .replace( value, '' )
+    .replace( /\^/g, ':' )
+    .trim()
+    .replace( /:$/, '' );
 
-  console.log( msg );
-  channels.forEach( function( c ) {
-    client.say( c, msg );
+  console.log( str );
+
+  nconf.set( str + ':date', value );
+  nconf.save( function() {
+    loadStorage( function() {
+      if ( running_messages[ o[0] ] ) {
+        msg = running_messages[ o[0] ].message;
+        for ( i = 1, l = o.length; i < l; i++ ) {
+          msg = msg.replace( '$' + i, o[i] );
+        }
+      }
+
+      channels.forEach( function( c ) {
+        client.say( c, msg );
+      });
+    });
   });
+
 
 });
 
@@ -152,7 +172,7 @@ function processMsg( o ) {
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) { 
-      running_plugins[i]( helpers, to, from, msg, storage[i], reply );
+      running_plugins[i]( helpers, to, from, msg, storage[i], storage.shared, reply );
     }
   }
 }

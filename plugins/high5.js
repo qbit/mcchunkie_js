@@ -1,4 +1,4 @@
-(function( helper, to, from, msg, store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
   var resp;
   if ( helper.isRelevant( msg ) ) { 

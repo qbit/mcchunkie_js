@@ -1,4 +1,4 @@
-(function( helper, to, from, msg, store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
   var resp, phrases = [
     'I am not ready for this kind of relationship!',

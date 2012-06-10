@@ -1,0 +1,17 @@
+{
+  "openbsd": {
+    "sets": {
+      "amd64": {
+        "date": "Sun Jun 10 2012 07:30:26 GMT-0700 (PDT)"
+      }
+    },
+    "packages": {
+      "amd64": {
+        "date": "Sun Jun 10 2012 07:30:26 GMT-0700 (PDT)"
+      },
+      "i386": {
+        "date": "Sun Jun 10 2012 07:30:26 GMT-0700 (PDT)"
+      }
+    }
+  }
+}
