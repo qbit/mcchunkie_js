@@ -75,6 +75,14 @@ helpers = {
   rand: function( len ) {
     return Math.floor( Math.random() * len );
   },
+  pHolder: function( str, array ) {
+    // lol - PHOLDER!
+    var i, l = array.length; 
+    for ( i = 0; i < l; i++ ) {
+      str = str.replace( '$' + parseInt( i + 1, 10 ), array[i] );
+    }
+    return str;
+  },
   httpGet: function( u, cb ) {
     u = url.parse( u );
     http.get( u, function( res ) {
@@ -88,6 +96,7 @@ helpers = {
       cb.call( null, er );
     });
   },
+  sqlite: require( 'sqlite3' ),
   isRelevant: function( msg ) {
     if ( msg.indexOf( this.botname ) > -1 ) {
       return true;

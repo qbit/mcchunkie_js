@@ -12,7 +12,8 @@
     "irc": "~0.3.4",
     "optimist": "~0.3.4",
     "drev": "~0.1.3",
-    "nconf": "~0.5.1"
+    "nconf": "~0.5.1",
+    "sqlite3": "~3.7.11"
   },
   "devDependencies": {},
   "optionalDependencies": {},
