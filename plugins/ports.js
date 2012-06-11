@@ -1,6 +1,7 @@
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
 
+  from = from || to;
   var resp = '', db = new helper.sqlite.Database( '/usr/local/share/sqlports' ),
   cmd, action, query,
   queries = {

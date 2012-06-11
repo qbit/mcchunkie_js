@@ -8,6 +8,7 @@
   ];
   if ( helper.isRelevant( msg ) ) {
     if ( msg.match( /i love you/i ) ) {
+      from = from || to;
       resp = from + ', ' + phrases[ helper.rand( phrases.length ) ];
     }
   }

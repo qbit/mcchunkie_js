@@ -3,6 +3,8 @@ mcchunkie
 
 Home for the new mcchunkie - now with 100% moar chunk
 
+mcchunkie is an irc bot with dynamically loadable plugins.
+
 Plugins
 =======
 
@@ -25,3 +27,5 @@ Example:
   cb.call( null, to, from, resp );
 });
 ````
+To disable a plugin, simple add a '''~''' to the name.
+
