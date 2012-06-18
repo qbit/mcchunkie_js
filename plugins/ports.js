@@ -13,15 +13,15 @@
       h: "Search for a port name ( displays pkgpath, comment and homepage"
     },
     desc: {
-      q: "select value from descr where fullpkgpath like '%$1%' limit 3",
+      q: "select fullpkgpath, value from descr where fullpkgpath like '%$1%' limit 3",
       h: "Search for a ports description"
     },
     flavors: {
-      q: "select value from pseudoflavors where fullpkgpath like '%$1%' limit 3",
+      q: "select fullpkgpath, value from pseudoflavors where fullpkgpath like '%$1%' limit 3",
       h: "Show the flavors a port will build for."
     },
     arch: {
-      q: "select value from onlyforarch where fullpkgpath like '%$1%' limit 3",
+      q: "select fullpkgpath, value from onlyforarch where fullpkgpath like '%$1%' limit 3",
       h: "Show the arches for a port."
     }
   };
@@ -55,10 +55,12 @@
               var a, count = 0;
               for ( a in row ) {
                 if ( row.hasOwnProperty( a ) ) {
-                  if ( count === 0 ) {
-                    resp += row[a] + ' ';
-                  } else {
-                    resp += ' | '  + row[a].replace( /\n/g, ' ' );
+                  if ( row[a] ) {
+                    if ( count === 0 ) {
+                      resp += row[a] + ' ';
+                    } else {
+                      resp += ' | '  + row[a].replace( /\n/g, ' ' );
+                    }
                   }
                 }
                 count++;

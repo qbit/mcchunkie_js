@@ -181,7 +181,11 @@ function processMsg( o ) {
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) { 
-      running_plugins[i]( helpers, to, from, msg, storage[i], storage.shared, reply );
+      try { 
+        running_plugins[i]( helpers, to, from, msg, storage[i], storage.shared, reply );
+      } catch( e ) {
+        console.log( "Error running '" + i + "'\n" + e );
+      }
     }
   }
 }
