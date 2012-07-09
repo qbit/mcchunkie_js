@@ -1,5 +1,6 @@
-![mcchunkie](https://raw.github.com/qbit/mcchunkie/master/mcchunkie.png)
+mcchunkie
 =========
+![mcchunkie](https://raw.github.com/qbit/mcchunkie/master/mcchunkie.png)
 
 Home for the new mcchunkie - now with 100% moar chunk
 
