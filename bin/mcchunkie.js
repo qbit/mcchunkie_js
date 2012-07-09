@@ -96,6 +96,8 @@ helpers = {
       cb.call( null, er );
     });
   },
+  redis: require( 'redis' ),
+  classifier: require( 'classifier' ),
   sqlite: require( 'sqlite3' ),
   isRelevant: function( msg ) {
     if ( msg.indexOf( this.botname ) > -1 ) {
