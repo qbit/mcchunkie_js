@@ -15,7 +15,8 @@
     "sqlite3": "~3.7.11",
     "redis": "~0.7.2",
     "classifier": "~0.1.0",
-    "irc": "~0.3.4"
+    "irc": "~0.3.4",
+    "pushover-notifications": "~0.1.2"
   },
   "devDependencies": {},
   "optionalDependencies": {},

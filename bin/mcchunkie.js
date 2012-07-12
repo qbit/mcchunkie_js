@@ -7,6 +7,7 @@ var irc = require( 'irc' ),
   url = require( 'url' ),
   drev = require( 'drev' ),
   nconf = require( 'nconf' ),
+  pushover = require( 'pushover-notifications' ),
   helpers,
   plugins = __dirname + '/../plugins',
   messages = __dirname + '/../messages',
@@ -75,6 +76,9 @@ helpers = {
   rand: function( len ) {
     return Math.floor( Math.random() * len );
   },
+  pushover: new pushover( {
+    token: 'YYkM7JlMH9F6JSTgG7rpoIfcHGpZiF'
+  } ),
   pHolder: function( str, array ) {
     // lol - PHOLDER!
     var i, l = array.length; 
