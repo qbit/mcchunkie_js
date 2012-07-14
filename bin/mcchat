@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+var drev = require( 'drev' ), 
+  readline = require( 'readline' ),
+  prompt = 'mcchunkie> ',
+rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.setPrompt( prompt );
+rl.prompt();
+
+rl.on( 'line', function( str ) {
+  drev.emit( 'mcchunkie', 'mcchat^' + str );
+  rl.prompt();
+});
+
+drev.start();

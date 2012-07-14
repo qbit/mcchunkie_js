@@ -48,9 +48,9 @@ drev.on( args.n, function( data ) {
     .trim()
     .replace( /:$/, '' );
 
-  console.log( str );
-
-  nconf.set( str + ':date', value );
+  if ( ! str.match( 'mcchat' ) ) {  
+    nconf.set( str + ':date', value );
+  }
   nconf.save( function() {
     loadStorage( function() {
       if ( running_messages[ o[0] ] ) {
