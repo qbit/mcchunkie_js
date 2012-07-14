@@ -15,43 +15,24 @@
 
       parts = msg.split( ' ' ); 
 
-      console.log( 'Parts: ', parts );
-
       cat = parts[1];
       scat = parts[2];
 
       // resp = ':( - hurry qbit! fix it!';
       s = store.openbsd || sh_store.openbsd;
 
-      console.log( 'cat: %s, scat: %s', cat, scat );
-
-      if ( s[cat] ) {
-        // showing packages or sets for all
+      if ( s[cat] && ! scat ) {
         for ( a in s[cat] ) {
-          if ( s[cat][a] ) {
-            console.log( 1, a, cat, s[cat][a] );
-            resp.push( a, ':', s[cat][a].date + '.' );
-          }
+          resp.push( a, '=>', s[cat][a].date + '.' );
         }
+      } else if( s[cat] && scat ) {
+        resp.push( scat, '=>', s[cat][scat].date + '.' );
       } else {
-        if ( s[scat] ) {
-          if ( s[scat][cat] ) {
-            for ( a in s[scat][cat] ) {
-              console.log( 2, a, cat, s[scat][cat][a] );
-              resp.push( cat, ':', s[scat][cat][a] + '.' );
-            }
+        for ( cat in s ) {
+          for ( a in s[cat] ) {
+              resp.push( cat, a, '=>', s[cat][a].date + '.' );
           }
-        } else {
-          for ( a in s ) {
-            for( b in s[a] ) {
-              // if ( b === cat ) {
-                // console.log( b, a, s[a][b] );
-                // resp.push( b, a, '=>',  s[a][b].date + '.' );
-              // } else {
-                resp.push( b, a, '=>',  s[a][b].date + '. \n' );
-              // }
-            }
-          }
+          resp.push( '\n' );
         }
       }
     }
