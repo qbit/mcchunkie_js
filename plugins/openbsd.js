@@ -28,11 +28,15 @@
       } else if( s[cat] && scat ) {
         resp.push( scat, '=>', s[cat][scat].date + '.' );
       } else {
-        for ( cat in s ) {
-          for ( a in s[cat] ) {
-              resp.push( cat, a, '=>', s[cat][a].date + '.' );
+        if ( ! cat ) {
+          for ( cat in s ) {
+            for ( a in s[cat] ) {
+                resp.push( cat, a, '=>', s[cat][a].date + '.' );
+            }
+            resp.push( '\n' );
           }
-          resp.push( '\n' );
+        } else {
+          resp.push( 'not sure what that is..' );
         }
       }
     }
