@@ -9,7 +9,7 @@ Features
 
 * **Dynamic plugins**
 * **Chat as bot** ( using mcchat )
-* **Subscribes to "botname:*" redispubsub** 
+* **Subscribes to "botname:*" redis pubsub** 
 * **Ability to chat "messages" from pubsub** ( see messages/ for
   examples )
 * **Persistent storage for pubsub'd messages**
