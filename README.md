@@ -9,7 +9,7 @@ Features
 
 * **Dynamic plugins**
 * **Chat as bot** ( using mcchat )
-* **Subscribes to "botname:*" redis pubsub** 
+* **Subscribes to "botname:*" [redis](http://redis.io) pubsub** 
 * **Ability to chat "messages" from pubsub** ( see messages/ for
   examples )
 * **Persistent storage for pubsub'd messages**
@@ -20,8 +20,9 @@ Plugin Features
 * **botsnack** - feed the bot!
 * **high5** - bot will respond with a "o/" or "\o".
 * **love** - give some love, get some love.
-* **openbsd** - uses the pubsub / storage features to keep track of
-  openbsd snapshot releases.
+* **openbsd** - uses the pubsub / storage features and an external app (
+  [openbsd_mon](https://github.com/qbit/openbsd_mon) to keep track of openbsd 
+  snapshot releases.
 * **pew** - get shot with LASERS!
 * **ports** - use sqlports to search the openbsd ports tree for various
   thngs.
@@ -32,7 +33,8 @@ Plugin Features
   trained.
 * **version** - spits out the version of node.js the bot is running on.
 * **wb** - respond to welcom back requests.
-* **yeah** - puts on sunglasses.. waits 5 seconds.. says YEAAAAAH!
+* **yeah** - when bot sees "CSI" it puts on sunglasses.. waits 5 seconds.. 
+  says YEAAAAAH!
 * **template** - quick plugin template for next gen templates.
 
 Writing Plugins
