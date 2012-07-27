@@ -18,7 +18,6 @@
       cat = parts[1];
       scat = parts[2];
 
-      // resp = ':( - hurry qbit! fix it!';
       s = store.openbsd || sh_store.openbsd;
 
       if ( s[cat] && ! scat ) {
