@@ -35,10 +35,18 @@
             resp.push( '\n' );
           }
         } else {
-          resp.push( 'not sure what that is..' );
+          for ( c in s ) {
+            if ( c.length === cat.length ) {
+              resp.push( "did you mean '" + c + "'?" );
+            }
+          }
+          if ( resp.length === 0 ) {
+            resp.push( 'not sure what that is..' );
+          }
         }
       }
     }
   }
+
   cb.call( null, to, from, resp.join( ' ' ).toString() );
 });
