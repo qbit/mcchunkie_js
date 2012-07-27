@@ -3,5 +3,9 @@
   var resp;
   if ( helper.isRelevant( msg ) ) {
   }
+
+  if ( msg === helper.botname + ': help' ) {
+  }
+
   cb.call( null, to, from, resp );
 });
