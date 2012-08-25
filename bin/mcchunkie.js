@@ -85,9 +85,9 @@ helpers = {
   rand: function( len ) {
     return Math.floor( Math.random() * len );
   },
-  pushover: new pushover( {
-    token: 'YYkM7JlMH9F6JSTgG7rpoIfcHGpZiF'
-  } ),
+  pushover: new pushover({
+    token: tokens.pushover
+  }),
   pHolder: function( str, array ) {
     // lol - PHOLDER!
     var i, l = array.length; 
