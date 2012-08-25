@@ -20,9 +20,19 @@ var irc = require( 'irc' ),
     .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
     .demand( [ 'n', 's', 'c' ] )
     .argv,
-  client, channels, chanCount = 0;
+  client, channels, chanCount = 0,
+  tokens = {};
 
 nconf.file( { file: storage_file } );
+
+fs.stat( 'api_keys.json', function( err, data ) {
+  if ( err ) {
+    throw err;
+  }
+  fs.readFile( 'api_keys.json', function( err, data ) {
+    tokens = JSON.parse( data );
+  });
+});
 
 function loadStorage( fn ) {
   storage.shared = {};
@@ -121,14 +131,17 @@ function loadPlugin( file, ismsg ) {
     var t, n;
     if ( data ) {
       try {
+        n = file.split( '/' );
+        n = n[ n.length - 1 ];
         if ( ismsg ) {
           t = eval( data.toString() );
-          n = file.split( '/' );
-          n = n[ n.length - 1 ];
           running_messages[ n ] = t();
         } else {
-          running_plugins[ file ] = eval( data.toString() );
-          storage[ file ] = {};
+          running_plugins[ n ] = eval( data.toString() );
+          storage[ n ] = {};
+          if ( tokens[ n ] ) {
+            storage[ n ].token = tokens[ n ];
+          }
         }
       } catch( e ) {
         console.log( 'Syntax error in "' + file + '"\n' + e );
