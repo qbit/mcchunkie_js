@@ -37,7 +37,8 @@ function loadStorage( fn ) {
 }
 
 loadStorage();
-drev.on( args.n, function( data ) {
+
+rclient.on( 'message', function( channel, data ) {
   var o = data.toString().split( '^' ), i, l, value, msg, str;
 
   value = o[ o.length - 1 ];
