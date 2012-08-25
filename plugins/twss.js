@@ -50,7 +50,7 @@
     try { 
       store.bays.classify( msg, function( cat ) {
       //   console.log( 'prev msg: ' + store.msgs[1] );
-        if ( msg.match( /twss$/i ) || msg === helper.botname + ': yes' ) {
+        if ( msg.match( /^twss$/i ) || msg === helper.botname + ': yes' ) {
           store.bays.train( store.msgs[ store.msgs.length - 2 ], 'funny', function() {
             resp = 'Added funny: "' + store.msgs[ store.msgs.length - 2 ] + '"';
             cb.call( null, to, from, resp );
@@ -60,6 +60,11 @@
             resp = 'Sorry: "' + store.msgs[ store.msgs.length - 2 ] + '"';
             cb.call( null, to, from, resp );
           });
+        } if ( msg.match( /^twss\?$/i ) ) {
+          if ( cat !== 'funny' ) {
+            resp = 'no.';
+            cb.call( null, to, from, resp );
+          }
         } else {
           if ( cat === 'funny' ) {
             resp = responses[ helper.rand( responses.length ) ];
