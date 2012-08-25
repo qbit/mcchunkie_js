@@ -30,7 +30,6 @@
     }
 
     if ( ! store.bays ) {
-      console.log( 'Initializing twss plugin.. ' );
       store.bays = new helper.classifier.Bayesian({
         backend: {
           type: "Redis",
