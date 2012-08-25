@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-var drev = require( 'drev' ), 
+var redis = require( 'redis' ), 
+  rclient = redis.createClient(),
   readline = require( 'readline' ),
   prompt = 'mcchunkie> ',
 rl = readline.createInterface({
@@ -12,8 +13,6 @@ rl.setPrompt( prompt );
 rl.prompt();
 
 rl.on( 'line', function( str ) {
-  drev.emit( 'mcchunkie', 'mcchat^' + str );
+  rclient.publish( 'mcchunkie', 'mcchat^' + str );
   rl.prompt();
 });
-
-drev.start();

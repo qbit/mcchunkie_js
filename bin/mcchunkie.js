@@ -6,7 +6,8 @@ var irc = require( 'irc' ),
   http = require( 'http' ),
   url = require( 'url' ),
   nconf = require( 'nconf' ),
-  drev = require( 'drev' ),
+  redis = require( 'redis' ),
+  rclient = redis.createClient(),
   pushover = require( 'pushover-notifications' ),
   helpers,
   plugins = __dirname + '/../plugins',
@@ -64,11 +65,9 @@ drev.on( args.n, function( data ) {
       });
     });
   });
-
-
 });
 
-drev.start();
+rclient.subscribe( args.n );
 
 helpers = { 
   botname: args.n,
