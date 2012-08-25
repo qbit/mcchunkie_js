@@ -17,9 +17,14 @@ Features
 Plugin Features
 ===============
 
+* **beer** - search brewerydb for beer!
 * **botsnack** - feed the bot!
+* **dayum** - Daaayum Daaayyyyuuummm DAAAAAAYYYYUUUUMMMMMMMM
+* **dolan** - translate to dolantalk
+* **ermahgerd** - translate to ermahgerd talk
 * **high5** - bot will respond with a "o/" or "\o".
 * **love** - give some love, get some love.
+* **navi** - HEY LOOK!!!!! AHHHHHHHH!
 * **openbsd** - uses the pubsub / storage features and an external app (
   [openbsd_mon](https://github.com/qbit/openbsd_mon) to keep track of openbsd 
   snapshot releases.
@@ -33,6 +38,7 @@ Plugin Features
   trained.
 * **version** - spits out the version of node.js the bot is running on.
 * **wb** - respond to welcom back requests.
+* **qw** - Tell the story of Wq.
 * **yeah** - when bot sees "CSI" it puts on sunglasses.. waits 5 seconds.. 
   says YEAAAAAH!
 * **template** - quick plugin template for next gen templates.
