@@ -9,7 +9,7 @@
   if ( msg.match( /^puny:/ ) ) {
     msg = msg.replace( /^puny:/, '' );
 
-    resp = store.puny.decode( msg );
+    resp = store.puny.decode( msg.toString() );
   }
 
   if ( msg === helper.botname + ': help' ) {

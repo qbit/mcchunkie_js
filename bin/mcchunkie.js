@@ -5,8 +5,8 @@ var irc = require( 'irc' ),
   fs = require( 'fs' ),
   http = require( 'http' ),
   url = require( 'url' ),
-  drev = require( 'drev' ),
   nconf = require( 'nconf' ),
+  drev = require( 'drev' ),
   pushover = require( 'pushover-notifications' ),
   helpers,
   plugins = __dirname + '/../plugins',
@@ -36,7 +36,6 @@ function loadStorage( fn ) {
 }
 
 loadStorage();
-
 drev.on( args.n, function( data ) {
   var o = data.toString().split( '^' ), i, l, value, msg, str;
 
