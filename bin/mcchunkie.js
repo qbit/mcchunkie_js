@@ -4,6 +4,7 @@
 var irc = require( 'irc' ),
   fs = require( 'fs' ),
   http = require( 'http' ),
+  https = require( 'https' ),
   url = require( 'url' ),
   nconf = require( 'nconf' ),
   redis = require( 'redis' ),
