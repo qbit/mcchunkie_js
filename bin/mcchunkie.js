@@ -110,7 +110,7 @@ helpers = {
       cb.call( null, er );
     });
   },
-  redis: require( 'redis' ),
+  reds: require( 'reds' ),
   classifier: require( 'classifier' ),
   sqlite: require( 'sqlite3' ),
   isRelevant: function( msg ) {
@@ -211,6 +211,7 @@ function processMsg( o ) {
 
 client = new irc.Client( args.s, args.n, { 
   channels: channels, 
+  debug: false,
   userName: args.n 
 }); 
 
