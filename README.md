@@ -2,7 +2,7 @@ mcchunkie
 =========
 ![mcchunkie](https://raw.github.com/qbit/mcchunkie/master/mcchunkie.png)
 
-mcchunkie is an irc bot with dynamically loadable plugins.
+an irc bot with dynamically loadable plugins.
 
 Features
 ========
