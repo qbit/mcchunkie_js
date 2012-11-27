@@ -49,6 +49,10 @@ function loadStorage( fn ) {
 
 loadStorage();
 
+rclient.on( 'error', function( er ) {
+  console.log( er );
+});
+
 rclient.on( 'message', function( channel, data ) {
   var o = data.toString().split( '^' ), i, l, value, msg, str;
 
