@@ -27,7 +27,8 @@
     if ( msg == helper.botname + ": toggle e" ) {
       store.doit = !store.doit;
       if ( store.doit ) {
-        resp = store.ermg( 'doing it!' );
+        //resp = store.ermg( 'doing it!' );
+        resp = 'Not doing it out of <3 for lteo';
       }
       cb.call( null, to, from, resp );
       return;
@@ -35,7 +36,7 @@
   }
 
   if ( store.doit ) {
-    resp = store.ermg( msg );
+    //resp = store.ermg( msg );
   }
 
   cb.call( null, to, from, resp );
