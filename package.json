@@ -12,7 +12,7 @@
     "optimist": "~0.3.4",
     "nconf": "~0.5.1",
     "sqlite3": "~3.7.11",
-    "redis": "~0.7.2",
+    "redis": "~0.8.2",
     "classifier": "~0.1.0",
     "irc": "~0.3.4",
     "pushover-notifications": "~0.1.2",
