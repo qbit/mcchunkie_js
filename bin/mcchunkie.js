@@ -215,12 +215,12 @@ function processMsg( o ) {
 
 client = new irc.Client( args.s, args.n, { 
   channels: channels, 
-  debug: false,
+  debug: true,
   userName: args.n 
 }); 
 
 client.addListener( 'error', function( err ) {
-  throw err;
+  console.log( err );
 });
 
 client.addListener( 'message', function( from, to, msg ) {
