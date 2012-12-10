@@ -8,7 +8,7 @@
     store.e = '';
     store.r = '';
 
-    store.getData = function() {
+    store.getData = function( fn ) {
       var data = [];
       http.get( store.url, function( res ) {
         if ( res.statusCode === 200 ) {
@@ -27,6 +27,9 @@
                 }
               }
             }
+            if ( fn ) {
+              fn.call();
+            }
           });
         }
       });
@@ -34,8 +37,9 @@
 
     store.getData();
     store.timer = setInterval( function() {
-      store.getData();
-      client.send( 'TOPIC', '#pueblo-ingress', 'All things Ingress for the Pueblo Colorado region | http://niantic.schlarp.com/ | http://ingress.com/intel | Enlightened: ' + store.e + ' Resistance: ' + store.r );
+      store.getData( function() {
+        client.send( 'TOPIC', '#pueblo-ingress', 'All things Ingress for the Pueblo Colorado region | http://niantic.schlarp.com/ | http://ingress.com/intel | Enlightened: ' + store.e + ' Resistance: ' + store.r );
+      });
     }, 10800000 );
   }
 
