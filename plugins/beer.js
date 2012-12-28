@@ -15,7 +15,6 @@
       store.get = function( url, to, from ) {
         helper.httpGet( url, function( err, data ) {
           var result, resp, name, abv, ibu, desc, year, bname, url;
-          data = data.replace( /,,/g, ',' );
           if ( data ) {
             try {
               result = JSON.parse( data );
