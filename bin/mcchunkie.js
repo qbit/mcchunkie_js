@@ -198,6 +198,7 @@ fs.watch( plugins, function( e, file ) {
 });
 
 function reply( to, from, resp ) {
+  to = to || from;
   if ( resp ) {
     client.say( to, resp );
   }
