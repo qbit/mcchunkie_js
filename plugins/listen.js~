@@ -1,0 +1,12 @@
+(function( helper, to, from, msg, store, sh_store, cb ) {
+  'use strict';
+  var resp;
+  console.log( from, msg );
+  if ( helper.isRelevant( msg ) ) {
+  }
+
+  if ( msg === helper.botname + ': help' ) {
+  }
+
+  cb.call( null, to, from, resp );
+});
