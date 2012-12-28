@@ -9,6 +9,9 @@
 
   if ( msg.match( /what happened to then\?/i ) ) {
     resp = 'we passed it.';
+    setTimeout( function() {
+      cb.call( null, to, from, 'just then.' );
+    }, 3000 );
   }
 
   // if ( msg === helper.botname + ': help' ) {
