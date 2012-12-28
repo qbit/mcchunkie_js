@@ -6,7 +6,7 @@
 
   // if ( msg === helper.botname + ': help' ) {
   // }
-  if ( msg.match( /merry christmas/i ) ) {
+  if ( msg.match( /^merry christmas/i ) ) {
     resp = [
       "˛ °.★__ *★* *˛.",
       "˛ °_██_*。*./ \ .˛* .˛.*.★* *★ 。*",
@@ -19,5 +19,5 @@
     resp = resp.join( '\n' );
   }
 
-  cb.call( null, to, from, resp );
+  // cb.call( null, to, from, resp );
 });
