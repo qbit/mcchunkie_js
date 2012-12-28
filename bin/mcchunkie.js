@@ -116,7 +116,7 @@ helpers = {
       res.on( 'data', function( chunk ) {
         d.push( chunk );
       }).on( 'end', function() {
-        cb.call( null, null, d.join() );
+        cb.call( null, null, d.join('') );
       });
     }).on( 'error', function( er ) {
       cb.call( null, er );
