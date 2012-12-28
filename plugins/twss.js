@@ -36,6 +36,9 @@
 
     if ( ! store.bays ) {
       store.bays = new helper.classifier.Bayesian({
+        error: function( e ) {
+          console.log( 'classifier error!', e );
+        },
         backend: {
           type: "Redis",
           options: {
