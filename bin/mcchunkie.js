@@ -47,6 +47,14 @@ function loadStorage( fn ) {
   });
 }
 
+function saveStorage( fn ) {
+  fs.writeFile( storage_file, JSON.stringify( storage.shared ), function( err ) {
+    if ( fn ) {
+      fn.call();
+    }
+  });
+}
+
 loadStorage();
 
 rclient.on( 'error', function( er ) {
