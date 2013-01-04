@@ -57,8 +57,8 @@ function saveStorage( fn ) {
 
 loadStorage();
 
-rclient.on( 'error', function( er ) {
-  console.log( er );
+rclient.on( 'error', function( error ) {
+  console.log( error );
 });
 
 rclient.on( 'message', function( channel, data ) {
