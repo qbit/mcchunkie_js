@@ -37,8 +37,8 @@ Plugin Features
 * **twss** - watch incoming messages for possible twss jokes.  Can be
   trained.
 * **version** - spits out the version of node.js the bot is running on.
-* **wb** - respond to welcom back requests.
-* **qw** - Tell the story of Wq.
+* **wb** - respond to welcome back requests.
+* **wq** - Tell the story of Wq.
 * **yeah** - when bot sees "CSI" it puts on sunglasses.. waits 5 seconds.. 
   says YEAAAAAH!
 * **template** - quick plugin template for next gen templates.
