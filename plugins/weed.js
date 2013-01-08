@@ -1,6 +1,17 @@
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
-  var resp = '', url;
+  var resp = '', url, i, l, index;
+
+  index = function() {
+    helper.httpGet( 'http://www.leafly.com/api/strains', function( err, data ) {
+      console.log( 'indexing weeds' );
+      for ( i = 0, l = data.length; i < l; i++ ) {
+        console.log( data[i].Name, data[i].Key );
+        store.search.index( data[i].Name, data[i].Key );
+      }
+      console.log( "done indexing" );
+    });
+  }
 
   try {
 
@@ -8,8 +19,15 @@
       url =  "http://www.leafly.com/api/details/";
     }
 
-    // TODO get strain info and store it .. cross ref the msg with the
-    // store.
+    if ( ! store.search ) {
+      store.search = helper.reds.createSearch( 'weed' );
+    }
+
+    if ( ! store.updateInterval ) {
+      store.updateInterval = setInterval(function() {
+        index();
+      }, 8640000 );
+    }
 
     if ( ! store.get ) {
       store.get = function( url, to, from ) {
@@ -45,7 +63,9 @@
               to = from;
             }
 
-            cb.call( null, to, from, resp );
+            if ( name !== '?' ) {
+              cb.call( null, to, from, resp );
+            }
           }
         });
       };
@@ -57,9 +77,11 @@
       msg = msg.replace( / $/g, '' );
       msg = msg.replace( / /g, '-' );
       msg = msg.toLowerCase();
-      url += msg;
+      // url += msg;
       try { 
-        store.get( url, to, from );
+        store.search.query( msg ).end( function( err, ids ) {
+          store.get( url += ids[0], to, from );
+        });
       } catch( e ) {
         resp = "oh shit...";
         cb.call( null, to, from, resp );
