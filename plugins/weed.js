@@ -25,7 +25,8 @@
 
     if ( ! store.updateInterval ) {
       store.updateInterval = setInterval(function() {
-        index();
+        //index();
+        console.log( 'not really indexing' );
       }, 8640000 );
     }
 
