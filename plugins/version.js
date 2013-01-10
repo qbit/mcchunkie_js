@@ -9,7 +9,7 @@
   }
 
   if ( helper.isRelevant( msg ) ) {
-    if ( msg.match( 'version' ) ) {
+    if ( msg.match( ' version$' ) ) {
       resp = "I am running on Node.JS " + process.version + ' on ' + process.platform.ucFirst().replace( 'bsd', 'BSD' ) + '.';
     }
   }

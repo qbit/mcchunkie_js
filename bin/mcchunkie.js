@@ -224,7 +224,7 @@ function processMsg( o ) {
 
 client = new irc.Client( args.s, args.n, { 
   channels: channels, 
-  debug: true,
+  debug: false,
   userName: args.n 
 }); 
 
