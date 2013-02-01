@@ -13,6 +13,9 @@ rl.setPrompt( prompt );
 rl.prompt();
 
 rl.on( 'line', function( str ) {
+  if ( str === 'exit' || str === 'quit' ) {
+    process.exit(0);
+  }
   rclient.publish( 'mcchunkie', 'mcchat^' + str );
   rl.prompt();
 });
