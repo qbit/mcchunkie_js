@@ -3,7 +3,7 @@ fs = require( 'fs' ),
 url = require( 'url' ),
 search = reds.createSearch( 'pueblo_ingress' ), i, l, data = [];
 
-fs.readFile( 'pueblo_ingress.js', function( err, data ) {
+fs.readFile( 'ColoradoPortals.js', function( err, data ) {
   data = JSON.parse( data );
   for ( i = 0, l = data.length; i < l; i++ ) {
     if ( i < 5 ) {
