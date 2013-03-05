@@ -13,11 +13,12 @@
     "nconf": "~0.6.7",
     "sqlite3": "~3.7.11",
     "redis": "~0.8.2",
-    "irc": "~0.3.5",
+    "irc": "~0.3.6",
     "pushover-notifications": "~0.1.3",
     "hiredis": "~0.1.14",
-    "reds": "~0.2.2",
-    "classifier": "git://github.com/qbit/classifier.git"
+    "reds": "~0.2.3",
+    "classifier": "~0.1.0",
+    "appdotnet": "~0.2.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},
