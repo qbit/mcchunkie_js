@@ -123,6 +123,7 @@ helpers = {
     });
   },
   reds: require( 'reds' ),
+  adn: require( 'appdotnet' ),
   classifier: require( 'classifier' ),
   sqlite: require( 'sqlite3' ),
   isRelevant: function( msg ) {
