@@ -13,5 +13,7 @@
     resp = phrases[ helper.rand( phrases.length ) ];
   }
 
-  cb.call( null, to, from, resp );
+  setTimeout( function() {
+    cb.call( null, to, from, resp );
+  }, 10000 );
 });
