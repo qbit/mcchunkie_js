@@ -5,13 +5,10 @@
     "that's what she said!",
     "twss!",
     "TWSS!",
-    "That's what c0sh said!",
+    "heuheuhuheuheuhe",
     "ohlol, that's what she said!",
     "ew! you guys are sick!",
-    "I am a respectable lady! I will not take this lying down!",
-    "aw, where's the pun in that?",
-    "(╯‵Д′)╯彡┻━┻"
-
+    "if you know what I mean."
   ],
 
   template = "\

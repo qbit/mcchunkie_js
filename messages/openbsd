@@ -1,5 +1,5 @@
 (function() {
   return {
-    'message': 'New $2 for $1!'
+    'message': 'New $2 for $1! ($3)'
   };
 });
