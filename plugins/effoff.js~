@@ -1,0 +1,35 @@
+(function( helper, to, from, msg, store, sh_store, cb ) {
+  'use strict';
+  var resp = '', urls, i, l;
+
+  if ( ! store.search ) {
+    store.url = require( 'url' );
+  }
+
+  try {
+          http.get( store.url.parse( urls[0] ), function( res ) {
+            var data = [];
+
+            res.on( 'data', function( chunk ) {
+              data.push( chunk );
+              if ( chunk.toString().match( /<\/title>/i ) || data.length > 2 ) {
+                res.destroy();
+                return;
+              }
+            });
+
+            res.on( 'end', function( ) {
+              var s = data.join()
+                .toString()
+                .replace( /\n/g, ' ' )
+                .replace( /\r/g, ' ' ), m;
+
+              m = s.match( /<title>(.*)<\/title>/i );
+
+              if ( m ) {
+                store.search.index( m, urls[0] );
+              }
+
+            });
+          });
+});
