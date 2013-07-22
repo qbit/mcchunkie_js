@@ -9,7 +9,7 @@ var irc = require( 'irc' ),
   nconf = require( 'nconf' ),
   redis = require( 'redis' ),
   rclient = redis.createClient(),
-  pushover = require( 'pushover-notifications' ),
+  // pushover = require( 'pushover-notifications' ),
   helpers,
   plugins = __dirname + '/../plugins',
   messages = __dirname + '/../messages',
@@ -98,9 +98,9 @@ helpers = {
   rand: function( len ) {
     return Math.floor( Math.random() * len );
   },
-  pushover: new pushover({
-    token: tokens.pushover
-  }),
+  // pushover: new pushover({
+  //   token: tokens.pushover
+  // }),
   pHolder: function( str, array ) {
     // lol - PHOLDER!
     var i, l = array.length; 
@@ -225,7 +225,7 @@ function processMsg( o ) {
 
 client = new irc.Client( args.s, args.n, { 
   channels: channels, 
-  debug: false,
+  debug: true,
   userName: args.n 
 }); 
 

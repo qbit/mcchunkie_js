@@ -9,12 +9,12 @@
     "url": "git://github.com/qbit/mcchunkie.git"
   },
   "dependencies": {
-    "optimist": "~0.3.5",
+    "optimist": "~0.3.7",
     "nconf": "~0.6.7",
     "sqlite3": "~3.7.11",
-    "redis": "~0.8.3",
+    "redis": "~0.8.4",
     "irc": "~0.3.6",
-    "pushover-notifications": "~0.1.3",
+    "pushover-notifications": "~0.1.5",
     "hiredis": "~0.1.15",
     "reds": "~0.2.3",
     "classifier": "~0.1.0",
