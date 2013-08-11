@@ -234,6 +234,9 @@ client.addListener( 'error', function( err ) {
 });
 
 client.addListener( 'message', function( from, to, msg ) {
+  if( client.nick !== args.n ) {
+    client.send('NICK', args.n);
+  }
   processMsg( { to: to, from: from, msg: msg } );
 });
 
