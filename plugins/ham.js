@@ -45,10 +45,8 @@
 		};
 		store.fcc.get = function(param) {
 			var u = store.fcc.query_url.replace('%S', param);
-			console.log('Searching "%s"', u);
 			helper.httpGet(u, function(err, data) {
 				data = JSON.parse(data);
-				console.log(data.Licenses.totalRows);
 				if (data.status === 'OK' ) {
 					resp = store.fcc.buildList(data.Licenses.License);
 					cb.call(null, to, from, resp);
