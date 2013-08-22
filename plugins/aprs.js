@@ -1,9 +1,7 @@
-// Title: ham.js
-// Usage: ham: <callsign>|<string>
 // Desc: query the FCC license database for license info.
 (function(helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
-	var resp; 
+	var resp, what, who, parts = msg.split( ' ' );
 	if (! store.aprs ) {
 		store.aprs = {};
 		store.aprs.url = 'http://api.aprs.fi/api/get?';
@@ -28,9 +26,9 @@
 			var i, l, r, list;
 
 			if (entries.length > 1) {
-				r = 'I found %d entries, here is the first: %l';
+				r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
 			} else {
-				r = '%l';
+				r = '%l (http://aprs.fi)';
 			}
 
 			r = r.replace('%d', entries.length);
@@ -49,6 +47,7 @@
 
 			aprs_url += store.aprs.qs.stringify(store.aprs_options);
 
+			console.log(aprs_url);
 			helper.httpGet(aprs_url, function(err, data) {
 				var f;
 
@@ -56,7 +55,7 @@
 				store.aprs_options.name = '';
 
 				data = JSON.parse(data);
-				if (data.result === 'ok' ) {
+				if (data.result === 'ok' && data.found > 0) {
 					resp = store.aprs.buildList(data.entries);
 					cb.call(null, to, from, resp);
 				} else {
@@ -68,7 +67,6 @@
 
 	if (msg.match(/^aprs: / )) {
 		msg = msg.replace(/^aprs: /, '');
-		var what, who, parts = msg.split( ' ' );
 		what = parts[0];
 		who = parts[1];
 		if ( store.aprs.whats[what] ) {
