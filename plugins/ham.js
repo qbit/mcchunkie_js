@@ -1,3 +1,6 @@
+// Title: ham.js
+// Usage: ham: <callsign>|<string>
+// Desc: query the FCC license database for license info.
 (function(helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
 	var resp;
@@ -9,14 +12,16 @@
 			'callsign': true,
 			'statusDesc': true,
 			'categoryDesc': true,
-			'expireDate': true
+			'lastUpdate': true,
+			'expiredDate': true
 		};
 		store.fcc.tmap = {
 			'licName': 'Name',
 			'callsign': 'Callsign',
 			'statusDesc': 'Desc',
 			'categoryDesc': 'Category',
-			'expireDate': 'Expires'
+			'lastUpdate': 'Last Update',
+			'expiredDate': 'Expires'
 		};
 		store.fcc.parseLicense = function(license) {
 			var l, text = [];
@@ -51,7 +56,7 @@
 					resp = store.fcc.buildList(data.Licenses.License);
 					cb.call(null, to, from, resp);
 				} else {
-					cb.call(null, to, from, data.status);
+					cb.call(null, to, from, 'I got nothin.');
 				}
 			});
 		};
