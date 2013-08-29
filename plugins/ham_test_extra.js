@@ -19,16 +19,18 @@
 
   console.log(store.cur_q, msg);
   if ( store.cur_q !== '' ) {
-	  if ( msg.match( store.cur_q + ': ' ) ) {
+	  if ( msg.match( store.cur_q + ': ' ) || msg.match(/^[a-e]$/i) ) {
 		  msg = msg.replace( store.cur_q + ': ', '' );
 		  store.rclient.hget( store.cur_q, 'answer', function(e, a) {
-			  if ( a === msg ) { 
-				  resp = 'Correct!';
-				  store.cur_q = '';
-			  } else {
-				  resp = "Incorrect!";
+			  if ( a ) {
+				  if ( a.toLowerCase() === msg.toLowerCase() ) { 
+					  resp = 'Correct!';
+					  store.cur_q = '';
+				  } else {
+					  resp = "Incorrect!";
+				  }
+				  cb.call(null, to, from, resp);
 			  }
-			  cb.call(null, to, from, resp);
 		  });
 	  }
   }
