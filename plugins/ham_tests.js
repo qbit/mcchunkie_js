@@ -58,20 +58,26 @@
 			  store[id].takers[from] = {};
 			  store[id].takers[from].correct = 0;
 			  store[id].takers[from].total = 0;
+			  store[id].takers[from].q = '';
 		  }
 		  if ( ans.match( store[id].curr + ': ' ) || ans.match(/^[a-e]$/i) ) {
 			  ans = ans.replace( store[id].curr + ': ', '' );
 			  store[id].db.hget( store[id].curr, 'answer', function(e, a) {
 				  if ( a ) {
+					  if ( store[id].takers[from].q !== store[id].curr ) {
+						  store[id].takers[from].total++;
+						  store[id].takers[from].q = '';
+					  }
+
 					  if ( a.toLowerCase() === ans.toLowerCase() ) { 
+						  if ( store[id].takers[from].q !== store[id].curr || store[id].takers[from].q === '' ) {
+							  store[id].takers[from].correct++;
+						  }
 						  resp = 'Correct! ' + store[id].curr + ' is "' + a.toUpperCase() + '", good job ' + from + '. ' + store.calcRes( from, store[id].takers[from], true );
 						  store[id].curr = '';
-
-						  store[id].takers[from].correct++;
-						  store[id].takers[from].total++;
 					  } else {
 						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + from + '. ' + store.calcRes( from, store[id].takers[from], true );
-						  store[id].takers[from].total++;
+						  store[id].takers[from].q = store[id].curr;
 					  }
 					  cb.call(null, to, from, resp);
 
