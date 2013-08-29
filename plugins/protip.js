@@ -13,7 +13,7 @@
   }
 
   if (msg.match(/^brotip:|^protip:|^pro-tip:/i )) {
-	  msg = msg.replace(/^brotip:|^protip:|^pro-tip:/i, '');
+	  msg = msg.replace(/^brotip: |^protip: |^pro-tip: /i, '');
 	  store.rclient.sadd('protip', msg);
   }
 });
