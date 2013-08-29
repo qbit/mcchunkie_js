@@ -2,6 +2,7 @@
   'use strict';
   var resp;
 
+  console.log( to, from );
   if (!store.t && ! store.g && ! store.e) {
 	  store.t = {};
 	  store.t.db = redis.createClient();
@@ -24,11 +25,11 @@
 	  store.e.takers = {};
 	  store.e.curr = '';
 
-	store.randFromTest = function( id, fn ) {
+	store.randFromTest = function( id, t, frm, fn ) {
 		  store[id].db.randomkey(function(e, d) {
 			  store[id].curr = d;
 			  store[id].db.hget( d, 'question', function(e, q) {
-				  cb.call(null, to, from, '(' + store[id].curr +') ' + q);
+				  cb.call(null, t, frm, '(' + store[id].curr +') ' + q);
 				  if ( fn ) {
 					  fn.call(null, q);
 				  }
@@ -36,15 +37,15 @@
 		  });
 	  };
 
-	  store.calcRes = function( from, taker, just_pct ) {
+	  store.calcRes = function( frm, taker, just_pct ) {
 		  var pct = Math.floor( taker.correct/taker.total * 100 ),
 		  resp = '';
 
 		  if ( ! just_pct ) {
 			  if ( pct < 74 ) {
-				  resp = 'Better luck next time, ' + from + '. you got ' + pct + '%';
+				  resp = 'Better luck next time, ' + frm + '. you got ' + pct + '%';
 			  } else {
-				  resp = from + ', congrats! :D';
+				  resp = frm + ', congrats! :D';
 			  }
 		  } else {
 			  resp = taker.correct + ' / ' + taker.total ;
@@ -53,37 +54,39 @@
 		  return resp;
 	  };
 
-	  store.processAns = function ( ans, id, from ) {
-		  if ( ! store[id].takers[from] ) {
-			  store[id].takers[from] = {};
-			  store[id].takers[from].correct = 0;
-			  store[id].takers[from].total = 0;
-			  store[id].takers[from].q = '';
+	  store.processAns = function ( ans, id, t, frm ) {
+		  console.log( t, frm , 'to from Ans' );
+		  if ( ! store[id].takers[frm] ) {
+			  store[id].takers[frm] = {};
+			  store[id].takers[frm].correct = 0;
+			  store[id].takers[frm].total = 0;
+			  store[id].takers[frm].q = '';
 		  }
 		  if ( ans.match( store[id].curr + ': ' ) || ans.match(/^[a-e]$/i) ) {
 			  ans = ans.replace( store[id].curr + ': ', '' );
 			  store[id].db.hget( store[id].curr, 'answer', function(e, a) {
 				  if ( a ) {
-					  if ( store[id].takers[from].q !== store[id].curr ) {
-						  store[id].takers[from].total++;
-						  store[id].takers[from].q = '';
+					  if ( store[id].takers[frm].q !== store[id].curr ) {
+						  store[id].takers[frm].total++;
+						  store[id].takers[frm].q = '';
 					  }
 
 					  if ( a.toLowerCase() === ans.toLowerCase() ) { 
-						  if ( store[id].takers[from].q !== store[id].curr || store[id].takers[from].q === '' ) {
-							  store[id].takers[from].correct++;
+						  if ( store[id].takers[frm].q !== store[id].curr || store[id].takers[frm].q === '' ) {
+							  store[id].takers[frm].correct++;
 						  }
-						  resp = 'Correct! ' + store[id].curr + ' is "' + a.toUpperCase() + '", good job ' + from + '. ' + store.calcRes( from, store[id].takers[from], true );
+						  resp = 'Correct! ' + store[id].curr + ' is "' + a.toUpperCase() + '", good job ' + frm + '. ' + store.calcRes( frm, store[id].takers[frm], true );
 						  store[id].curr = '';
 					  } else {
-						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + from + '. ' + store.calcRes( from, store[id].takers[from], true );
-						  store[id].takers[from].q = store[id].curr;
+						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + frm + '. ' + store.calcRes( frm, store[id].takers[frm], true );
+						  store[id].takers[frm].q = store[id].curr;
 					  }
-					  cb.call(null, to, from, resp);
+					  cb.call(null, t, frm, resp);
+		  console.log( t, frm , 'to from Ans hget' );
 
-					  if ( store[id].takers[from] && store[id].takers[from].total ) {
-						  if ( store[id].takers[from].total === 30 ) {
-							  cb.call(null, to, from, from + ': ' + store.calcRes( from, store[id].takers[from] ));
+					  if ( store[id].takers[frm] && store[id].takers[frm].total ) {
+						  if ( store[id].takers[frm].total === 30 ) {
+							  cb.call(null, t, frm, frm + ': ' + store.calcRes( frm, store[id].takers[frm] ));
 						  }
 					  }
 				  }
@@ -94,26 +97,26 @@
 
 
   if (msg.match(/^THQ:/i)) {
-	  store.randFromTest('t');
+	  store.randFromTest('t', to, from);
   }
 
   if (msg.match(/^GHQ:/i)) {
-	  store.randFromTest('g');
+	  store.randFromTest('g', to, from);
   }
 
   if (msg.match(/^EHQ:/i)) {
-	  store.randFromTest('e');
+	  store.randFromTest('e', to, from);
   }
 
   if ( store.t.curr !== '' ) {
-	  store.processAns( msg, 't', from );
+	  store.processAns( msg, 't', to, from );
   }
 
   if ( store.g.curr !== '' ) {
-	  store.processAns( msg, 'g', from );
+	  store.processAns( msg, 'g', to, from );
   }
 
   if ( store.e.curr !== '' ) {
-	  store.processAns( msg, 'e', from );
+	  store.processAns( msg, 'e', to, from );
   }
 });
