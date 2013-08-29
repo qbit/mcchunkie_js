@@ -36,8 +36,8 @@
 		  });
 	  };
 
-	  store.calcRes = function( id, from, just_pct ) {
-		  var pct = Math.floor( store[id].takers[from].correct/store[id].takers[from].total * 100 ),
+	  store.calcRes = function( from, taker, just_pct ) {
+		  var pct = Math.floor( taker.correct/taker.total * 100 ),
 		  resp = '';
 
 		  if ( ! just_pct ) {
@@ -47,7 +47,7 @@
 				  resp = from + ', congrats! :D';
 			  }
 		  } else {
-			  resp = store[id].trackers[from].correct + ' / ' + store[id].takers[from].total ;
+			  resp = taker.correct + ' / ' + taker.total ;
 		  }
 
 		  return resp;
@@ -64,20 +64,20 @@
 			  store[id].db.hget( store[id].curr, 'answer', function(e, a) {
 				  if ( a ) {
 					  if ( a.toLowerCase() === ans.toLowerCase() ) { 
-						  resp = 'Correct! ' + store[id].curr + ' is "' + a.toUpperCase() + '", good job ' + from + '. ' + store.calcRes( id, from, true );
+						  resp = 'Correct! ' + store[id].curr + ' is "' + a.toUpperCase() + '", good job ' + from + '. ' + store.calcRes( from, store[id].takers[from], true );
 						  store[id].curr = '';
 
 						  store[id].takers[from].correct++;
 						  store[id].takers[from].total++;
 					  } else {
-						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + from + '. ' + store.calcRes( id, from, true );
+						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + from + '. ' + store.calcRes( from, store[id].takers[from], true );
 						  store[id].takers[from].total++;
 					  }
 					  cb.call(null, to, from, resp);
 
 					  if ( store[id].takers[from] && store[id].takers[from].total ) {
 						  if ( store[id].takers[from].total === 30 ) {
-							  cb.call(null, to, from, from + ': ' + store.calcRes( id, from ));
+							  cb.call(null, to, from, from + ': ' + store.calcRes( from, store[id].takers[from] ));
 						  }
 					  }
 				  }
