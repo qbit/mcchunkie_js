@@ -198,19 +198,15 @@ fs.watch( plugins, function( e, file ) {
   loadPlugins( messages, false );
 });
 
-function reply( to, from, resp ) {
-  to = to || from;
+function reply( t, frm, resp ) {
+  t = t || frm;
   if ( resp ) {
-    client.say( to, resp );
+    client.say( t, resp );
   }
 }
 
-function processMsg( o ) {
-  var to, from, msg, i, resp;
-
-  to = o.to;
-  from = o.from;
-  msg = o.msg;
+function processMsg( to, from, msg) {
+  var i, resp;
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) { 
@@ -237,11 +233,11 @@ client.addListener( 'message', function( from, to, msg ) {
   if( client.nick !== args.n ) {
     client.send('NICK', args.n);
   }
-  processMsg( { to: to, from: from, msg: msg } );
+  processMsg( to, from, msg );
 });
 
 client.addListener( 'pm', function( from, msg ) {
-  processMsg( { to: from, msg: args.n + ': ' + msg } );
+  processMsg( null, from, args.n + ':' + msg );
 });
 
 client.addListener( 'invite', function( chan, from ) {
