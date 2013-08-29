@@ -54,7 +54,11 @@
 	  };
 
 	  store.processAns = function ( ans, id, from ) {
-		  console.log(ans,id);
+		  if ( ! store[id].takers[from] ) {
+			  store[id].takers[from] = {};
+			  store[id].takers[from].correct = 0;
+			  store[id].takers[from].total = 0;
+		  }
 		  if ( ans.match( store[id].curr + ': ' ) || ans.match(/^[a-e]$/i) ) {
 			  ans = ans.replace( store[id].curr + ': ', '' );
 			  store[id].db.hget( store[id].curr, 'answer', function(e, a) {
@@ -62,21 +66,11 @@
 					  if ( a.toLowerCase() === ans.toLowerCase() ) { 
 						  resp = 'Correct! ' + store[id].curr + ' is "' + a.toUpperCase() + '", good job ' + from + '. ' + store.calcRes( id, from, true );
 						  store[id].curr = '';
-						  if ( ! store[id].takers[from] ) {
-							  store[id].takers[from] = {};
-							  store[id].takers[from].correct = 0;
-							  store[id].takers[from].total = 0;
-						  }
 
 						  store[id].takers[from].correct++;
 						  store[id].takers[from].total++;
 					  } else {
 						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + from + '. ' + store.calcRes( id, from, true );
-						  if ( ! store[id].takers[from] ) {
-							  store[id].takers[from] = {};
-							  store[id].takers[from].correct = 0;
-							  store[id].takers[from].total = 0;
-						  }
 						  store[id].takers[from].total++;
 					  }
 					  cb.call(null, to, from, resp);
@@ -85,10 +79,6 @@
 						  if ( store[id].takers[from].total === 30 ) {
 							  cb.call(null, to, from, from + ': ' + store.calcRes( id, from ));
 						  }
-					  } else {
-						  store[id].takers[from] = {};
-						  store[id].takers[from].correct = 0;
-						  store[id].takers[from].total = 0;
 					  }
 				  }
 			  });
