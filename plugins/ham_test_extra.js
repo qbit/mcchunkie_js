@@ -5,10 +5,10 @@
   if (!store.rclient) {
 	  
 	  store.rclient = redis.createClient();
-	  store.rclient.select(2);
+	  store.rclient.select(4);
   }
 
-  if (msg.match(/^GHQ:/i)) {
+  if (msg.match(/^EHQ:/i)) {
 	  store.rclient.randomkey(function(e, d) {
 		  store.cur_q = d;
 		  store.rclient.hget( d, 'question', function(e, q) {
