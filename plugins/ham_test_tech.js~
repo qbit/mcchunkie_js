@@ -5,10 +5,10 @@
   if (!store.rclient) {
 	  
 	  store.rclient = redis.createClient();
-	  store.rclient.select(3);
+	  store.rclient.select(2);
   }
 
-  if (msg.match(/^GHQ:/i)) {
+  if (msg.match(/^THQ:/i)) {
 	  store.rclient.randomkey(function(e, d) {
 		  store.cur_q = d;
 		  store.rclient.hget( d, 'question', function(e, q) {
@@ -17,17 +17,16 @@
 	  });
   }
 
-  console.log(store.cur_q, msg);
   if ( store.cur_q !== '' ) {
 	  if ( msg.match( store.cur_q + ': ' ) || msg.match(/^[a-e]$/i) ) {
 		  msg = msg.replace( store.cur_q + ': ', '' );
 		  store.rclient.hget( store.cur_q, 'answer', function(e, a) {
 			  if ( a ) {
 				  if ( a.toLowerCase() === msg.toLowerCase() ) { 
-					  resp = 'Correct!';
+					  resp = 'Correct! ' + store.cur_q + ' is "' + a.toUpperCase() + '"';
 					  store.cur_q = '';
 				  } else {
-					  resp = "Incorrect!";
+					  resp = 'Incorrect answer for ' + store.cur_q + '!';
 				  }
 				  cb.call(null, to, from, resp);
 			  }
