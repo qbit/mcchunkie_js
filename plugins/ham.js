@@ -48,22 +48,22 @@
 			r = r.replace('%l', store.fcc.parseLicense(licenses[0]));
 			return r;
 		};
-		store.fcc.get = function(param) {
+		store.fcc.get = function(param, t, frm) {
 			var u = store.fcc.query_url.replace('%S', param);
 			helper.httpGet(u, function(err, data) {
 				data = JSON.parse(data);
 				if (data.status === 'OK' ) {
 					resp = store.fcc.buildList(data.Licenses.License);
-					cb.call(null, to, from, resp);
+					cb.call(null, t, frm, resp);
 				} else {
-					cb.call(null, to, from, 'I got nothin.');
+					cb.call(null, t, frm, 'I got nothin.');
 				}
 			});
 		};
 	}
 
 	if (msg.match(/^ham: / )) {
-		store.fcc.get(msg.replace(/^ham: /, ''));
+		store.fcc.get(msg.replace(/^ham: /, ''), to, from);
 	}
 
 });
