@@ -87,6 +87,8 @@
 					  if ( store[id].takers[frm] && store[id].takers[frm].total ) {
 						  if ( store[id].takers[frm].total === 30 ) {
 							  cb.call(null, t, frm, frm + ': ' + store.calcRes( frm, store[id].takers[frm] ));
+							  store[id].takers[frm].total = 0;
+							  store[id].takers[frm].count = 0;
 						  }
 					  }
 				  }
