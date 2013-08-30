@@ -39,7 +39,7 @@
 			loc: true,
 			wx: true
 		};
-		store.aprs.get = function(what, who) {
+		store.aprs.get = function(what, who, t, frm) {
 			var aprs_url = store.aprs.url;
 
 			store.aprs_options.what = what;
@@ -57,9 +57,9 @@
 				data = JSON.parse(data);
 				if (data.result === 'ok' && data.found > 0) {
 					resp = store.aprs.buildList(data.entries);
-					cb.call(null, to, from, resp);
+					cb.call(null, t, frm, resp);
 				} else {
-					cb.call(null, to, from, 'I got nothin.');
+					cb.call(null, t, frm, 'I got nothin.');
 				}
 			});
 		};
@@ -70,7 +70,7 @@
 		what = parts[0];
 		who = parts[1];
 		if ( store.aprs.whats[what] ) {
-			store.aprs.get(what, who);
+			store.aprs.get(what, who, to, from);
 		}
 	}
 
