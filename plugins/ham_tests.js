@@ -2,7 +2,6 @@
   'use strict';
   var resp;
 
-  console.log( to, from );
   if (!store.t && ! store.g && ! store.e) {
 	  store.t = {};
 	  store.t.db = redis.createClient();
@@ -55,7 +54,6 @@
 	  };
 
 	  store.processAns = function ( ans, id, t, frm ) {
-		  console.log( t, frm , 'to from Ans' );
 		  if ( ! store[id].takers[frm] ) {
 			  store[id].takers[frm] = {};
 			  store[id].takers[frm].correct = 0;
@@ -82,11 +80,10 @@
 						  store[id].takers[frm].q = store[id].curr;
 					  }
 					  cb.call(null, t, frm, resp);
-		  console.log( t, frm , 'to from Ans hget' );
 
 					  if ( store[id].takers[frm] && store[id].takers[frm].total ) {
-						  if ( store[id].takers[frm].total === 35 ) {
-							  cb.call(null, t, frm, frm + ': ' + store.calcRes( frm, store[id].takers[frm] ));
+						  if ( store[id].takers[frm].total === 35 || store[id].takers[frm].total - store[id].takers[frm].correct >= 9) {
+							  cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ));
 							  store[id].takers[frm].total = 0;
 							  store[id].takers[frm].correct = 0;
 						  }
