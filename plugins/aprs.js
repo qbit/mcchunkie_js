@@ -52,7 +52,6 @@
 
 			aprs_url += store.aprs.qs.stringify(store.aprs_options);
 
-			console.log(aprs_url);
 			helper.httpGet(aprs_url, options, function(err, data) {
 				var f;
 
@@ -72,6 +71,7 @@
 
 	if (msg.match(/^aprs: / )) {
 		msg = msg.replace(/^aprs: /, '');
+		parts = msg.split(' ');
 		what = parts[0];
 		who = parts[1];
 		if ( store.aprs.whats[what] ) {
