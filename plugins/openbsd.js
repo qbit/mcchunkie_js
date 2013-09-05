@@ -48,5 +48,6 @@
     }
   }
 
-  cb.call( null, to, from, resp.join( ' ' ).toString() );
+  client.say('#devious', resp.join(' ').toString());
+  // cb.call( null, to, from, resp.join( ' ' ).toString() );
 });
