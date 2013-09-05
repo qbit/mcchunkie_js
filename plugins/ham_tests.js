@@ -44,7 +44,7 @@
 			  if ( pct < 74 ) {
 				  resp = 'Better luck next time, ' + frm + '. you got ' + pct + '%';
 			  } else {
-				  resp = frm + ', congrats! :D';
+				  resp = frm + ', congrats! :D - ' + pct + '%' ;
 			  }
 		  } else {
 			  resp = taker.correct + ' / ' + taker.total ;
