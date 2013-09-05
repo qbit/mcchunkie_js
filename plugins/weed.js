@@ -3,7 +3,7 @@
   var resp = '', url, i, l, index;
 
   index = function() {
-    helper.httpGet( 'http://www.leafly.com/api/strains', function( err, data ) {
+    helper.httpGet( 'http://www.leafly.com/api/strains', {}, function( err, data ) {
       console.log( 'indexing weeds' );
       for ( i = 0, l = data.length; i < l; i++ ) {
         console.log( data[i].Name, data[i].Key );
@@ -32,7 +32,7 @@
 
     if ( ! store.get ) {
       store.get = function( url, to, from ) {
-        helper.httpGet( url, function( err, data ) {
+        helper.httpGet( url, {}, function( err, data ) {
           var result, name, cat, rate, effect, desc, url;
           resp = '';
           if ( data ) {
