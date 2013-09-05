@@ -109,8 +109,16 @@ helpers = {
     }
     return str;
   },
-  httpGet: function( u, cb ) {
+  httpGet: function( u, opts, cb ) {
     u = url.parse( u );
+    var i;
+    for (i in opts) {
+      if (opts.hasOwnProperty(i)) {
+        if (! u[i]) {
+          u[i] = opts[i];
+        }
+      }
+    }
     http.get( u, function( res ) {
       var d = [];
       res.on( 'data', function( chunk ) {

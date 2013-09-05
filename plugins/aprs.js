@@ -40,7 +40,12 @@
 			wx: true
 		};
 		store.aprs.get = function(what, who, t, frm) {
-			var aprs_url = store.aprs.url;
+			var aprs_url = store.aprs.url,
+			options = {
+				headers: {
+					'User-Agent': 'mcchunkie/1.0.0 (+http://github.com/qbit/mcchunkie)'
+				}
+			};
 
 			store.aprs_options.what = what;
 			store.aprs_options.name = who;
@@ -48,7 +53,7 @@
 			aprs_url += store.aprs.qs.stringify(store.aprs_options);
 
 			console.log(aprs_url);
-			helper.httpGet(aprs_url, function(err, data) {
+			helper.httpGet(aprs_url, options, function(err, data) {
 				var f;
 
 				store.aprs_options.what = '';
