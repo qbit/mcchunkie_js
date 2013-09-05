@@ -50,7 +50,7 @@
 		};
 		store.fcc.get = function(param, t, frm) {
 			var u = store.fcc.query_url.replace('%S', param);
-			helper.httpGet(u, function(err, data) {
+			helper.httpGet(u, {}, function(err, data) {
 				data = JSON.parse(data);
 				if (data.status === 'OK' ) {
 					resp = store.fcc.buildList(data.Licenses.License);

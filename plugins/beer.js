@@ -13,7 +13,7 @@
 
     if ( ! store.get ) {
       store.get = function( url, to, from ) {
-        helper.httpGet( url, function( err, data ) {
+        helper.httpGet( url, {}, function( err, data ) {
           var result, resp, name, abv, ibu, desc, year, bname, url;
           if ( data ) {
             try {
