@@ -1,5 +1,6 @@
 (function() {
   return {
-    'message': 'New $2 for $1! ($3)'
+    'message': 'New $2 for $1! ($3)',
+    'channel': '#devious'
   };
 });

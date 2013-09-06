@@ -62,7 +62,7 @@ rclient.on( "error", function (err) {
 });
 
 rclient.on( 'message', function( channel, data ) {
-  var o = data.toString().split( '^' ), i, l, value, msg, str;
+  var o = data.toString().split( '^' ), i, l, value, msg, chan, str;
 
   value = o[ o.length - 1 ];
 
@@ -77,16 +77,21 @@ rclient.on( 'message', function( channel, data ) {
   }
   nconf.save( function() {
     loadStorage( function() {
-      if ( running_messages[ o[0] ] ) {
-        msg = running_messages[ o[0] ].message;
+      if ( running_messages[o[0]] ) {
+        msg = running_messages[o[0]].message;
+	chan = running_messages[o[0]].channel;
         for ( i = 1, l = o.length; i < l; i++ ) {
           msg = msg.replace( '$' + i, o[i] );
         }
       }
 
-      channels.forEach( function( c ) {
-        client.say( c, msg );
-      });
+      if ( !chan ) {
+        channels.forEach( function( c ) {
+          client.say( c, msg );
+        });
+      } else {
+        client.say(chan, msg);
+      }
     });
   });
 });
