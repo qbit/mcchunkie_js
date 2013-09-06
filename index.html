@@ -1,0 +1,153 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Mcchunkie</title>
+  <meta name="description" content="Home for the new mcchunkie - now with 100% moar chunk (NodeJS,JavaScript)">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Mcchunkie</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Home for the new mcchunkie - now with 100% moar chunk (NodeJS,JavaScript)</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/qbit/mcchunkie/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/qbit/mcchunkie/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/qbit/mcchunkie" class="code">View Mcchunkie on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>
+<a name="mcchunkie" class="anchor" href="#mcchunkie"><span class="octicon octicon-link"></span></a>mcchunkie</h1>
+
+<p><img src="https://raw.github.com/qbit/mcchunkie/master/mcchunkie.png" alt="mcchunkie"></p>
+
+<p>an irc bot with dynamically loadable plugins.</p>
+
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li><strong>Dynamic plugins</strong></li>
+<li>
+<strong>Chat as bot</strong> ( using mcchat )</li>
+<li>
+<strong>Subscribes to "botname:*" <a href="http://redis.io">redis</a> pubsub</strong> </li>
+<li>
+<strong>Ability to chat "messages" from pubsub</strong> ( see messages/ for
+examples )</li>
+<li><strong>Persistent storage for pubsub'd messages</strong></li>
+</ul><h1>
+<a name="plugin-features" class="anchor" href="#plugin-features"><span class="octicon octicon-link"></span></a>Plugin Features</h1>
+
+<ul>
+<li>
+<strong>beer</strong> - search brewerydb for beer!</li>
+<li>
+<strong>botsnack</strong> - feed the bot!</li>
+<li>
+<strong>dayum</strong> - Daaayum Daaayyyyuuummm DAAAAAAYYYYUUUUMMMMMMMM</li>
+<li>
+<strong>dolan</strong> - translate to dolantalk</li>
+<li>
+<strong>ermahgerd</strong> - translate to ermahgerd talk</li>
+<li>
+<strong>high5</strong> - bot will respond with a "o/" or "\o".</li>
+<li>
+<strong>love</strong> - give some love, get some love.</li>
+<li>
+<strong>navi</strong> - HEY LOOK!!!!! AHHHHHHHH!</li>
+<li>
+<strong>openbsd</strong> - uses the pubsub / storage features and an external app (
+<a href="https://github.com/qbit/openbsd_mon">openbsd_mon</a> to keep track of openbsd 
+snapshot releases.</li>
+<li>
+<strong>pew</strong> - get shot with LASERS!</li>
+<li>
+<strong>ports</strong> - use sqlports to search the openbsd ports tree for various
+thngs.</li>
+<li>
+<strong>reverse</strong> - reverse a string.</li>
+<li>
+<strong>thanks</strong> - be polite.</li>
+<li>
+<strong>tmnt</strong> - respond with random teenage mutant ninja turtles quotes.</li>
+<li>
+<strong>twss</strong> - watch incoming messages for possible twss jokes.  Can be
+trained.</li>
+<li>
+<strong>version</strong> - spits out the version of node.js the bot is running on.</li>
+<li>
+<strong>wb</strong> - respond to welcome back requests.</li>
+<li>
+<strong>wq</strong> - Tell the story of Wq.</li>
+<li>
+<strong>yeah</strong> - when bot sees "CSI" it puts on sunglasses.. waits 5 seconds.. 
+says YEAAAAAH!</li>
+<li>
+<strong>template</strong> - quick plugin template for next gen templates.</li>
+</ul><h1>
+<a name="writing-plugins" class="anchor" href="#writing-plugins"><span class="octicon octicon-link"></span></a>Writing Plugins</h1>
+
+<p>Plugins should be javascript functions wrapped in (); and should take
+six args: botname, to, from, msg, store and callback.</p>
+
+<p>The callback should be passed null, to, from, and resp.</p>
+
+<p>Example:</p>
+
+<div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">(</span> <span class="nx">botname</span><span class="p">,</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">msg</span><span class="p">,</span> <span class="nx">store</span><span class="p">,</span> <span class="nx">cb</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Plugin to reverse every msg that is passed in.</span>
+  <span class="kd">var</span> <span class="nx">resp</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">""</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="s2">""</span><span class="p">);</span>
+
+  <span class="c1">// do something awesome with storage here..</span>
+
+  <span class="c1">// do some more manip of the msg here</span>
+
+  <span class="nx">cb</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">resp</span> <span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>To disable a plugin, simple add a '''~''' to the name.</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/qbit" class="avatar"><img src="https://1.gravatar.com/avatar/185a0b4dc7bd19786817be2fa979c2b6?d=https%3A%2F%2Fidenticons.github.com%2Fee2eedca83dd243e0b972e70b3ff28d5.png&amp;s=30" width="48" height="48"/></a> <a href="https://github.com/qbit">qbit</a> maintains <a href="https://github.com/qbit/mcchunkie">Mcchunkie</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/qbit/mcchunkie/tarball/master" class="tar">tar</a><a href="https://github.com/qbit/mcchunkie/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
