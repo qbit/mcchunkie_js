@@ -51,12 +51,17 @@
 		store.fcc.get = function(param, t, frm) {
 			var u = store.fcc.query_url.replace('%S', param);
 			helper.httpGet(u, {}, function(err, data) {
-				data = JSON.parse(data);
+				try {
+					data = JSON.parse(data);
+				} catch (e) {
+					data = {};
+					data.status = 'ENOGVMNT';
+				}
 				if (data.status === 'OK' ) {
 					resp = store.fcc.buildList(data.Licenses.License);
 					cb.call(null, t, frm, resp);
 				} else {
-					cb.call(null, t, frm, 'I got nothin.');
+					cb.call(null, t, frm, data.status);
 				}
 			});
 		};
