@@ -11,12 +11,12 @@
   "dependencies": {
     "optimist": "~0.3.7",
     "nconf": "~0.6.7",
-    "sqlite3": "~3.7.11",
-    "redis": "~0.8.4",
+    "sqlite3": "~2.1.17",
+    "redis": "~0.8.6",
     "irc": "~0.3.6",
     "pushover-notifications": "~0.1.5",
     "hiredis": "~0.1.15",
-    "reds": "~0.2.3",
+    "reds": "~0.2.4",
     "classifier": "~0.1.0",
     "appdotnet": "~0.2.0"
   },
