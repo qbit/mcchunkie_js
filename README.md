@@ -67,3 +67,11 @@ Example:
 ````
 To disable a plugin, simple add a '''~''' to the name.
 
+Installation
+=================
+    git clone <repo>;
+    cd <repo>;
+    npm install;
+    node bin/mcchunkie -h
+
+
