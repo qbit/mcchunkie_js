@@ -31,7 +31,9 @@ fs.stat( 'api_keys.json', function( err, data ) {
     throw err;
   }
   fs.readFile( 'api_keys.json', function( err, data ) {
-    tokens = JSON.parse( data );
+    if ( data instanceof String ){
+      tokens = JSON.parse( data );
+    }
   });
 });
 
@@ -178,18 +180,45 @@ function loadPlugin( file, ismsg ) {
 }
 
 function loadPlugins( dir, harsh ) {
-
   if ( harsh ) {
     running_plugins = {};
   } else {
     running_messages = {};
   }
 
-  fs.readdir( dir, function( err, files ) {
-    var i,l = files.length, file;
+  var results = [];
+
+
+  //get all the files in the plugin dir recursively.  
+  var walk = function(dir, done) {
+    fs.readdir(dir, function(err, list) {
+      if (err) return done(err);
+      var pending = list.length;
+      if (!pending) return done(null, results);
+      list.forEach(function(file) {
+        file = dir + '/' + file;
+        fs.stat(file, function(err, stat) {
+          if (stat && stat.isDirectory()) {
+            walk(file, function(err, res) {
+              results = results.concat(res);
+              if (!--pending) done(null, results);
+            });
+          } else {
+            results.push(file);
+            if (!--pending) done(null, results);
+          }
+        });
+      });
+    });
+  };
+
+  //Iterate each file
+  walk(dir, function(err, results) {
+    if (err) throw err;
+    var i,l = results.length, file;
 
     for ( i = 0; i < l; i++ ) {
-      file = dir + '/' + files[i];
+      file = results[i];
       if ( file.indexOf( '~' ) === -1 ) {
         if ( harsh ) {
           if ( file.indexOf( '.js' ) > -1 ) {
