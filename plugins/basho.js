@@ -354,7 +354,7 @@
 	  ];
   }
 
-  if ( msg.match(/^basho/) ) {
+  if ( msg.match(/^basho$/) ) {
 	  resp = store.phrases[ helper.rand( store.phrases.length ) ];
   }
 
