@@ -55,14 +55,14 @@ function loadStorage( fn ) {
         }
         if ( data ) {
           storage.shared = JSON.parse( data.toString() );
-          if ( fn ) { 
+          if ( fn ) {
             fn.call();
           }
         }
       });
     } else {
       storage.shared = {};
-      if ( fn ) { 
+      if ( fn ) {
         fn.call();
       }
     }
@@ -97,14 +97,14 @@ rclient.on( 'message', function( channel, data ) {
     .trim()
     .replace( /:$/, '' );
 
-  if ( ! str.match( 'mcchat' ) ) {  
+  if ( ! str.match( 'mcchat' ) ) {
     nconf.set( str + ':date', value );
   }
   nconf.save( function() {
     loadStorage( function() {
       if ( running_messages[o[0]] ) {
         msg = running_messages[o[0]].message;
-	chan = running_messages[o[0]].channel;
+        chan = running_messages[o[0]].channel;
         for ( i = 1, l = o.length; i < l; i++ ) {
           msg = msg.replace( '$' + i, o[i] );
         }
@@ -123,7 +123,7 @@ rclient.on( 'message', function( channel, data ) {
 
 rclient.subscribe( args.n );
 
-helpers = { 
+helpers = {
   botname: args.n,
   rand: function( len ) {
     return Math.floor( Math.random() * len );
@@ -133,7 +133,7 @@ helpers = {
   // }),
   pHolder: function( str, array ) {
     // lol - PHOLDER!
-    var i, l = array.length; 
+    var i, l = array.length;
     for ( i = 0; i < l; i++ ) {
       str = str.replace( '$' + parseInt( i + 1, 10 ), array[i] );
     }
@@ -217,7 +217,7 @@ function loadPlugins( dir, harsh ) {
   var results = [];
 
 
-  //get all the files in the plugin dir recursively.  
+  //get all the files in the plugin dir recursively.
   var walk = function(dir, done) {
     fs.readdir(dir, function(err, list) {
       if (err) return done(err);
@@ -271,16 +271,21 @@ fs.watch( plugins, function( e, file ) {
 function reply( t, frm, resp ) {
   t = t || frm;
   if ( resp ) {
-    client.say( t, resp );
+    if (args.j) {
+      xmpp.send(frm, resp);
+    }
+    if (client) {
+      client.say( t, resp );
+    }
   }
 }
 
-function processMsg( to, from, msg) {
+function processMsg( to, from, msg ) {
   var i, resp;
 
   for ( i in running_plugins ) {
-    if ( running_plugins.hasOwnProperty( i ) ) { 
-      try { 
+    if ( running_plugins.hasOwnProperty( i ) ) {
+      try {
         running_plugins[i]( helpers, to, from, msg, storage[i], storage.shared, reply );
       } catch( e ) {
         console.log( "Error running '" + i + "'\n" + e );
