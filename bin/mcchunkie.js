@@ -31,7 +31,10 @@ fs.stat( 'api_keys.json', function( err, data ) {
     throw err;
   }
   fs.readFile( 'api_keys.json', function( err, data ) {
-    if ( data instanceof String ){
+    if ( err ){
+      throw err;
+    }
+    if ( typeof data === 'string' ){
       tokens = JSON.parse( data );
     }
   });
@@ -40,6 +43,9 @@ fs.stat( 'api_keys.json', function( err, data ) {
 function loadStorage( fn ) {
   storage.shared = {};
   fs.readFile( storage_file, function (err, data) {
+    if ( err ) {
+      throw err;
+    }
     if ( data ) {
       storage.shared = JSON.parse( data.toString() );
       if ( fn ) { 
@@ -51,6 +57,9 @@ function loadStorage( fn ) {
 
 function saveStorage( fn ) {
   fs.writeFile( storage_file, JSON.stringify( storage.shared ), function( err ) {
+    if ( err ) {
+      throw err;
+    }
     if ( fn ) {
       fn.call();
     }
@@ -157,6 +166,9 @@ channels.forEach( function( c ) {
 
 function loadPlugin( file, ismsg ) {
   fs.readFile( file, function( err, data ) {
+    if ( err ) {
+      throw err;
+    }
     var t, n;
     if ( data ) {
       try {
