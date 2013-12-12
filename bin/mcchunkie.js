@@ -27,20 +27,18 @@ var irc = require( 'irc' ),
 
 nconf.file( { file: storage_file } );
 
-fs.exists('api_keys.json', function(exists) {
-  if (exists) {
-    fs.stat( 'api_keys.json', function( err, data ) {
-      if ( err ) {
+fs.stat( 'api_keys.json', function( err, stat ) {
+  if ( err ) {
+    throw err;
+  }
+  if (stat.size > 0) {
+    fs.readFile( 'api_keys.json', 'utf8', function( err, data ) {
+      if ( err ){
         throw err;
       }
-      fs.readFile( 'api_keys.json', function( err, data ) {
-        if ( err ){
-          throw err;
-        }
-        if ( typeof data === 'string' ){
-          tokens = JSON.parse( data );
-        }
-      });
+      if ( typeof data === 'string' ){
+        tokens = JSON.parse( data );
+      }
     });
   }
 });
@@ -49,7 +47,7 @@ function loadStorage( fn ) {
   storage.shared = {};
   fs.exists(storage_file, function(exists) {
     if (exists) {
-      fs.readFile( storage_file, function (err, data) {
+      fs.readFile( storage_file, 'utf8', function(err, data) {
         if ( err ) {
           throw err;
         }
@@ -181,7 +179,7 @@ if ( args.c ) {
 }
 
 function loadPlugin( file, ismsg ) {
-  fs.readFile( file, function( err, data ) {
+  fs.readFile( file, 'utf8', function( err, data ) {
     if ( err ) {
       throw err;
     }
