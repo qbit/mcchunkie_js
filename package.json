@@ -9,16 +9,17 @@
     "url": "git://github.com/qbit/mcchunkie.git"
   },
   "dependencies": {
-    "optimist": "~0.3.7",
-    "nconf": "~0.6.7",
-    "sqlite3": "~2.1.17",
-    "redis": "~0.8.6",
+    "optimist": "~0.6.0",
+    "nconf": "~0.6.9",
+    "sqlite3": "~2.1.19",
+    "redis": "~0.9.1",
     "irc": "~0.3.6",
-    "pushover-notifications": "~0.1.5",
-    "hiredis": "~0.1.15",
+    "pushover-notifications": "~0.1.6",
+    "hiredis": "~0.1.16",
     "reds": "~0.2.4",
     "classifier": "~0.1.0",
-    "appdotnet": "~0.2.0"
+    "appdotnet": "~0.2.0",
+    "simple-xmpp": "~0.1.18"
   },
   "devDependencies": {},
   "optionalDependencies": {},

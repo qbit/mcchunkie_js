@@ -8,6 +8,7 @@ var irc = require( 'irc' ),
   url = require( 'url' ),
   nconf = require( 'nconf' ),
   redis = require( 'redis' ),
+  xmpp = require('simple-xmpp'),
   rclient = redis.createClient(),
   // pushover = require( 'pushover-notifications' ),
   helpers,
@@ -18,31 +19,48 @@ var irc = require( 'irc' ),
   running_messages = {},
   storage = {},
   args = require( 'optimist' )
-    .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
-    .demand( [ 'n', 's', 'c' ] )
+    .usage( '$0 [-i] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>' )
+    .demand( [ 'n' ] )
     .argv,
   client, channels, chanCount = 0,
   tokens = {};
 
 nconf.file( { file: storage_file } );
 
-fs.stat( 'api_keys.json', function( err, data ) {
+fs.stat( 'api_keys.json', function( err, stat ) {
   if ( err ) {
     throw err;
   }
-  fs.readFile( 'api_keys.json', function( err, data ) {
-    if ( data instanceof String ){
-      tokens = JSON.parse( data );
-    }
-  });
+  if (stat.size > 0) {
+    fs.readFile( 'api_keys.json', 'utf8', function( err, data ) {
+      if ( err ){
+        throw err;
+      }
+      if ( typeof data === 'string' ){
+        tokens = JSON.parse( data );
+      }
+    });
+  }
 });
 
 function loadStorage( fn ) {
   storage.shared = {};
-  fs.readFile( storage_file, function (err, data) {
-    if ( data ) {
-      storage.shared = JSON.parse( data.toString() );
-      if ( fn ) { 
+  fs.exists(storage_file, function(exists) {
+    if (exists) {
+      fs.readFile( storage_file, 'utf8', function(err, data) {
+        if ( err ) {
+          throw err;
+        }
+        if ( data ) {
+          storage.shared = JSON.parse( data.toString() );
+          if ( fn ) {
+            fn.call();
+          }
+        }
+      });
+    } else {
+      storage.shared = {};
+      if ( fn ) {
         fn.call();
       }
     }
@@ -51,6 +69,9 @@ function loadStorage( fn ) {
 
 function saveStorage( fn ) {
   fs.writeFile( storage_file, JSON.stringify( storage.shared ), function( err ) {
+    if ( err ) {
+      throw err;
+    }
     if ( fn ) {
       fn.call();
     }
@@ -74,14 +95,14 @@ rclient.on( 'message', function( channel, data ) {
     .trim()
     .replace( /:$/, '' );
 
-  if ( ! str.match( 'mcchat' ) ) {  
+  if ( ! str.match( 'mcchat' ) ) {
     nconf.set( str + ':date', value );
   }
   nconf.save( function() {
     loadStorage( function() {
       if ( running_messages[o[0]] ) {
         msg = running_messages[o[0]].message;
-	chan = running_messages[o[0]].channel;
+        chan = running_messages[o[0]].channel;
         for ( i = 1, l = o.length; i < l; i++ ) {
           msg = msg.replace( '$' + i, o[i] );
         }
@@ -100,7 +121,7 @@ rclient.on( 'message', function( channel, data ) {
 
 rclient.subscribe( args.n );
 
-helpers = { 
+helpers = {
   botname: args.n,
   rand: function( len ) {
     return Math.floor( Math.random() * len );
@@ -110,7 +131,7 @@ helpers = {
   // }),
   pHolder: function( str, array ) {
     // lol - PHOLDER!
-    var i, l = array.length; 
+    var i, l = array.length;
     for ( i = 0; i < l; i++ ) {
       str = str.replace( '$' + parseInt( i + 1, 10 ), array[i] );
     }
@@ -149,14 +170,19 @@ helpers = {
   }
 };
 
-channels = args.c.split( ',' );
-channels.forEach( function( c ) {
-  channels[ chanCount ] = '#' + c.trim();
-  chanCount++;
-});
+if ( args.c ) {
+  channels = args.c.split( ',' );
+  channels.forEach( function( c ) {
+    channels[ chanCount ] = '#' + c.trim();
+    chanCount++;
+  });
+}
 
 function loadPlugin( file, ismsg ) {
-  fs.readFile( file, function( err, data ) {
+  fs.readFile( file, 'utf8', function( err, data ) {
+    if ( err ) {
+      throw err;
+    }
     var t, n;
     if ( data ) {
       try {
@@ -189,7 +215,7 @@ function loadPlugins( dir, harsh ) {
   var results = [];
 
 
-  //get all the files in the plugin dir recursively.  
+  //get all the files in the plugin dir recursively.
   var walk = function(dir, done) {
     fs.readdir(dir, function(err, list) {
       if (err) return done(err);
@@ -243,16 +269,21 @@ fs.watch( plugins, function( e, file ) {
 function reply( t, frm, resp ) {
   t = t || frm;
   if ( resp ) {
-    client.say( t, resp );
+    if (args.j) {
+      xmpp.send(frm, resp);
+    }
+    if (client) {
+      client.say( t, resp );
+    }
   }
 }
 
-function processMsg( to, from, msg) {
+function processMsg( to, from, msg ) {
   var i, resp;
 
   for ( i in running_plugins ) {
-    if ( running_plugins.hasOwnProperty( i ) ) { 
-      try { 
+    if ( running_plugins.hasOwnProperty( i ) ) {
+      try {
         running_plugins[i]( helpers, to, from, msg, storage[i], storage.shared, reply );
       } catch( e ) {
         console.log( "Error running '" + i + "'\n" + e );
@@ -261,30 +292,58 @@ function processMsg( to, from, msg) {
   }
 }
 
-client = new irc.Client( args.s, args.n, { 
-  channels: channels, 
-  debug: false,
-  userName: args.n 
-}); 
-
-client.addListener( 'error', function( err ) {
-  console.log( err );
-});
-
-client.addListener( 'message', function( from, to, msg ) {
-  if( client.nick !== args.n ) {
-    client.send('NICK', args.n);
-  }
-  processMsg( to, from, msg );
-});
-
-client.addListener( 'pm', function( from, msg ) {
-  processMsg( null, from, args.n + ':' + msg );
-});
-
-client.addListener( 'invite', function( chan, from ) {
-  channels.push( chan );
-  client.join( chan, function() {
-    console.log( 'joined ' + chan + ' because ' + from + ' invited me' );
+if (args.j) {
+  xmpp.on('online', function() {
+    console.log('xmpp online');
   });
-});
+
+  xmpp.on('error', function(err) {
+    console.log(err);
+  });
+
+  xmpp.on('subscribe', function(from) {
+    xmpp.acceptSubscription(from);
+  });
+
+  xmpp.on('chat', function(from, message) {
+    processMsg( null, from, message );
+  });
+
+  xmpp.connect({
+    jid: args.j,
+    password: args.p,
+    host: args.s
+  });
+
+  xmpp.getRoster();
+}
+
+if (args.i) {
+  client = new irc.Client( args.s, args.n, {
+    channels: channels,
+    debug: false,
+    userName: args.n
+  });
+
+  client.addListener( 'error', function( err ) {
+    console.log( err );
+  });
+
+  client.addListener( 'message', function( from, to, msg ) {
+    if( client.nick !== args.n ) {
+      client.send('NICK', args.n);
+    }
+    processMsg( to, from, msg );
+  });
+
+  client.addListener( 'pm', function( from, msg ) {
+    processMsg( null, from, args.n + ':' + msg );
+  });
+
+  client.addListener( 'invite', function( chan, from ) {
+    channels.push( chan );
+    client.join( chan, function() {
+      console.log( 'joined ' + chan + ' because ' + from + ' invited me' );
+    });
+  });
+}
