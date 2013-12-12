@@ -19,7 +19,7 @@ var irc = require( 'irc' ),
   running_messages = {},
   storage = {},
   args = require( 'optimist' )
-    .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>' )
+    .usage( '$0 [-i] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>' )
     .demand( [ 'n' ] )
     .argv,
   client, channels, chanCount = 0,
@@ -293,7 +293,6 @@ function processMsg( to, from, msg ) {
 }
 
 if (args.j) {
-  console.log('using xmpp');
   xmpp.on('online', function() {
     console.log('xmpp online');
   });
