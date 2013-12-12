@@ -8,6 +8,7 @@ var irc = require( 'irc' ),
   url = require( 'url' ),
   nconf = require( 'nconf' ),
   redis = require( 'redis' ),
+  xmpp = require('simple-xmpp'),
   rclient = redis.createClient(),
   // pushover = require( 'pushover-notifications' ),
   helpers,
@@ -18,36 +19,49 @@ var irc = require( 'irc' ),
   running_messages = {},
   storage = {},
   args = require( 'optimist' )
-    .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n' )
-    .demand( [ 'n', 's', 'c' ] )
+    .usage( '$0 -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>' )
+    .demand( [ 'n' ] )
     .argv,
   client, channels, chanCount = 0,
   tokens = {};
 
 nconf.file( { file: storage_file } );
 
-fs.stat( 'api_keys.json', function( err, data ) {
-  if ( err ) {
-    throw err;
+fs.exists('api_keys.json', function(exists) {
+  if (exists) {
+    fs.stat( 'api_keys.json', function( err, data ) {
+      if ( err ) {
+        throw err;
+      }
+      fs.readFile( 'api_keys.json', function( err, data ) {
+        if ( err ){
+          throw err;
+        }
+        if ( typeof data === 'string' ){
+          tokens = JSON.parse( data );
+        }
+      });
+    });
   }
-  fs.readFile( 'api_keys.json', function( err, data ) {
-    if ( err ){
-      throw err;
-    }
-    if ( typeof data === 'string' ){
-      tokens = JSON.parse( data );
-    }
-  });
 });
 
 function loadStorage( fn ) {
   storage.shared = {};
-  fs.readFile( storage_file, function (err, data) {
-    if ( err ) {
-      throw err;
-    }
-    if ( data ) {
-      storage.shared = JSON.parse( data.toString() );
+  fs.exists(storage_file, function(exists) {
+    if (exists) {
+      fs.readFile( storage_file, function (err, data) {
+        if ( err ) {
+          throw err;
+        }
+        if ( data ) {
+          storage.shared = JSON.parse( data.toString() );
+          if ( fn ) { 
+            fn.call();
+          }
+        }
+      });
+    } else {
+      storage.shared = {};
       if ( fn ) { 
         fn.call();
       }
@@ -158,11 +172,13 @@ helpers = {
   }
 };
 
-channels = args.c.split( ',' );
-channels.forEach( function( c ) {
-  channels[ chanCount ] = '#' + c.trim();
-  chanCount++;
-});
+if ( args.c ) {
+  channels = args.c.split( ',' );
+  channels.forEach( function( c ) {
+    channels[ chanCount ] = '#' + c.trim();
+    chanCount++;
+  });
+}
 
 function loadPlugin( file, ismsg ) {
   fs.readFile( file, function( err, data ) {
@@ -273,30 +289,59 @@ function processMsg( to, from, msg) {
   }
 }
 
-client = new irc.Client( args.s, args.n, { 
-  channels: channels, 
-  debug: false,
-  userName: args.n 
-}); 
-
-client.addListener( 'error', function( err ) {
-  console.log( err );
-});
-
-client.addListener( 'message', function( from, to, msg ) {
-  if( client.nick !== args.n ) {
-    client.send('NICK', args.n);
-  }
-  processMsg( to, from, msg );
-});
-
-client.addListener( 'pm', function( from, msg ) {
-  processMsg( null, from, args.n + ':' + msg );
-});
-
-client.addListener( 'invite', function( chan, from ) {
-  channels.push( chan );
-  client.join( chan, function() {
-    console.log( 'joined ' + chan + ' because ' + from + ' invited me' );
+if (args.j) {
+  console.log('using xmpp');
+  xmpp.on('online', function() {
+    console.log('xmpp online');
   });
-});
+
+  xmpp.on('error', function(err) {
+    console.log(err);
+  });
+
+  xmpp.on('subscribe', function(from) {
+    xmpp.acceptSubscription(from);
+  });
+
+  xmpp.on('chat', function(from, message) {
+    processMsg( null, from, message );
+  });
+
+  xmpp.connect({
+    jid: args.j,
+    password: args.p,
+    host: args.s
+  });
+
+  xmpp.getRoster();
+}
+
+if (args.i) {
+  client = new irc.Client( args.s, args.n, {
+    channels: channels,
+    debug: false,
+    userName: args.n
+  });
+
+  client.addListener( 'error', function( err ) {
+    console.log( err );
+  });
+
+  client.addListener( 'message', function( from, to, msg ) {
+    if( client.nick !== args.n ) {
+      client.send('NICK', args.n);
+    }
+    processMsg( to, from, msg );
+  });
+
+  client.addListener( 'pm', function( from, msg ) {
+    processMsg( null, from, args.n + ':' + msg );
+  });
+
+  client.addListener( 'invite', function( chan, from ) {
+    channels.push( chan );
+    client.join( chan, function() {
+      console.log( 'joined ' + chan + ' because ' + from + ' invited me' );
+    });
+  });
+}
