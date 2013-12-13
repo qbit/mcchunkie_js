@@ -269,6 +269,7 @@ fs.watch( plugins, function( e, file ) {
 function reply( t, frm, resp ) {
   t = t || frm;
   if ( resp ) {
+	  console.log('Resp: "%s":"%s" - "%s"', t, frm, resp);
     if (args.j) {
       xmpp.send(frm, resp);
     }
@@ -280,6 +281,8 @@ function reply( t, frm, resp ) {
 
 function processMsg( to, from, msg ) {
   var i, resp;
+
+  console.log('Message: "%s":"%s" - "%s"', to, from, msg);
 
   for ( i in running_plugins ) {
     if ( running_plugins.hasOwnProperty( i ) ) {
