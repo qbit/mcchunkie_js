@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var redis = require( 'redis' ), 
+var redis = require( 'redis' ),
   rclient = redis.createClient(),
   readline = require( 'readline' ),
   prompt = 'mcchunkie> ',
