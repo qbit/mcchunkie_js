@@ -75,3 +75,11 @@ Installation
     node bin/mcchunkie -h
 
 
+Usage
+==================
+````-n <nick> -s <server> -c <chan1>,<chan2> -j <xmpp jid> -p <xmpp password>````
+
+**Example:**
+````
+nodejs bin/mcchunkie -n 'nameOfBot' -s 'host' -c 'channelName'
+````
