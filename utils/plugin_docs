@@ -1,0 +1,4 @@
+for p in $(cat ../plugins/*.js); do
+	lines=$(cat $p | grep ^\/\/)
+	print $lines;
+done
