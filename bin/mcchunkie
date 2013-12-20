@@ -12,6 +12,7 @@
 	rclient = redis.createClient(),
 	// pushover = require( 'pushover-notifications' ),
 	helpers,
+	apiKeys = __dirname + '/../api_keys.json',
 	plugins = __dirname + '/../plugins',
 	messages = __dirname + '/../messages',
 	storage_file = __dirname + '/../shared_storage.json',
@@ -27,7 +28,7 @@
 
 nconf.file( { file: storage_file } );
 
-fs.stat( 'api_keys.json', function( err, stat ) {
+fs.stat( apiKeys, function( err, stat ) {
 	if ( err ) {
 		throw err;
 	}
