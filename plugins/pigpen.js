@@ -1,3 +1,4 @@
+// Desc: translate text to pigpen
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp, i;

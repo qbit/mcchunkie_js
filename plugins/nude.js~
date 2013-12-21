@@ -1,3 +1,4 @@
+// Desc: with bugs, check to see if images contain nudity or not
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp = '', urls, i, l;

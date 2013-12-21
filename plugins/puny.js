@@ -1,3 +1,4 @@
+// Desc: translate strings to punycode
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp;

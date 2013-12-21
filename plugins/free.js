@@ -1,3 +1,4 @@
+// Desc: no one is as free as 'Merika!
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp;

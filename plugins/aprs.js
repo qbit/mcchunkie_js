@@ -1,4 +1,4 @@
-// Desc: query the FCC license database for license info.
+// Desc: query the FCC license database for license info. *requires api key for aprs.fi*
 (function(helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
 	var resp, what, who, parts = msg.split( ' ' );

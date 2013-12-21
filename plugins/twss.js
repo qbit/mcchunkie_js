@@ -1,3 +1,4 @@
+// Desc: watch incoming messages for possible twss jokes. Can be trained.
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp,

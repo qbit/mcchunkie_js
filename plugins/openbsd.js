@@ -1,3 +1,4 @@
+// Desc: uses the pubsub / storage features and an external app ( openbsd_mon to keep track of openbsd snapshot releases.
 (function( helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
 

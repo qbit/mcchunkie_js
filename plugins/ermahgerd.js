@@ -1,3 +1,4 @@
+// Desc: translate to ermahgerd talk
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp;

@@ -1,3 +1,4 @@
+// Desc: respond to high5's
 (function( helper, to, from, msg, store, sh_store, cb ) {
 	'use strict';
   var resp;

@@ -1,3 +1,4 @@
+// Desc: feed the bot!
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var snacks = [

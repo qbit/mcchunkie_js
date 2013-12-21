@@ -1,3 +1,4 @@
+// Desc: search leafly for types of weed (requires api key)
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp = '', url, i, l, index;

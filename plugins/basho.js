@@ -1,3 +1,4 @@
+// Desc: print haikus from Basho
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp;

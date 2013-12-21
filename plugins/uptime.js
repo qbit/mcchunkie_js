@@ -1,3 +1,4 @@
+// Desc: print bot's uptime
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp, minutes = 0;
