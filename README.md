@@ -17,31 +17,45 @@ Features
 Plugin Features
 ===============
 
-* **beer** - search brewerydb for beer!
-* **botsnack** - feed the bot!
-* **dayum** - Daaayum Daaayyyyuuummm DAAAAAAYYYYUUUUMMMMMMMM
-* **dolan** - translate to dolantalk
-* **ermahgerd** - translate to ermahgerd talk
-* **high5** - bot will respond with a "o/" or "\o".
-* **love** - give some love, get some love.
-* **navi** - HEY LOOK!!!!! AHHHHHHHH!
-* **openbsd** - uses the pubsub / storage features and an external app (
-  [openbsd_mon](https://github.com/qbit/openbsd_mon) to keep track of openbsd 
-  snapshot releases.
-* **pew** - get shot with LASERS!
-* **ports** - use sqlports to search the openbsd ports tree for various
-  thngs.
-* **reverse** - reverse a string.
-* **thanks** - be polite.
-* **tmnt** - respond with random teenage mutant ninja turtles quotes.
-* **twss** - watch incoming messages for possible twss jokes.  Can be
-  trained.
-* **version** - spits out the version of node.js the bot is running on.
-* **wb** - respond to welcome back requests.
-* **wq** - Tell the story of Wq.
-* **yeah** - when bot sees "CSI" it puts on sunglasses.. waits 5 seconds.. 
-  says YEAAAAAH!
-* **template** - quick plugin template for next gen templates.
+* **aprs.js** -  query the FCC license database for license info. *requires api key for aprs.fi*
+* **basho.js** -  print haikus from Basho
+* **beer.js** -  query brewerydb for delicious delicious beer
+* **botsnack.js** -  feed the bot!
+* **dayum.js** -  Daaayum Daaayyyyuuummm DAAAAAAYYYYUUUUMMMMMMMM
+* **dolan.js** -  translate to dolantalk
+* **emacs.js** -  we are emacs!
+* **ermahgerd.js** -  translate to ermahgerd talk
+* **free.js** -  no one is as free as 'Merika!
+* **getoverhere.js** -  mortal kombat style ~~~~~~>
+* **ham.js** -  query the FCC license database for license info.
+* **ham_tests.js** -  quiz players on Extra, General and Tech exams for Ham Radio.
+* **high5.js** -  respond to high5's
+* **howmany.js** -  query openbsd ports for maintainer count info
+* **love.js** -  respond to people who love us
+* **mojo.js** -  I got my mojo workin!
+* **navi.js** -  HEY LOOK!!!!! AHHHHHHHH!
+* **openbsd.js** -  uses the pubsub 
+* **oyfb.js** -  respond randomly to ooyfb
+* **pew.js** -  get shot with LASERS!
+* **pigpen.js** -  translate text to pigpen
+* **protip.js** -  return random protips
+* **puny.js** -  translate strings to punycode
+* **putitback.js** -  once a table has been fliped, politely put it back
+* **random_info.js** -  tell everyone about OpenSSH's native vpn capability
+* **reverse.js** -  reverse a string
+* **sballs.js** -  do you know SpaceBalls?
+* **tell.js** -  tell $person $msg next time you see them
+* **thanks.js** -  be polite
+* **tmnt.js** -  return random TMNT quotes (really hard to find good ones!)
+* **twss.js** -  watch incoming messages for possible twss jokes. Can be trained.
+* **uptime.js** -  print bot's uptime
+* **version.js** -  print version information
+* **wb.js** -  respond to welcom backs
+* **weed.js** -  search leafly for types of weed (requires api key)
+* **wq.js** -  print the tales of Wq
+* **xmas.js** -  ride the joly train on xmas!
+* **yeah.js** -  pull a sweet CSI move
+* **ykysaw.js** -  you know you're South African when
 
 Writing Plugins
 ===============
