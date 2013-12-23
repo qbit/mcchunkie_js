@@ -76,7 +76,9 @@
           if ( cat === 'funny' ) {
             store.spoken_twsses.push( msg );
             resp = responses[ helper.rand( responses.length ) ];
-            cb.call( null, to, from, resp );
+	    if ( from !== 'dbtid' ) {
+		    cb.call( null, to, from, resp );
+	    }
           }
         }
 
