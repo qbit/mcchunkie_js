@@ -1,6 +1,10 @@
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
 
+  if (os.type() !== 'OpenBSD') {
+	  return;
+  }
+
   from = from || to;
   var resp = '', db = new helper.sqlite.Database( '/usr/local/share/sqlports' ),
   cmd, action, query,

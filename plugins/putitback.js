@@ -1,3 +1,4 @@
+// Desc: once a table has been fliped, politely put it back
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp;

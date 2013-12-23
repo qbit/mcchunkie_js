@@ -1,5 +1,10 @@
+// Desc: query openbsd ports for maintainer count info
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
+
+  if (os.type() !== 'OpenBSD') {
+	  return;
+  }
 
   from = from || to;
   var resp = ''; 

@@ -1,3 +1,4 @@
+// Desc: respond randomly to ooyfb
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp, 

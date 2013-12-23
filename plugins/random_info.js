@@ -1,3 +1,4 @@
+// Desc: tell everyone about OpenSSH's native vpn capability
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp;

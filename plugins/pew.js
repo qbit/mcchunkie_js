@@ -1,3 +1,4 @@
+// Desc: get shot with LASERS!
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var pews = [

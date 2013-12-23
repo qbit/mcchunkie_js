@@ -1,3 +1,4 @@
+// Desc: reverse a string
 (function( helpers, to, from, msg, storage, sh_store, cb ) {
   // Plugin to reverse every msg that is passed in.
   'use strict';

@@ -1,3 +1,4 @@
+// Desc: pull a sweet CSI move
 (function( helper, to, from, msg, store, sh_store, cb ) {
   'use strict';
   var resp = "";

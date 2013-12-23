@@ -1,4 +1,4 @@
-for p in $(cat ../plugins/*.js); do
-	lines=$(cat $p | grep ^\/\/)
-	print $lines;
+for p in $(ls ../plugins/*.js); do
+	lines=$(cat $p | grep "^\/\/ Desc:")
+	print "${p} : ${lines}";
 done

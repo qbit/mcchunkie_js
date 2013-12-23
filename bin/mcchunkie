@@ -1,78 +1,79 @@
 #!/usr/bin/env node
 
 'use strict';
-	var irc = require( 'irc' ),
-	fs = require( 'fs' ),
-	http = require( 'http' ),
-	https = require( 'https' ),
-	url = require( 'url' ),
-	nconf = require( 'nconf' ),
-	redis = require( 'redis' ),
+	var irc = require('irc'),
+	fs = require('fs'),
+	http = require('http'),
+	https = require('https'),
+	url = require('url'),
+	nconf = require('nconf'),
+	redis = require('redis'),
 	xmpp = require('simple-xmpp'),
 	rclient = redis.createClient(),
-	// pushover = require( 'pushover-notifications' ),
+	// pushover = require('pushover-notifications'),
 	helpers,
+	apiKeys = __dirname + '/../api_keys.json',
 	plugins = __dirname + '/../plugins',
 	messages = __dirname + '/../messages',
-	storage_file = __dirname + '/../shared_storage.json',
-	running_plugins = {},
-	running_messages = {},
+	storageFile = __dirname + '/../shared_storage.json',
+	runningPlugins = {},
+	runningMessages = {},
 	storage = {},
-	args = require( 'optimist' )
-		.usage( '$0 [-i] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>' )
-		.demand( [ 'n' ] )
+	args = require('optimist')
+		.usage('$0 [-i] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>')
+		.demand(['n'])
 		.argv,
 	client, channels, chanCount = 0,
 	tokens = {};
 
-nconf.file( { file: storage_file } );
+nconf.file({ file: storageFile });
 
-fs.stat( 'api_keys.json', function( err, stat ) {
+fs.stat( apiKeys, function( err, stat ) {
 	if ( err ) {
 		throw err;
 	}
 	if (stat.size > 0) {
-		fs.readFile( 'api_keys.json', 'utf8', function( err, data ) {
-			if ( err ){
+		fs.readFile('api_keys.json', 'utf8', function(err, data) {
+			if (err){
 				throw err;
 			}
-			if ( typeof data === 'string' ){
-				tokens = JSON.parse( data );
+			if (typeof data === 'string'){
+				tokens = JSON.parse(data);
 			}
 		});
 	}
 });
 
-function loadStorage( fn ) {
+function loadStorage(fn) {
 	storage.shared = {};
-	fs.exists(storage_file, function(exists) {
+	fs.exists(storageFile, function(exists) {
 		if (exists) {
-			fs.readFile( storage_file, 'utf8', function(err, data) {
-				if ( err ) {
+			fs.readFile(storageFile, 'utf8', function(err, data) {
+				if (err) {
 					throw err;
 				}
-				if ( data ) {
-					storage.shared = JSON.parse( data.toString() );
-					if ( fn ) {
+				if (data) {
+					storage.shared = JSON.parse(data.toString());
+					if (fn) {
 						fn.call();
 					}
 				}
 			});
 		} else {
 			storage.shared = {};
-			if ( fn ) {
+			if (fn) {
 				fn.call();
 			}
 		}
 	});
 }
 
-function saveStorage( fn ) {
-	fs.writeFile( storage_file, JSON.stringify( storage.shared ), function( err ) {
-		if ( err ) {
+function saveStorage(fn) {
+	fs.writeFile(storageFile, JSON.stringify(storage.shared), function(err) {
+		if (err) {
 			throw err;
 		}
-		if ( fn ) {
+		if (fn) {
 			fn.call();
 		}
 	});
@@ -80,37 +81,37 @@ function saveStorage( fn ) {
 
 loadStorage();
 
-rclient.on( "error", function (err) {
+rclient.on("error", function (err) {
 	console.log("Error " + err);
 });
 
-rclient.on( 'message', function( channel, data ) {
-	var o = data.toString().split( '^' ), i, l, value, msg, chan, str;
+rclient.on('message', function(channel, data) {
+	var o = data.toString().split('^'), i, l, value, msg, chan, str;
 	
-	value = o[ o.length - 1 ];
+	value = o[o.length - 1];
 	
 	str = data.toString()
-		.replace( value, '' )
-		.replace( /\^/g, ':' )
+		.replace(value, '')
+		.replace(/\^/g, ':')
 		.trim()
-		.replace( /:$/, '' );
+		.replace(/:$/, '');
 	
-	if ( ! str.match( 'mcchat' ) ) {
-		nconf.set( str + ':date', value );
+	if (! str.match('mcchat')) {
+		nconf.set(str + ':date', value);
 	}
-	nconf.save( function() {
-		loadStorage( function() {
-			if ( running_messages[o[0]] ) {
-				msg = running_messages[o[0]].message;
-				chan = running_messages[o[0]].channel;
-				for ( i = 1, l = o.length; i < l; i++ ) {
-					msg = msg.replace( '$' + i, o[i] );
+	nconf.save(function() {
+		loadStorage(function() {
+			if (runningMessages[o[0]]) {
+				msg = runningMessages[o[0]].message;
+				chan = runningMessages[o[0]].channel;
+				for (i = 1, l = o.length; i < l; i++) {
+					msg = msg.replace('$' + i, o[i]);
 				}
 			}
 
-			if ( !chan ) {
-				channels.forEach( function( c ) {
-					client.say( c, msg );
+			if (!chan) {
+				channels.forEach(function(c) {
+					client.say(c, msg);
 				});
 			} else {
 				client.say(chan, msg);
@@ -119,26 +120,26 @@ rclient.on( 'message', function( channel, data ) {
 	});
 });
 
-rclient.subscribe( args.n );
+rclient.subscribe(args.n);
 
 helpers = {
 	botname: args.n,
-	rand: function( len ) {
-		return Math.floor( Math.random() * len );
+	rand: function(len) {
+		return Math.floor(Math.random() * len);
 	},
 	// pushover: new pushover({
 	//   token: tokens.pushover
 	// }),
-	pHolder: function( str, array ) {
+	pHolder: function(str, array) {
 		// lol - PHOLDER!
 		var i, l = array.length;
-		for ( i = 0; i < l; i++ ) {
-			str = str.replace( '$' + parseInt( i + 1, 10 ), array[i] );
+		for (i = 0; i < l; i++) {
+			str = str.replace('$' + parseInt(i + 1, 10), array[i]);
 		}
 		return str;
 	},
-	httpGet: function( u, opts, cb ) {
-		u = url.parse( u );
+	httpGet: function(u, opts, cb) {
+		u = url.parse(u);
 		var i;
 		for (i in opts) {
 			if (opts.hasOwnProperty(i)) {
@@ -147,69 +148,69 @@ helpers = {
 				}
 			}
 		}
-		http.get( u, function( res ) {
+		http.get(u, function(res) {
 			var d = [];
-			res.on( 'data', function( chunk ) {
-				d.push( chunk );
-			}).on( 'end', function() {
-				cb.call( null, null, d.join('') );
+			res.on('data', function(chunk) {
+				d.push(chunk);
+			}).on('end', function() {
+				cb.call(null, null, d.join(''));
 			});
-		}).on( 'error', function( er ) {
-			cb.call( null, er );
+		}).on('error', function(er) {
+			cb.call(null, er);
 		});
 	},
-	reds: require( 'reds' ),
-	adn: require( 'appdotnet' ),
-	classifier: require( 'classifier' ),
-	sqlite: require( 'sqlite3' ),
-	isRelevant: function( msg ) {
-		if ( msg.indexOf( this.botname ) > -1 ) {
+	reds: require('reds'),
+	adn: require('appdotnet'),
+	classifier: require('classifier'),
+	sqlite: require('sqlite3'),
+	isRelevant: function(msg) {
+		if (msg.indexOf(this.botname) > -1) {
 			return true;
 		}
 			return false;
 	}
 };
 
-if ( args.c ) {
-	channels = args.c.split( ',' );
-	channels.forEach( function( c ) {
-		channels[ chanCount ] = '#' + c.trim();
+if (args.c) {
+	channels = args.c.split(',');
+	channels.forEach(function(c) {
+		channels[chanCount] = '#' + c.trim();
 		chanCount++;
 	});
 }
 
-function loadPlugin( file, ismsg ) {
-	fs.readFile( file, 'utf8', function( err, data ) {
-		if ( err ) {
+function loadPlugin(file, ismsg) {
+	fs.readFile(file, 'utf8', function(err, data) {
+		if (err) {
 			throw err;
 		}
 		var t, n;
-		if ( data ) {
+		if (data) {
 			try {
-				n = file.split( '/' );
-				n = n[ n.length - 1 ];
-				if ( ismsg ) {
-					t = eval( data.toString() );
-					running_messages[ n ] = t();
+				n = file.split('/');
+				n = n[n.length - 1];
+				if (ismsg) {
+					t = eval(data.toString());
+					runningMessages[n] = t();
 				} else {
-					running_plugins[ n ] = eval( data.toString() );
-					storage[ n ] = {};
-					if ( tokens[ n ] ) {
-						storage[ n ].token = tokens[ n ];
+					runningPlugins[n] = eval(data.toString());
+					storage[n] = {};
+					if (tokens[n]) {
+						storage[n].token = tokens[n];
 					}
 				}
-			} catch( e ) {
-				console.log( 'Syntax error in "' + file + '"\n' + e );
+			} catch(e) {
+				console.log('Syntax error in "' + file + '"\n' + e);
 			}
 		}
 	});
 }
 
-function loadPlugins( dir, harsh ) {
-	if ( harsh ) {
-		running_plugins = {};
+function loadPlugins(dir, harsh) {
+	if (harsh) {
+		runningPlugins = {};
 	} else {
-		running_messages = {};
+		runningMessages = {};
 	}
 
 	var results = [];
@@ -243,53 +244,53 @@ function loadPlugins( dir, harsh ) {
 		if (err) throw err;
 		var i,l = results.length, file;
 
-		for ( i = 0; i < l; i++ ) {
+		for (i = 0; i < l; i++) {
 			file = results[i];
-			if ( file.indexOf( '~' ) === -1 ) {
-				if ( harsh ) {
-					if ( file.indexOf( '.js' ) > -1 ) {
-						loadPlugin( file );
+			if (file.indexOf('~') === -1) {
+				if (harsh) {
+					if (file.indexOf('.js') > -1) {
+						loadPlugin(file);
 					}
 				} else {
-						loadPlugin( file, true );
+						loadPlugin(file, true);
 				}
 			}
 		}
 	});
 }
 
-loadPlugins( plugins, true );
-loadPlugins( messages, false );
+loadPlugins(plugins, true);
+loadPlugins(messages, false);
 
-fs.watch( plugins, function( e, file ) {
-	loadPlugins( plugins, true );
-	loadPlugins( messages, false );
+fs.watch(plugins, function(e, file) {
+	loadPlugins(plugins, true);
+	loadPlugins(messages, false);
 });
 
-function reply( t, frm, resp ) {
+function reply(t, frm, resp) {
 	t = t || frm;
-	if ( resp ) {
+	if (resp) {
 		console.log('Resp: "%s":"%s" - "%s"', t, frm, resp);
 		if (args.j) {
 			xmpp.send(frm, resp);
 		}
 		if (client) {
-			client.say( t, resp );
+			client.say(t, resp);
 		}
 	}
 }
 
-function processMsg( to, from, msg ) {
+function processMsg(to, from, msg) {
 	var i, resp;
 	
 	console.log('Message: "%s":"%s" - "%s"', to, from, msg);
 	
-	for ( i in running_plugins ) {
-		if ( running_plugins.hasOwnProperty( i ) ) {
+	for (i in runningPlugins) {
+		if (runningPlugins.hasOwnProperty(i)) {
 			try {
-				running_plugins[i]( helpers, to, from, msg, storage[i], storage.shared, reply );
-			} catch( e ) {
-				console.log( "Error running '" + i + "'\n" + e );
+				runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply);
+			} catch(e) {
+				console.log("Error running '" + i + "'\n" + e);
 			}
 		}
 	}
@@ -309,7 +310,7 @@ if (args.j) {
 	});
 
 	xmpp.on('chat', function(from, message) {
-		processMsg( null, from, message );
+		processMsg(null, from, message);
 	});
 
 	xmpp.connect({
@@ -322,31 +323,31 @@ if (args.j) {
 }
 
 if (args.i) {
-	client = new irc.Client( args.s, args.n, {
+	client = new irc.Client(args.s, args.n, {
 		channels: channels,
 		debug: false,
 		userName: args.n
 	});
 
-	client.addListener( 'error', function( err ) {
-		console.log( err );
+	client.addListener('error', function(err) {
+		console.log(err);
 	});
 
-	client.addListener( 'message', function( from, to, msg ) {
-		if( client.nick !== args.n ) {
+	client.addListener('message', function(from, to, msg) {
+		if(client.nick !== args.n) {
 			client.send('NICK', args.n);
 		}
-		processMsg( to, from, msg );
+		processMsg(to, from, msg);
 	});
 
-	client.addListener( 'pm', function( from, msg ) {
-		processMsg( null, from, args.n + ':' + msg );
+	client.addListener('pm', function(from, msg) {
+		processMsg(null, from, args.n + ':' + msg);
 	});
 
-	client.addListener( 'invite', function( chan, from ) {
-		channels.push( chan );
-		client.join( chan, function() {
-			console.log( 'joined ' + chan + ' because ' + from + ' invited me' );
+	client.addListener('invite', function(chan, from) {
+		channels.push(chan);
+		client.join(chan, function() {
+			console.log('joined ' + chan + ' because ' + from + ' invited me');
 		});
 	});
 }
