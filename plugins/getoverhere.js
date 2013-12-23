@@ -12,7 +12,7 @@
 			  client.say( to || from, str );
 		  } else {
 			  client.say( to || from, str );
-			  client.say( to || from, 'FINISHHIM!!!' )
+			  client.say( to || from, 'FINISHTHEM!!!' )
 			  clearInterval(count);
 		  }
 	  },1000);
