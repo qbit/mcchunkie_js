@@ -56,18 +56,27 @@
       store.bays.classify( msg, function( cat ) {
       //   console.log( 'prev msg: ' + store.msgs[1] );
         if ( msg.match( /^twss$/i ) || msg === helper.botname + ': yes' ) {
-          store.bays.train( store.msgs[ store.msgs.length - 2 ], 'funny', function() {
-            store.spoken_twsses.push( store.msgs[ store.msgs.length - 2 ] );
-            resp = 'Added funny: "' + store.msgs[ store.msgs.length - 2 ] + '"';
-            cb.call( null, to, from, resp );
-          });
+		console.log('store.msgs', store.msgs);
+ 	  if (store.msgs.length > 1) {
+		  store.bays.train( store.msgs[ store.msgs.length - 2 ], 'funny', function() {
+		    store.spoken_twsses.push( store.msgs[ store.msgs.length - 2 ]);
+		    resp = 'Added funny: "' + store.msgs[ store.msgs.length - 2 ] + '"';
+		    cb.call( null, to, from, resp );
+		  });
+	  } else {
+		    cb.call( null, to, from, 'que?' );
+	  }
         } if ( msg === helper.botname + ': no' ) {
           // store.bays.train( store.msgs[ store.msgs.length - 2 ], 'notfunny', function() {
-          store.bays.train( store.spoken_twsses[ store.spoken_twsses.length - 1 ], 'notfunny', function() {
-            // resp = 'Sorry: "' + store.msgs[ store.msgs.length - 2 ] + '"';
-            resp = 'Sorry: "' + store.spoken_twsses[ store.spoken_twsses.length - 1 ] + '"';
-            cb.call( null, to, from, resp );
-          });
+ 	  if(store.spoken_twsses.length > 0) {
+		  store.bays.train( store.spoken_twsses[ store.spoken_twsses.length - 1 ], 'notfunny', function() {
+		    // resp = 'Sorry: "' + store.msgs[ store.msgs.length - 2 ] + '"';
+		    resp = 'Sorry: "' + store.spoken_twsses[ store.spoken_twsses.length - 1 ] + '"';
+		    cb.call( null, to, from, resp );
+		  });
+	  } else {
+		    cb.call( null, to, from, 'que?' );
+	  }
         } if ( msg.match( /^twss\?$/i ) ) {
           if ( cat !== 'funny' ) {
             resp = 'no.';
