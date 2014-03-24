@@ -8,8 +8,11 @@
 	url = require('url'),
 	nconf = require('nconf'),
 	redis = require('redis'),
-	xmpp = require('simple-xmpp'),
-	rclient = redis.createClient(),
+//	xmpp = require('simple-xmpp'),
+	rclient = redis.createClient( null, null, {
+		auth_pass: process.env.REDIS_PASS
+	}),
+	os = require('os'),
 	// pushover = require('pushover-notifications'),
 	helpers,
 	apiKeys = __dirname + '/../api_keys.json',
@@ -25,6 +28,10 @@
 		.argv,
 	client, channels, chanCount = 0,
 	tokens = {};
+
+rclient.auth(process.env.REDIS_PASS, function(err, res) {
+	console.log(err, res, "authed with:", process.env.REDIS_PASS);
+});
 
 nconf.file({ file: storageFile });
 
@@ -335,7 +342,7 @@ if (args.i) {
 
 	client.addListener('message', function(from, to, msg) {
 		if(client.nick !== args.n) {
-			client.send('NICK', args.n);
+			//client.send('NICK', args.n);
 		}
 		processMsg(to, from, msg);
 	});
