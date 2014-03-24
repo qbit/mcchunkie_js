@@ -37,11 +37,13 @@
   if (msg.match(/^ba:/)) {
 	  msg = msg.replace(/^ba:/, '');
 	  store.ba.beerSearch(msg, function(beers) {
-		  store.ba.beerPage(beers[0].beer_url, function(reviews) {
-			  if ( reviews.length >= 1) {
-				  cb.call( null, to, from, pretty(reviews[0]));
-			  }
-		  });
+		  if ( beers[0] && beers[0].beer_url ) {
+			  store.ba.beerPage(beers[0].beer_url, function(reviews) {
+				  if ( reviews.length >= 1) {
+					  cb.call( null, to, from, pretty(reviews[0]));
+				  }
+			  });
+		  }
       	  });
 
   }
