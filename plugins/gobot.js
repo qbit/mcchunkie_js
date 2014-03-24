@@ -60,7 +60,7 @@
  	  if (store.msgs.length > 1) {
 		  store.bays.train( store.msgs[ store.msgs.length - 2 ], 'funny', function() {
 		    store.spoken_twsses.push( store.msgs[ store.msgs.length - 2 ]);
-		    resp = 'Added funny: "' + store.msgs[ store.msgs.length - 2 ] + '"';
+		    resp = 'Added: "' + store.msgs[ store.msgs.length - 2 ] + '" to the slice';
 		    cb.call( null, to, from, resp );
 		  });
 	  } else {
