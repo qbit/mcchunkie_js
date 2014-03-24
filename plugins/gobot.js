@@ -70,8 +70,8 @@
           // store.bays.train( store.msgs[ store.msgs.length - 2 ], 'notfunny', function() {
  	  if(store.spoken_twsses.length > 0) {
 		  store.bays.train( store.spoken_twsses[ store.spoken_twsses.length - 1 ], 'notfunny', function() {
-		    // resp = 'Sorry: "' + store.msgs[ store.msgs.length - 2 ] + '"';
-		    resp = 'Sorry: "' + store.spoken_twsses[ store.spoken_twsses.length - 1 ] + '"';
+		    // resp = 'Sorry, I have failed the Rob Pike: "' + store.msgs[ store.msgs.length - 2 ] + '"';
+		    resp = 'Sorry, I have failed the Rob Pike: "' + store.spoken_twsses[ store.spoken_twsses.length - 1 ] + '"';
 		    cb.call( null, to, from, resp );
 		  });
 	  } else {
