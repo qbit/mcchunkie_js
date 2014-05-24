@@ -4,6 +4,8 @@
   var resp,
   responses = [
     "that's what she said!",
+    "PHRASING, BOOM!",
+    "phrasing.",
     "twss!",
     "TWSS!",
     "heuheuhuheuheuhe",
