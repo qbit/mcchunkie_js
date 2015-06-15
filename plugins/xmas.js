@@ -20,5 +20,5 @@
     resp = resp.join( '\n' );
   }
 
-  // cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp );
 });
