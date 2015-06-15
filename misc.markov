@@ -1,0 +1,3687 @@
+Do you need ICAP? I think it's primarily for web filtering or virus/DLP
+Is there a reason you chose a different config than suggested in the
+port README?
+Does setting openfiles-cur also increase openfiles-max if it's not
+Hi,
+Hmm, I checked on one of my boxen and there /etc/passwd has
+_squid
+as account for this package, so you probably want
+HTH
+rru
+----BEGIN PGP SIGNED MESSAGE-----
+I'm pretty sure it's supposed to be 'squid', as the daemon name is
+It'd probably be easiest just to duplicate it and replace what you
+----END PGP SIGNATURE-----
+Could anyone run into these problems? thanks!
+using " pfctl -sr " which won't
+prompted the same warning when using command " pfctl -s queue
+reading!
+Best Regards,
+Cosmo Wu
+This is very interesting - I've been looking at various small boxes
+that do are very expensive (higher end Zotac)
+suitable as a home firewall?
+What about one of the Open Firmware firewalls like ASUS? Is there an
+Hi!
+I'd like to know if I'm the only one that have experiences crashes with
+appears saying that "Plasma Desktop Shell closed unexpectedly"
+final big KDE logo appears in the startup page (maybe this is related to
+this happens only to me (to my hardware/software configuration), or is a
+Exactly the same happens on recent Debian sid, odds are it could be
+This bug is still under investigation, dunno if it has been uploaded
+Hi,
+Segmentation fault (core dumped)
+If I just type "make install" again, it happens again, thus I would
+exclude a memory issue which makes thins more random, but it repeats in
+causing problems?
+Cheers,
+Riccardo
+on it's own, but something else in the current state of pf
+In my case, usually flushing the queues before reloading them from
+dd
+David Dahlberg
+Hi,
+for some reason, this seems to have been for a while now; isakmpd will
+Starting isakmpd manually with flags -Kdv doesn't give any indication as
+to what might be causing the service to crash or segfault and nothing is
+ike passive esp transport \
+quick auth "hmac-sha" enc "aes" \
+ike passive esp transport \
+quick auth "hmac-sha" enc "aes" \
+psk "<Some_crazy_pass>"
+Basically the setup used to work fine a few upgrades ago while I was on
+to be some issue with routing on some apps so to get round that the
+and managed to pretty much validate my config in comparison but for some
+Would anyone be able to suggest anything?
+Kaya
+building process (the sparc build machines are very unstable) or
+Unfortunately, that's the usual course when an architecture becomes
+and general reliability problems, and the set of available packages
+and take out thousands more for which they serve as dependencies,
+then the only way to fix this is for somebody to sit down and examine
+hardware, run by few people, with pitiful "best effort" package
+slowly sink under the accumulating bitrot that nobody cares to fix,
+but at the same time people can't bring themselves to completely
+I've
+planned
+to spend a few hours this next weekend trying to isolate the regression,
+and
+to date have not done any more than reproduce the problem with older
+Chromebox)
+Why is OpenBSD the choice only if you have a floating point?
+people have ported Linux to all sorts of things, but no MMU?
+cheers
+Worik
+Why is the legal status of chardonnay different to that of cannabis?
+Aotearoa (New Zealand)
+I voted for love
+For some background, see
+Solved problem, but I'm mentioning it here for anyone searching the
+rules for the data-channel connections, with accompanying verbose
+And then try to remember that mess, or type it, especially into
+Check out uclinux
+They have come up with special memory handling to avoid memory
+fragmentation but It's probably still far wide of the mark for reliable
+That's interesting - what soft of brand name or product name would I search for?
+I'm not really familiar with any thin clients
+"Don't eat anything you've ever seen advertised on TV"
+ Michael Pollan, author of "In Defense of Food"
+This is what I came up with
+#!/bin/sh
+fi
+I see one of these on my local kijiji but can't tell whether or not
+site
+$ pkg_info apg
+automated password generator
+APG (Automated Password Generator) is the tool set for random
+Cheers
+I've tried figuring the difference between these two, but I can't find
+Can somebody please shed some light?
+/jl
+ASCII ribbon campaign ( ) Powered by Lemote Fuloong
+against HTML e-mail X Loongson MIPS and OpenBSD
+attachments / \ Code Blue or Go Home!
+/jl
+ASCII ribbon campaign ( ) Powered by Lemote Fuloong
+against HTML e-mail X Loongson MIPS and OpenBSD
+attachments / \ Code Blue or Go Home!
+Huh? With OpenBSD on them?
+"Don't eat anything you've ever seen advertised on TV"
+ Michael Pollan, author of "In Defense of Food"
+addition that needs to be done in order to get isakmpd and ipsec working
+together?
+Regards,
+Kaya
+socppc), meaning the powerpc binaries shared by socppc and macppc can't
+they 'should' be able to share arch/powerpc binaries, but a) nobody
+(including me) has done the necessary work in the kernel to run on
+them, and b) I'm not aware of hardware such as RouterBoards that use
+Matthew Weigel
+hacker
+this new disk as a boot device, that is now you cannot do
+Apparently, there is no way to create an fdisk partition once you
+Regards,
+ASK
+Thoughts?
+Matt
+OpenBSD changed time_t and broke existing applications, but hardly
+problematic, so filename policy enforcement is a breakage of the same
+FWIW now it is rather safe to normalize filenames now, as related
+Although I might be missing something, an additional function which
+takes desired filename and outputs normalized filename could probably
+implemented in libc, could even allow system administrators enforce
+jmc
+this example has potential to confuse of course,
+however NFD normalizing will not turn it into
+(Po=other punctuation, Ll=lowercase letter)
+f
+Hi!
+Is it possible to setup npppd so that the clients are on the same
+network as the local network behind the router/firewall?
+chs
+I do not remember from the output of patch if it printed at the bottom that
+So if my vague memories are incorrect and patch indeed warns at the end of
+/ Raimo Niskanen, Erlang/OTP, Ericsson AB
+$ touch »´ÁÉǑÄ«
+wrong/unknown "from" encoding!
+First fix this or correct options!
+in contrast my tool is much more blunt, because i dont care
+f
+Hello misc,
+period end time isn't being reset if the over_soft_quota stage is reached
+Developers seemed to don't have time for it, so I've asked our
+daddr_t change;
+if (uid == (uid_t)VNOVAL)
+uid = DIP(ip, uid);
+goto error;
+ newcr = crget();
+ newcr->cr_uid = uid;
+ newcr->cr_gid = gid;
+ crfree(newcr);
+goto error;
+quota_flags);
+ crfree(newcr);
+goto error;
+ crfree(newcr);
+if (getinoquota(ip))
+Please advise if you see problems with that patch (besides the fact that
+Best regards,
+Cheers,STEFAN
+Hi Otto,
+sysmerge' does not know about the options '-s' and '-x'?
+Best,
+STEFAN
+----BEGIN PGP SIGNED MESSAGE-----
+I'm pretty sure it's supposed to be 'squid', as the daemon name is
+It'd probably be easiest just to duplicate it and replace what you
+----END PGP SIGNATURE-----
+Hi,
+I was pkg_add'ing some essential packages on a freshly installed SPARC
+I know that some packages might not build on sparc or do not have sense
+Is this a problem? or is it deliberate? Sebastian, I know you used to
+Thank you,
+Riccardo
+Could anyone run into these problems? thanks!
+using " pfctl -sr " which won't
+prompted the same warning when using command " pfctl -s queue
+reading!
+Best Regards,
+Cosmo Wu
+Hi,
+Segmentation fault (core dumped)
+If I just type "make install" again, it happens again, thus I would
+exclude a memory issue which makes thins more random, but it repeats in
+causing problems?
+Cheers,
+Riccardo
+Hi,
+Hmm, I checked on one of my boxen and there /etc/passwd has
+_squid
+as account for this package, so you probably want
+HTH
+rru
+Do you need ICAP? I think it's primarily for web filtering or virus/DLP
+Is there a reason you chose a different config than suggested in the
+port README?
+Does setting openfiles-cur also increase openfiles-max if it's not
+Exactly the same happens on recent Debian sid, odds are it could be
+This bug is still under investigation, dunno if it has been uploaded
+on it's own, but something else in the current state of pf
+In my case, usually flushing the queues before reloading them from
+dd
+David Dahlberg
+Hi!
+I'd like to know if I'm the only one that have experiences crashes with
+appears saying that "Plasma Desktop Shell closed unexpectedly"
+final big KDE logo appears in the startup page (maybe this is related to
+this happens only to me (to my hardware/software configuration), or is a
+Hi,
+for some reason, this seems to have been for a while now; isakmpd will
+Starting isakmpd manually with flags -Kdv doesn't give any indication as
+to what might be causing the service to crash or segfault and nothing is
+ike passive esp transport \
+quick auth "hmac-sha" enc "aes" \
+ike passive esp transport \
+quick auth "hmac-sha" enc "aes" \
+psk "<Some_crazy_pass>"
+Basically the setup used to work fine a few upgrades ago while I was on
+to be some issue with routing on some apps so to get round that the
+and managed to pretty much validate my config in comparison but for some
+Would anyone be able to suggest anything?
+Kaya
+name "OpenBSD" throughout the system?
+require the change in?
+logo is restricted, so I imagine it would be necessary to change the
+Thanks for considering,
+Riley Baird
+of MPL/LGPL/GPL, but Debian had to change all references to Firefox to
+the product, it may no longer be called Firefox unless all of the
+Hi,
+That is, starting from a clean port build may shift the problem, but
+I will try if it survives a reboot, that is if it is file-system
+Riccardo
+ I have a child DNS zone served by my ISP slave name server;
+ the parent zone is served by my ISP master name server;
+ the question is - how and with what tools (dig, host, nslookup, or
+maybe C or Perl libs) can I verify the NS glue records in the parent
+zone of my ISP (zone transfers are denied)?
+was not possible to make any conclusions about NS glue records from the
+I found some tools in the Internet (for example
+nameservers reported by parent") but these are inconvinient, I would
+Alexei Malinin
+Luckily I use OpenBSD ;)
+CIAO,
+David
+really be solved by applying two or three times the persistence that
+- Stewart Nelson
+$ pkg_info dnstracer
+domain name system resolution tracer
+Dnstracer determines where a given Domain Name Server (DNS) gets
+its information from and follows the chain of DNS servers back to
+I don't hardware to try it, but another option might be a sata ssd and scsi
+Follow the instructions in the pkg-readme exactly and let me know if you
+In your case you most likely have an invalid config, the openfiles-max
+accept this and use the higher limit, but a couple of releases ago this
+rdr-to The packet is redirected to another destination and possibly a
+divert-to <host> port <port>
+Used to redirect packets to a local socket bound to host and
+socket will return the original destination address of the
+rdr-to is a general purpose address translation and can forward to
+(using the "bitmask" option) it's also possible to rewrite destination
+to implement transparent proxies, but requires looking up the original
+destination address using a state table lookup (DIOCNATLOOK), but
+packet, allowing a simple method (getsockname) for proxy software
+Linux developers were seeing higher throughput (though obviously higher
+still helpful to set allowaperture?
+building process (the sparc build machines are very unstable) or
+Unfortunately, that's the usual course when an architecture becomes
+and general reliability problems, and the set of available packages
+and take out thousands more for which they serve as dependencies,
+then the only way to fix this is for somebody to sit down and examine
+hardware, run by few people, with pitiful "best effort" package
+slowly sink under the accumulating bitrot that nobody cares to fix,
+but at the same time people can't bring themselves to completely
+For some background, see
+This is very interesting - I've been looking at various small boxes
+that do are very expensive (higher end Zotac)
+suitable as a home firewall?
+What about one of the Open Firmware firewalls like ASUS? Is there an
+And then try to remember that mess, or type it, especially into
+I've
+planned
+to spend a few hours this next weekend trying to isolate the regression,
+and
+to date have not done any more than reproduce the problem with older
+Chromebox)
+Why is OpenBSD the choice only if you have a floating point?
+people have ported Linux to all sorts of things, but no MMU?
+cheers
+Worik
+Why is the legal status of chardonnay different to that of cannabis?
+Aotearoa (New Zealand)
+I voted for love
+Check out uclinux
+They have come up with special memory handling to avoid memory
+fragmentation but It's probably still far wide of the mark for reliable
+This is what I came up with
+#!/bin/sh
+fi
+Solved problem, but I'm mentioning it here for anyone searching the
+rules for the data-channel connections, with accompanying verbose
+That's interesting - what soft of brand name or product name would I search for?
+I'm not really familiar with any thin clients
+"Don't eat anything you've ever seen advertised on TV"
+ Michael Pollan, author of "In Defense of Food"
+I see one of these on my local kijiji but can't tell whether or not
+site
+What exactly do you mean by that?
+True, but the press releases never even mentioned the microcode, which
+I realise that this usage may have been propagated by the FSF, and on
+but given that - for better or for worse - firmware is included in the
+Best
+Martin
+This is silly, all the firmware in /etc/firmware allows free
+If you're worried about scary evil "Microcode", then you probably
+shouldn't run a modern Intel or AMD machine, not including all the
+firmware on flash or ROM, your BIOS likely loaded CPU microcode that
+This information is easily available to anyone interested via online
+to verify whether his hardware can be used without proprietary firmware,
+firmware and does not require loading it at initialization time? Or is
+this kind of firmware OK according to your definition of free?
+May the fairy god-camel leave a lump on your pillow!
+/jl
+ASCII ribbon campaign ( ) Powered by Lemote Fuloong
+against HTML e-mail X Loongson MIPS and OpenBSD
+attachments / \ Code Blue or Go Home!
+addition that needs to be done in order to get isakmpd and ipsec working
+together?
+Regards,
+Kaya
+$ pkg_info apg
+automated password generator
+APG (Automated Password Generator) is the tool set for random
+Cheers
+/jl
+ASCII ribbon campaign ( ) Powered by Lemote Fuloong
+against HTML e-mail X Loongson MIPS and OpenBSD
+attachments / \ Code Blue or Go Home!
+I've tried figuring the difference between these two, but I can't find
+Can somebody please shed some light?
+Huh? With OpenBSD on them?
+"Don't eat anything you've ever seen advertised on TV"
+ Michael Pollan, author of "In Defense of Food"
+that this was not written in assembly; rather, it has been compiled, and
+You could argue that this is better than hardware where the firmware is
+physically on the hardware, because at least the blobs we load onto the
+hardware can be reverse engineered, and to a certain degree you would be
+has open-source firmware thanks to atheros, and this has actually been
+Could somebody please give me a hint?
+Thanks,
+Frank
+After a private conversation with Theo, I've decided that I'm not going
+Hi Adam,
+Best,
+STEFAN
+Anyone had any problems getting iked to adhere to revoked certificates?
+I can log in with a valid cert but can also log in using the same cert
+after it's been revoked using # ikectl ca vpn certificate
+TIA
+name "OpenBSD" throughout the system?
+require the change in?
+logo is restricted, so I imagine it would be necessary to change the
+Thanks for considering,
+Riley Baird
+of MPL/LGPL/GPL, but Debian had to change all references to Firefox to
+the product, it may no longer be called Firefox unless all of the
+that this was not written in assembly; rather, it has been compiled, and
+You could argue that this is better than hardware where the firmware is
+physically on the hardware, because at least the blobs we load onto the
+hardware can be reverse engineered, and to a certain degree you would be
+has open-source firmware thanks to atheros, and this has actually been
+True, but the press releases never even mentioned the microcode, which
+I realise that this usage may have been propagated by the FSF, and on
+but given that - for better or for worse - firmware is included in the
+What exactly do you mean by that?
+I'd personally rather choose to activate a device that required
+binary-only firmware after realising that it doesn't work, because at
+period of time on Debian, and I had to install the package for it
+hardware for Linux, I ensure that I'll buy one that will work with the
+That being said, this should be less of a problem with OpenBSD, since a
+large portion of its use is in server applications, when you should
+Best
+Martin
+This is silly, all the firmware in /etc/firmware allows free
+If you're worried about scary evil "Microcode", then you probably
+shouldn't run a modern Intel or AMD machine, not including all the
+firmware on flash or ROM, your BIOS likely loaded CPU microcode that
+This information is easily available to anyone interested via online
+to verify whether his hardware can be used without proprietary firmware,
+firmware and does not require loading it at initialization time? Or is
+this kind of firmware OK according to your definition of free?
+this new disk as a boot device, that is now you cannot do
+Apparently, there is no way to create an fdisk partition once you
+Regards,
+ASK
+socppc), meaning the powerpc binaries shared by socppc and macppc can't
+they 'should' be able to share arch/powerpc binaries, but a) nobody
+(including me) has done the necessary work in the kernel to run on
+them, and b) I'm not aware of hardware such as RouterBoards that use
+Matthew Weigel
+hacker
+Thoughts?
+Matt
+Hi,
+That is, starting from a clean port build may shift the problem, but
+I will try if it survives a reboot, that is if it is file-system
+Riccardo
+ I have a child DNS zone served by my ISP slave name server;
+ the parent zone is served by my ISP master name server;
+ the question is - how and with what tools (dig, host, nslookup, or
+maybe C or Perl libs) can I verify the NS glue records in the parent
+zone of my ISP (zone transfers are denied)?
+was not possible to make any conclusions about NS glue records from the
+I found some tools in the Internet (for example
+nameservers reported by parent") but these are inconvinient, I would
+Alexei Malinin
+Luckily I use OpenBSD ;)
+CIAO,
+David
+really be solved by applying two or three times the persistence that
+- Stewart Nelson
+$ pkg_info dnstracer
+domain name system resolution tracer
+Dnstracer determines where a given Domain Name Server (DNS) gets
+its information from and follows the chain of DNS servers back to
+Follow the instructions in the pkg-readme exactly and let me know if you
+In your case you most likely have an invalid config, the openfiles-max
+accept this and use the higher limit, but a couple of releases ago this
+I don't hardware to try it, but another option might be a sata ssd and scsi
+rdr-to The packet is redirected to another destination and possibly a
+divert-to <host> port <port>
+Used to redirect packets to a local socket bound to host and
+socket will return the original destination address of the
+rdr-to is a general purpose address translation and can forward to
+(using the "bitmask" option) it's also possible to rewrite destination
+to implement transparent proxies, but requires looking up the original
+destination address using a state table lookup (DIOCNATLOOK), but
+packet, allowing a simple method (getsockname) for proxy software
+Linux developers were seeing higher throughput (though obviously higher
+still helpful to set allowaperture?
+Hi all,
+I would like to ask what is the reason for man afterboot discouraging
+Is there a reason for '(not space)' being included in that passage? The
+not the case in the past?
+Regards,
+Adam Wolk
+Could somebody please give me a hint?
+Thanks,
+Frank
+Hi Adam,
+Best,
+STEFAN
+After a private conversation with Theo, I've decided that I'm not going
+Anyone had any problems getting iked to adhere to revoked certificates?
+I can log in with a valid cert but can also log in using the same cert
+after it's been revoked using # ikectl ca vpn certificate
+TIA
+I'd personally rather choose to activate a device that required
+binary-only firmware after realising that it doesn't work, because at
+period of time on Debian, and I had to install the package for it
+hardware for Linux, I ensure that I'll buy one that will work with the
+That being said, this should be less of a problem with OpenBSD, since a
+large portion of its use is in server applications, when you should
+this example has potential to confuse of course,
+however NFD normalizing will not turn it into
+(Po=other punctuation, Ll=lowercase letter)
+f
+jmc
+Hi all,
+I would like to ask what is the reason for man afterboot discouraging
+Is there a reason for '(not space)' being included in that passage? The
+not the case in the past?
+Regards,
+Adam Wolk
+May the fairy god-camel leave a lump on your pillow!
+$ touch »´ÁÉǑÄ«
+wrong/unknown "from" encoding!
+First fix this or correct options!
+in contrast my tool is much more blunt, because i dont care
+f
+Hello misc,
+period end time isn't being reset if the over_soft_quota stage is reached
+Developers seemed to don't have time for it, so I've asked our
+daddr_t change;
+if (uid == (uid_t)VNOVAL)
+uid = DIP(ip, uid);
+goto error;
+ newcr = crget();
+ newcr->cr_uid = uid;
+ newcr->cr_gid = gid;
+ crfree(newcr);
+goto error;
+quota_flags);
+ crfree(newcr);
+goto error;
+ crfree(newcr);
+if (getinoquota(ip))
+Please advise if you see problems with that patch (besides the fact that
+Best regards,
+Cheers,STEFAN
+Hi Otto,
+sysmerge' does not know about the options '-s' and '-x'?
+Best,
+STEFAN
+Hi,
+I was pkg_add'ing some essential packages on a freshly installed SPARC
+I know that some packages might not build on sparc or do not have sense
+Is this a problem? or is it deliberate? Sebastian, I know you used to
+Thank you,
+Riccardo
+Hi,
+system to test my code on before releasing it, but my interest in it as
+Riccardo
+Curious if anyone knows a simple way to prevent resolution of one word
+I realize this is how DNS works, but I also think it's something I
+Hi everyone,
+We use OpenBSD currently on physical hardware and manage it in our
+customer premises and we'll still manage the VM (but not the VM
+The problem is not letting the customer access to our proprietary data
+obvious answer is disk encryption, but we can't require manual
+I'm sure I'll have to settle with obfuscation, which I'm OK with, but
+Is the only option to change things we need to hide into binaries?
+Compile the kernel with a key to decrypt?
+VM I can mount the boot partitions, but they only have boot
+Thanks for any advice!
+Nate
+Hi Alessandro,
+AJ> The issue is not with USB printing per se but with the HPLIP
+AJ> There's probably a regression in HLIP after CUPS got updated
+That may as well be true but I wanted to double-check whether your issue
+The reason I mention it is the fact that several people have reported
+Regards,
+Raf
+Hi Raf,
+the xhci driver anyway, but how could I check? Any chances to switch off
+xhci and revert to uhci/ehci?
+Alessandro DE LAURENZIS
+Hello Miod,
+So yes, both modules are affected
+Something stresses ln there, just as a test I tried "touch a" and "ln -s
+Riccardo
+on this box, if possible?
+Hi,
+Regards,
+Hi,
+several experienced people report to routinely disregard without
+adverse effect, is bad advice, in particular when it keeps people
+As long as you don't reuse one of your programs written in
+Yours,
+Ingo
+Hi,
+wouldn't mind sharing some through-put data for gigabit
+Regards,
+MH
+Hello @list,
+//mxb
+matheus
+We will call you Cygnus,
+The God of balance you shall be
+Hi Jonathan,
+In my understanding (I'm definitely not an expert), the last part of
+Here I just tried to make the patch more general (guessing that the GPIO
+All the best
+Alessandro DE LAURENZIS
+Thanks Maurice and Dennis for point me to the FAQ on
+Richard Toohey was first to respond in private with the
+I didn't want to "muddy" the unbootable iso image issue
+I just assumed I was missing something subtle in its
+-patrick
+Regards
+Hi,
+system to test my code on before releasing it, but my interest in it as
+Riccardo
+Curious if anyone knows a simple way to prevent resolution of one word
+I realize this is how DNS works, but I also think it's something I
+Regards
+Hello Miod,
+So yes, both modules are affected
+Something stresses ln there, just as a test I tried "touch a" and "ln -s
+Riccardo
+Hi,
+wouldn't mind sharing some through-put data for gigabit
+Regards,
+MH
+Hi,
+several experienced people report to routinely disregard without
+adverse effect, is bad advice, in particular when it keeps people
+As long as you don't reuse one of your programs written in
+Yours,
+Ingo
+Hi,
+Regards,
+on this box, if possible?
+Hello @list,
+//mxb
+Hi Raf,
+the xhci driver anyway, but how could I check? Any chances to switch off
+xhci and revert to uhci/ehci?
+Alessandro DE LAURENZIS
+Hi Jonathan,
+In my understanding (I'm definitely not an expert), the last part of
+Here I just tried to make the patch more general (guessing that the GPIO
+All the best
+Alessandro DE LAURENZIS
+matheus
+We will call you Cygnus,
+The God of balance you shall be
+Hi everyone,
+We use OpenBSD currently on physical hardware and manage it in our
+customer premises and we'll still manage the VM (but not the VM
+The problem is not letting the customer access to our proprietary data
+obvious answer is disk encryption, but we can't require manual
+I'm sure I'll have to settle with obfuscation, which I'm OK with, but
+Is the only option to change things we need to hide into binaries?
+Compile the kernel with a key to decrypt?
+VM I can mount the boot partitions, but they only have boot
+Thanks for any advice!
+Nate
+Thanks Maurice and Dennis for point me to the FAQ on
+Richard Toohey was first to respond in private with the
+I didn't want to "muddy" the unbootable iso image issue
+I just assumed I was missing something subtle in its
+-patrick
+Hi Alessandro,
+AJ> The issue is not with USB printing per se but with the HPLIP
+AJ> There's probably a regression in HLIP after CUPS got updated
+That may as well be true but I wanted to double-check whether your issue
+The reason I mention it is the fact that several people have reported
+Regards,
+Raf
+Hi,
+$ firefox
+$ pkg_info -Q canberra
+$ pkg_info | grep -i canberra
+Is it a missing dependency?
+Remember to update /var/db/dbus/machine-id
+Remember to update /etc/machine-id
+I don't know how to do this and I couldn't find much about machine-id on
+the gentoo forum about it, in which posters express worry about it as a
+Can anyone shed light on this and say what, if anything, I should do?
+Anthony
+diffs quickly on a source- or port-change?
+Just reading the titles is not very helpful and I also don't feel
+like pulling the entire OpenBSD CVS-tree just to view the recent
+I'm subscribed to numerous mailing lists, and all of them provide
+to such a list if it actually encouraged to read and check the
+Cheers
+FRIGN
+Anthony
+next several days -- unless some change caused a cascade of
+non-compiles in which case the problem will be worked on before
+You might want to subscribe to the ports-changes changes list,
+What is META?
+Stan
+$ ldd /usr/sbin/unbound
+Regards,
+Liviu Daia
+Oh, I wasn't accusing anybody, or pointing fingers, or anything like
+Regards,
+Liviu Daia
+following source-changes so you can spot these and hold off on updating for a
+This might be more a question for ports@ but it is also a general "do
+He wants to use some newer POSIX features but it seems that if he does
+I'm definitely not the best person to advise him, so asking the general
+Thanks,
+Yes, this is what I use if I'm looking for contents of diffs that have
+Personally I also try to keep the main part of my commit logs in the
+first line (and where ports is concerned I include the name of the port
+for simple updates rather than just 'update to xx') so that the truncated
+What you could do if you can't wait for new packages and don't have the
+correct version of the library, is to identify the date/time when the
+update) to fetch a copy of the source code for the library at the
+i follow
+# ls -l /srv/http/
+<Directory "/srv/http/member">
+AuthType Basic
+AuthName "Secret Zone"
+Require user secret
+</Directory>
+what should i do ?
+AuthType Basic
+AuthName "Secret Zone"
+Require user XXX
+</Directory>
+tuyosi
+Hi,
+Many thanks!
+Lars
+obvious enthusiasm and just don't care - so many rock stars rise and
+Lars
+implications for data-in=-motion on virtual machines of third party
+----Message d'origine-----
+I have a digital Ocean instance too, but they do not (last time I
+Worik
+Why is the legal status of chardonnay different to that of cannabis?
+Aotearoa (New Zealand)
+I voted for love
+ Eric
+The key is also likely stored in RAM, and it is simpler to get a
+Maybe I just think to simple here, but how about just switching on
+David
+David Dahlberg
+I've found a few other mentions with different subids that look like
+So I'll commit your original patch, included below as
+break;
+break;
+That's about the reverse of what's wanted, ndots sets the number of
+dots when it should always do an absolute query and avoid using search
+At this point I think we need to just consider search domains as broken
+Hi Alessandro,
+However, whether your issue is related to that one or whether xHCI
+know - I merely (making an assumption, which may as well be flawed)
+Regards,
+Raf
+What about using a kay partition local to the VM disk
+Hi,
+$ firefox
+$ pkg_info -Q canberra
+$ pkg_info | grep -i canberra
+Is it a missing dependency?
+Hello all,
+First of all, I'd like to thank Reyk, Pierre-Yves and OpenBSD for this
+breeze,
+I've configured relayd to act as a forward proxy for basic URL filtering
+filters
+blacklist
+would be applied against an unprivileged user, and a more lenient
+blacklist is
+to
+accomplish that task, but it doesn't seem the client IP is present on
+HTTP
+there a
+I've
+devised is to make relayd listen on two different ports, each with its
+respective filter, and redirect from pf depending on the originating
+address,
+fbscarel
+Joel Rees
+Look first in your own heart,
+I should note, that I have to launch the ibus preferences (as from
+Joel Rees
+Look first in your own heart,
+I have got Japanese input running and useable, by installing the packages
+ja-fonts-gnu
+ja-sazanami-ttf
+ja-mplus-ttf
+ibus-anthy
+Joel Rees
+Look first in your own heart,
+Hi misc,
+them?
+is it OK?
+cat /etc/motd
+Thank you
+Indunil Jayasooriya
+Fonts
+Hello @misc,
+This mail is regarding about issues that im facing after doing a fresh
+The point is that after installing sucessfully i am trying to start X but
+x starts)
+Regards,
+Leonardo Santagostini
+was retired, pfstat could no longer graph my queues and this is still
+my college-level C sleeves and fix pfstat, but I did not take this
+route and, instead, took the lesser route and wrote a script that
+Medium (I have no affiliation with them) releasing/open sourcing their
+pretty and simple data visualization tool, Charted, and there are more
+details about this at
+If you are interested, a snapshot of my queue graph is at
+only person using this script, so it might be horribly broken for some
+A trademark doesn't have to be registered to be enforced (but you will
+Why does free distribution matter?
+This still doesn't solve the CPU microcode problem, but when open
+hardware comes, and I need to buy a new computer, I'll be buying the
+They can always add it themselves, thus ensuring that they only have the
+Look how many bugs - with potential security implications - have been
+Hmmmmmm
+their reasons, that standard's nearly a quarter of a century old now, so
+maybe in the interests of moving MOC forward we have to leave OpenBSD
+So just because something is old it's automatically bad and useless and
+for all costs wheel must be reinvented? Better to keep away from that
+aka don't think about why there's used different standard, simply run
+When does the screen go black? On startx?
+I have seen a similar issue on a Toshiba portege - and toggling the
+hth
+Fred
+PS dmesg is always useful
+All,
+Due to lack of free time I would like to give away my SUN SPARCstation
+The machine has been running until very recently in the above
+If the project has a need for this machine, I am happy to cover the
+Kind regards,
+Mark
+Well good that you know it, but where are they? ;-)
+I think I should try a different tack - I'm not a MOC user nor a
+If anyone using OpenBSD and MOC wants to ensure that future versions
+Thanks,
+thnks !!
+You can get the IPsec SA SPIs and keys with the "ipsecctl -k -sa"
+dd
+David Dahlberg
+started from your Imac? In that case I believe you should not use ssh
+display on your iMac? In that case I believe you will need a separate X
+server (like Xephyr or Xnest) running on your iMac and to which whatever
+software I tried was remmina (in packages) but performance, at least
+Regards,
+Erling
+Does this also work when u do it from OpenBSD to a headless (just no video
+card) OpenBSD server? Can I run X stuff on that remote box too?
+To have it on, I had to go to bios and lower how much memory
+Best regards
+Zoran
+Hi all,
+thought that problem is similar to this thread
+But if in dell bios system profile settings is set to performance or to
+In links bellow you can find acpidump and dmesg from performance and
+I am trying to get the netatalk package to use ssh-key login oppose to
+I know the afp is not as popular then the samba setup but it is so much
+smaller and faster that I would prefer using it from apple computer to
+Could there be a kind sole out there that got this to work and could
+give me a clue stick somehow?
+But the ssh key issue, if anyone got this to work I would very much
+trying to do something that should be possible and yes I sure can just
+ssh to the box using the key, but can't use the afp mount process with
+I am just getting to old for such frustrations and drunk trying to work
+Before I have to run to the store again and not be able to drive, anyone
+have a clue?
+Beer stuck is getting low!
+Best,
+Daniel
+I'm trying to do something somewhat similar to Loïc Blot was attempting,
+as described in
+subnet on the BGP routers, and I am using a mix of both CARP and
+So far, I'm not doing NAT on these routers, and my pf rulesets on both
+Should I configure pfsync? Should I just use sloppy state?
+Adam Thompson
+I have been trying out dovecot for some years and it has always had some irritating "bug" or
+It seems to have been very quiet lately so I thought I'd have another attempt to get it running
+Any happy users? Absolute haters who have really tried hard? (Description of problem?)
+Thanx,
+Rod/
+news is this will only take about seven kernels to find the offending
+commit; the bad news is building old snapshot ramdisk kernels is quite
+Rod/
+Marc
+Bernd
+hth
+Fred
+I see that tedu@ already mentioned the fact about your local storage is
+Given that the initial installation finishes just fine, I conclude that
+Regards,
+Raf
+Not everyone's running -current, Ingo ;^)
+Regards,
+Raf
+have a nice day
+Lars
+ForeTell Technologies Limited
+Hi,
+internal wifi card (realtek usb dongle works more or less fine with
+urtwn), and not having sound over HDMI (I have dedicated another older
+As a long time xfce user, I got used to monitor my battery status with
+Any chance for fixing this?
+Marko Cupać
+Look at the install scripts -- it doesn't prefetch just anywhere, it has
+Thus, your original config, which had nowhere near enough space in /tmp
+All,
+Kind regards,
+Mark
+Hi,
+I don't experience problems, but perhaps developers will have some use
+Marko Cupać
+Hi,
+netstart restores the connection for a few seconds, after which it
+Re-inserting usb dongle followed by netstart re-estabilishes
+I don't know if it is related, but I had similar problem with
+I'd have to turn adapter off and on in order to restore the
+Any good people out there to help me out with this?
+Marko Cupać
+Remember to update /var/db/dbus/machine-id
+Remember to update /etc/machine-id
+I don't know how to do this and I couldn't find much about machine-id on
+the gentoo forum about it, in which posters express worry about it as a
+Can anyone shed light on this and say what, if anything, I should do?
+Anthony
+Anthony
+Stan
+next several days -- unless some change caused a cascade of
+non-compiles in which case the problem will be worked on before
+You might want to subscribe to the ports-changes changes list,
+$ ldd /usr/sbin/unbound
+Regards,
+Liviu Daia
+Oh, I wasn't accusing anybody, or pointing fingers, or anything like
+Regards,
+Liviu Daia
+following source-changes so you can spot these and hold off on updating for a
+diffs quickly on a source- or port-change?
+Just reading the titles is not very helpful and I also don't feel
+like pulling the entire OpenBSD CVS-tree just to view the recent
+I'm subscribed to numerous mailing lists, and all of them provide
+to such a list if it actually encouraged to read and check the
+Cheers
+FRIGN
+What is META?
+Yes, this is what I use if I'm looking for contents of diffs that have
+Personally I also try to keep the main part of my commit logs in the
+first line (and where ports is concerned I include the name of the port
+for simple updates rather than just 'update to xx') so that the truncated
+This might be more a question for ports@ but it is also a general "do
+He wants to use some newer POSIX features but it seems that if he does
+I'm definitely not the best person to advise him, so asking the general
+Thanks,
+What you could do if you can't wait for new packages and don't have the
+correct version of the library, is to identify the date/time when the
+update) to fetch a copy of the source code for the library at the
+i follow
+# ls -l /srv/http/
+<Directory "/srv/http/member">
+AuthType Basic
+AuthName "Secret Zone"
+Require user secret
+</Directory>
+what should i do ?
+AuthType Basic
+AuthName "Secret Zone"
+Require user XXX
+</Directory>
+tuyosi
+Hi,
+Many thanks!
+obvious enthusiasm and just don't care - so many rock stars rise and
+Lars
+Lars
+implications for data-in=-motion on virtual machines of third party
+----Message d'origine-----
+I have a digital Ocean instance too, but they do not (last time I
+Worik
+Why is the legal status of chardonnay different to that of cannabis?
+Aotearoa (New Zealand)
+I voted for love
+ Eric
+The key is also likely stored in RAM, and it is simpler to get a
+Hi,
+$ firefox
+$ pkg_info -Q canberra
+$ pkg_info | grep -i canberra
+Is it a missing dependency?
+I've found a few other mentions with different subids that look like
+So I'll commit your original patch, included below as
+break;
+break;
+Maybe I just think to simple here, but how about just switching on
+David
+David Dahlberg
+That's about the reverse of what's wanted, ndots sets the number of
+dots when it should always do an absolute query and avoid using search
+At this point I think we need to just consider search domains as broken
+Hi Alessandro,
+However, whether your issue is related to that one or whether xHCI
+know - I merely (making an assumption, which may as well be flawed)
+Regards,
+Raf
+What about using a kay partition local to the VM disk
+Hello all,
+First of all, I'd like to thank Reyk, Pierre-Yves and OpenBSD for this
+breeze,
+I've configured relayd to act as a forward proxy for basic URL filtering
+filters
+blacklist
+would be applied against an unprivileged user, and a more lenient
+blacklist is
+to
+accomplish that task, but it doesn't seem the client IP is present on
+HTTP
+there a
+I've
+devised is to make relayd listen on two different ports, each with its
+respective filter, and redirect from pf depending on the originating
+address,
+fbscarel
+Joel Rees
+Look first in your own heart,
+Hi misc,
+them?
+is it OK?
+cat /etc/motd
+Thank you
+Indunil Jayasooriya
+Fonts
+I have got Japanese input running and useable, by installing the packages
+ja-fonts-gnu
+ja-sazanami-ttf
+ja-mplus-ttf
+ibus-anthy
+Joel Rees
+Look first in your own heart,
+I should note, that I have to launch the ibus preferences (as from
+Joel Rees
+Look first in your own heart,
+was retired, pfstat could no longer graph my queues and this is still
+my college-level C sleeves and fix pfstat, but I did not take this
+route and, instead, took the lesser route and wrote a script that
+Medium (I have no affiliation with them) releasing/open sourcing their
+pretty and simple data visualization tool, Charted, and there are more
+details about this at
+If you are interested, a snapshot of my queue graph is at
+only person using this script, so it might be horribly broken for some
+Hello @misc,
+This mail is regarding about issues that im facing after doing a fresh
+The point is that after installing sucessfully i am trying to start X but
+x starts)
+Regards,
+Leonardo Santagostini
+They can always add it themselves, thus ensuring that they only have the
+Look how many bugs - with potential security implications - have been
+A trademark doesn't have to be registered to be enforced (but you will
+Why does free distribution matter?
+This still doesn't solve the CPU microcode problem, but when open
+hardware comes, and I need to buy a new computer, I'll be buying the
+Hmmmmmm
+their reasons, that standard's nearly a quarter of a century old now, so
+maybe in the interests of moving MOC forward we have to leave OpenBSD
+So just because something is old it's automatically bad and useless and
+for all costs wheel must be reinvented? Better to keep away from that
+aka don't think about why there's used different standard, simply run
+Well good that you know it, but where are they? ;-)
+thnks !!
+When does the screen go black? On startx?
+I have seen a similar issue on a Toshiba portege - and toggling the
+hth
+Fred
+PS dmesg is always useful
+I think I should try a different tack - I'm not a MOC user nor a
+If anyone using OpenBSD and MOC wants to ensure that future versions
+Thanks,
+You can get the IPsec SA SPIs and keys with the "ipsecctl -k -sa"
+dd
+David Dahlberg
+All,
+Due to lack of free time I would like to give away my SUN SPARCstation
+The machine has been running until very recently in the above
+If the project has a need for this machine, I am happy to cover the
+Kind regards,
+Mark
+Does this also work when u do it from OpenBSD to a headless (just no video
+card) OpenBSD server? Can I run X stuff on that remote box too?
+started from your Imac? In that case I believe you should not use ssh
+display on your iMac? In that case I believe you will need a separate X
+server (like Xephyr or Xnest) running on your iMac and to which whatever
+software I tried was remmina (in packages) but performance, at least
+Regards,
+Erling
+Hi all,
+thought that problem is similar to this thread
+But if in dell bios system profile settings is set to performance or to
+In links bellow you can find acpidump and dmesg from performance and
+To have it on, I had to go to bios and lower how much memory
+Best regards
+Zoran
+I am trying to get the netatalk package to use ssh-key login oppose to
+I know the afp is not as popular then the samba setup but it is so much
+smaller and faster that I would prefer using it from apple computer to
+Could there be a kind sole out there that got this to work and could
+give me a clue stick somehow?
+But the ssh key issue, if anyone got this to work I would very much
+trying to do something that should be possible and yes I sure can just
+ssh to the box using the key, but can't use the afp mount process with
+I am just getting to old for such frustrations and drunk trying to work
+Before I have to run to the store again and not be able to drive, anyone
+have a clue?
+Beer stuck is getting low!
+Best,
+Daniel
+news is this will only take about seven kernels to find the offending
+commit; the bad news is building old snapshot ramdisk kernels is quite
+I have been trying out dovecot for some years and it has always had some irritating "bug" or
+It seems to have been very quiet lately so I thought I'd have another attempt to get it running
+Any happy users? Absolute haters who have really tried hard? (Description of problem?)
+Thanx,
+Rod/
+Rod/
+I'm trying to do something somewhat similar to Loïc Blot was attempting,
+as described in
+subnet on the BGP routers, and I am using a mix of both CARP and
+So far, I'm not doing NAT on these routers, and my pf rulesets on both
+Should I configure pfsync? Should I just use sloppy state?
+Adam Thompson
+Bernd
+I see that tedu@ already mentioned the fact about your local storage is
+Given that the initial installation finishes just fine, I conclude that
+Regards,
+Raf
+Not everyone's running -current, Ingo ;^)
+Regards,
+Raf
+Marc
+have a nice day
+Lars
+hth
+Fred
+ForeTell Technologies Limited
+All,
+Kind regards,
+Mark
+Hi,
+internal wifi card (realtek usb dongle works more or less fine with
+urtwn), and not having sound over HDMI (I have dedicated another older
+As a long time xfce user, I got used to monitor my battery status with
+Any chance for fixing this?
+Marko Cupać
+Look at the install scripts -- it doesn't prefetch just anywhere, it has
+Thus, your original config, which had nowhere near enough space in /tmp
+Hi,
+I don't experience problems, but perhaps developers will have some use
+Marko Cupać
+Hi,
+netstart restores the connection for a few seconds, after which it
+Re-inserting usb dongle followed by netstart re-estabilishes
+I don't know if it is related, but I had similar problem with
+I'd have to turn adapter off and on in order to restore the
+Any good people out there to help me out with this?
+Marko Cupać
+Hi,
+This is modern laptop with SSD disk, I guess it should be faster than
+Any advice on where should I start looking for solution?
+Thank you in advance,
+Marko Cupać
+Hi,
+I've read this
+but I cant seem to find relevant entries in the source tree so probably
+is still out?
+regards,
+Giannis
+Hi,
+in xfce, but it accesses apm without dbus (it still does not access acpi
+on OpenBSD, that is on my TODO list)
+Riccardo
+Hi,
+Not sure what want, but ospfd seems to properly detect interfaces, that
+Lee
+Some cheap VPS providers allow you to use a custom ISO which is a
+straight forward process, but looking at this thread I am wondering if I
+Is this a suggestion for a new chapter in the FAQ?
+Worik
+Why is the legal status of chardonnay different to that of cannabis?
+Aotearoa (New Zealand)
+I voted for love
+How can you say this? The problem isn't my BIOS don't booting with a
+My motherboard is very new and it every worked good in any type of
+Henrique Lengler
+Since I ran into this issue I can't even access my bios with the HDD
+Henrique Lengler
+Hi,
+I decided to install openbsd by the first time a month ago, How I was
+with no internet
+connection I needed to shutdown the computer in the part that I need to
+download the packages,
+clicked the reset button
+Thinking that the problem was the harddrive I sent it to warranty to be
+cable connection, and I
+It sucefully downloaded and installed everything, so I rebooted the
+AND SHIT, everything happened as before, the system don't boot as
+before, I can't open the bios as before, and
+I don't know if I will be able to sent it to warranty again, but this
+isn't the right thing to do now that
+I discovered that the problem isn't with it, the problem is with
+Could someone please explain me why this happened? Can you think about a
+way to fix this without send it to warranty?
+Any other questions? send me a reply, I'm really in need of help
+Henrique Lengler
+worked, and still
+second time, I did
+a test, I reboot my system three times, accessed bios and everything
+Henrique Lengler
+What about my second attempt, in which I did everything normally and the
+same problem happened?
+Henrique Lengler
+But it can boot my CD/DVD reader with a cd containing Linux, wich is
+Henrique Lengler
+Start ruling out sections of the root cause scope, and pretty soon
+has SMART programs, so you can see whether your hard disk is damaged,
+SteveT
+I mean before
+Henrique Lengler
+Will be difficult to me can do this, I don't have any other desktop in
+Isn't the operating system responsible to recognize and use with a
+correct
+driver my HDD?
+Linux is like this, the kernel have the SATA driver wich handle the
+Regards,
+Henrique Lengler
+Just in case, I already used Linux with a totally BIOS setup and it
+Regards,
+Henrique Lengler
+So this it the time the OS is able to do whatfuck it wants with my HDD,
+and
+So why this happened when using OpenBSD?
+Henrique Lengler
+I stand to be corrected but I do not think that OpenBSD can support
+Regards
+Henrique Lengler
+Also found a very similar with a similar motherboard, but have no
+Regards,
+Henrique Lengler
+As I said, everything I can expect from a bad uncompleted install is the
+system trying
+But what really happen is that if I tur on the computer with the HDD
+connected, all other
+clicking
+Henrique Lengler
+At least this my motherboard did good, I easily updated the firmware by
+plugging
+the HDD sata
+will still
+I'm in doubt about try openBSD again, I'm afraid everything could happen
+Also is there a explanation to this shitty behavior? My motherboard
+acted like having a
+short circuit, making everything stop working because a bad formatted
+HDD, this is a
+Regards,
+Henrique Lengler
+Hi,
+in xfce, but it accesses apm without dbus (it still does not access acpi
+on OpenBSD, that is on my TODO list)
+Riccardo
+Hi,
+I've read this
+but I cant seem to find relevant entries in the source tree so probably
+is still out?
+regards,
+Giannis
+Hi,
+Not sure what want, but ospfd seems to properly detect interfaces, that
+interfaces (vlan)
+G
+Hi,
+This is modern laptop with SSD disk, I guess it should be faster than
+Any advice on where should I start looking for solution?
+Thank you in advance,
+Marko Cupać
+Hi,
+I have constant number of blocked procs in vmstat after xfce starts
+procs memory page disk traps cpu
+How can I find out what are blocked processes? And why are they
+constantly blocked?
+Thank you in advance,
+Marko Cupać
+Hi Marko,
+Can you provide the output of upower -d please?
+Cheers,
+Daniel
+line-power
+battery
+battery
+Marko Cupać
+Upon, pulling the plug from the wall on my older Toshiba Satellite (which has a new-ish battery)
+Any clue where I should start looking for this?
+I see the exact same thing as you show above, but did nothing to start it twice, so
+Because this is a new thing that even experienced users can easily
+<p>
+For instance, to update all your packages, make sure <tt>PKG_PATH</tt> is
+For instance, to update all your packages, make sure <tt>PKG_PATH</tt>
+(and
+and use something like
+Adam Thompson
+Given that batteries are treated as consumables nowadays and their
+Regards,
+Raf
+hello, I am willing to know the sound system of OpenBSD,
+I summarized with a graph below, it is right?
+access to audio and MIDI hardware and to services
+| interface to audio devices and MIDI streams |
+| audio/midi server |
+| device-independent | | raw device |
+| driver layer | | independent |
+|--------------------| | interface |
+| device dependent driver |
+| [audio] [MIDI] |
+| Hardware |
+Regards Alfonso
+using virtio for nics and disks, I've got the same problem like
+Hi all,
+I only want to know what problems I can encounter when I need to
+Yes, I know, OpenBSD is not supported to run in virtualization
+environments, but many of us only have access to that kind of
+physical server and although I am not a big fan of this type of
+Anything else??
+n
+configuration OK
+# global configuration
+Regards Tony
+You may want to read these two as well
+G
+This can be tried as a workaround for possible bugs in host
+What bugs in the host implementation, which versions are affected, how
+bad is the performance hit, and should this be the default?
+- Fred Allen
+I have update the graph about the sound system
+and I have added the border between userspace and kernelspace
+| interface to audio devices and MIDI streams |
+| | audio/midi server | |
+| | | | User
+| | | | space
+| | | | Kernel
+| | | | space
+| device-independent | | raw device |
+| driver layer | | independent |
+|--------------------| | interface |
+| device dependent driver |
+| [audio] [MIDI] |
+| Hardware |
+Regards Alfonso
+- Indian proverb
+Using any OS on top of any virtual machine is like scratching your
+doing that?
+I know that one of the goals of OpenBSD dev team is launch a new version
+to update OpenBSD? There is an automated way to do it?
+Thanks
+Ignacio Ocampo Millán
+anywhere
+Clementine may have special code which expects the network to be slow and
+flaky,
+code which helps in keeping playback smooth over the network, code which does
+that
+Hi,
+I've just changed my pair of of firewalls (master/backup) from
+I'm looking for success stories for the initial bulk transfer/sync of
+What do you guys do for that?
+ Delayed ospfd start?
+ copy states from the second firewall immediately after boot?
+ssh root@fw /sbin/pfctl -S /dev/stdout | /sbin/pfctl -L /dev/stdin
+ tricks with ifstated?
+Giannis
+it into a different port, then return it back to the original to get
+After the holidays I'll get a dmesg with more details
+Run the installer, choose the upgrade option, reboot, run sysmerge, I
+Greetings,
+man is hashed (/usr/bin/man)
+Alessandro DE LAURENZIS
+thanks
+Hello,
+the config with masquerading but could not figure out how to link local users to
+I figure, that there are many people like me trying to hack a bit but unwilling
+love to see a sample sendmail config for the stuff that is configured that
+Cheers,
+Uli Grassberger
+one or two testing cycles
+It is absolutely Genuine Replacement, since this laptop is out of production
+I've read something about "training the charge controller" about actual battery capabilities, but
+I was planning to boot with some random Knoppix live CD to see if the behaviour was any different
+I can see that these two variables are needed in the case of someone
+using separate release directories for X and non-X files, but would it
+Hi,
+If so, how well does the driver for the two NICs work? How does the box perform in general?
+Thanks!
+Vultr already support OpenBSD on their servers (you upload the OpenBSD
+install ISO and install it yourself) and their servers cost the same as
+Hi,
+Alan Cheng
+to compile the ports myself, which always successfully compile, but always
+Richard Thornton
+Why do you think this? Can you provide an error message or stack trace?
+I'm considering setting up a wifi access point using a PC Engines
+However, 'man athn' says
+running on the (relatively slow) ALIX Geode processor? That is, is
+the software crypto likely to limit the available wifi data rate?
+ciao,
+Dept of Astronomy & IUCSS, Indiana University, Bloomington, Indiana, USA
+"There was of course no way of knowing whether you were being watched
+There is a very good chance to stay like this in the future if you
+design machine which can't be shown to the public yet?
+I'm trying to create an appliance like install and want to stop
+In particular when running bioctl to setup a softraid device with
+CRYPTO, console outputs a new disk is attached, but I don't want this
+My guess is a boot option but I've looked around a lot and can't find
+Thanks
+I should mention that RamNode offers OpenBSD -release without the
+Cheers!
+Ezequiel
+Hi,
+C) change the CPU frequency of only single (arbitrary) cores, leading
+(correct me if I'm wrong!)
+(only a P_CPUPEG for the scheduler, which is probably of limited use in
+a course of action? A user-space implementation seems out of the
+Regards,
+Marinos
+Marinos Yannikos
+I think the concern is warranted and yes, I expect this to be a
+I have no experience with that configuration, but I had a broadly
+seemed to be able to saturate the wireless link, but it was mostly
+Also note that if kernel crypto monopolizes the CPU, userland
+make install
+</pre>
+install the files in /usr/src/share/mk before completing the steps
+outlined above!
+Bye, Marcus
+I am aware of one prior instance of a BIOS failing to complete POST
+after
+Lee
+Some cheap VPS providers allow you to use a custom ISO which is a
+straight forward process, but looking at this thread I am wondering if I
+Is this a suggestion for a new chapter in the FAQ?
+Worik
+Why is the legal status of chardonnay different to that of cannabis?
+Aotearoa (New Zealand)
+I voted for love
+Since I ran into this issue I can't even access my bios with the HDD
+Henrique Lengler
+What about my second attempt, in which I did everything normally and the
+same problem happened?
+Henrique Lengler
+Hi,
+I decided to install openbsd by the first time a month ago, How I was
+with no internet
+connection I needed to shutdown the computer in the part that I need to
+download the packages,
+clicked the reset button
+Thinking that the problem was the harddrive I sent it to warranty to be
+cable connection, and I
+It sucefully downloaded and installed everything, so I rebooted the
+AND SHIT, everything happened as before, the system don't boot as
+before, I can't open the bios as before, and
+I don't know if I will be able to sent it to warranty again, but this
+isn't the right thing to do now that
+I discovered that the problem isn't with it, the problem is with
+Could someone please explain me why this happened? Can you think about a
+way to fix this without send it to warranty?
+Any other questions? send me a reply, I'm really in need of help
+Henrique Lengler
+worked, and still
+second time, I did
+a test, I reboot my system three times, accessed bios and everything
+Henrique Lengler
+But it can boot my CD/DVD reader with a cd containing Linux, wich is
+Henrique Lengler
+How can you say this? The problem isn't my BIOS don't booting with a
+My motherboard is very new and it every worked good in any type of
+Henrique Lengler
+I mean before
+Henrique Lengler
+Just in case, I already used Linux with a totally BIOS setup and it
+Regards,
+Henrique Lengler
+Will be difficult to me can do this, I don't have any other desktop in
+Isn't the operating system responsible to recognize and use with a
+correct
+driver my HDD?
+Linux is like this, the kernel have the SATA driver wich handle the
+Regards,
+Henrique Lengler
+So this it the time the OS is able to do whatfuck it wants with my HDD,
+and
+So why this happened when using OpenBSD?
+Henrique Lengler
+I stand to be corrected but I do not think that OpenBSD can support
+Start ruling out sections of the root cause scope, and pretty soon
+has SMART programs, so you can see whether your hard disk is damaged,
+SteveT
+As I said, everything I can expect from a bad uncompleted install is the
+system trying
+But what really happen is that if I tur on the computer with the HDD
+connected, all other
+clicking
+Henrique Lengler
+Also found a very similar with a similar motherboard, but have no
+Regards,
+Henrique Lengler
+Regards
+Henrique Lengler
+At least this my motherboard did good, I easily updated the firmware by
+plugging
+the HDD sata
+will still
+I'm in doubt about try openBSD again, I'm afraid everything could happen
+Also is there a explanation to this shitty behavior? My motherboard
+acted like having a
+short circuit, making everything stop working because a bad formatted
+HDD, this is a
+Regards,
+Henrique Lengler
+interfaces (vlan)
+G
+Hi,
+I have constant number of blocked procs in vmstat after xfce starts
+procs memory page disk traps cpu
+How can I find out what are blocked processes? And why are they
+constantly blocked?
+Thank you in advance,
+Marko Cupać
+Hi Marko,
+Can you provide the output of upower -d please?
+Cheers,
+Daniel
+line-power
+battery
+battery
+Marko Cupać
+I see the exact same thing as you show above, but did nothing to start it twice, so
+Upon, pulling the plug from the wall on my older Toshiba Satellite (which has a new-ish battery)
+Any clue where I should start looking for this?
+hello, I am willing to know the sound system of OpenBSD,
+I summarized with a graph below, it is right?
+access to audio and MIDI hardware and to services
+| interface to audio devices and MIDI streams |
+| audio/midi server |
+| device-independent | | raw device |
+| driver layer | | independent |
+|--------------------| | interface |
+| device dependent driver |
+| [audio] [MIDI] |
+| Hardware |
+Regards Alfonso
+Because this is a new thing that even experienced users can easily
+<p>
+For instance, to update all your packages, make sure <tt>PKG_PATH</tt> is
+For instance, to update all your packages, make sure <tt>PKG_PATH</tt>
+(and
+and use something like
+Adam Thompson
+Hi all,
+I only want to know what problems I can encounter when I need to
+Yes, I know, OpenBSD is not supported to run in virtualization
+environments, but many of us only have access to that kind of
+physical server and although I am not a big fan of this type of
+Anything else??
+You may want to read these two as well
+Given that batteries are treated as consumables nowadays and their
+Regards,
+Raf
+This can be tried as a workaround for possible bugs in host
+What bugs in the host implementation, which versions are affected, how
+bad is the performance hit, and should this be the default?
+- Fred Allen
+using virtio for nics and disks, I've got the same problem like
+- Indian proverb
+n
+configuration OK
+# global configuration
+Regards Tony
+G
+I have update the graph about the sound system
+and I have added the border between userspace and kernelspace
+| interface to audio devices and MIDI streams |
+| | audio/midi server | |
+| | | | User
+| | | | space
+| | | | Kernel
+| | | | space
+| device-independent | | raw device |
+| driver layer | | independent |
+|--------------------| | interface |
+| device dependent driver |
+| [audio] [MIDI] |
+| Hardware |
+Regards Alfonso
+Using any OS on top of any virtual machine is like scratching your
+doing that?
+it into a different port, then return it back to the original to get
+After the holidays I'll get a dmesg with more details
+anywhere
+Clementine may have special code which expects the network to be slow and
+flaky,
+code which helps in keeping playback smooth over the network, code which does
+that
+I know that one of the goals of OpenBSD dev team is launch a new version
+to update OpenBSD? There is an automated way to do it?
+Thanks
+Ignacio Ocampo Millán
+Run the installer, choose the upgrade option, reboot, run sysmerge, I
+Hi,
+I've just changed my pair of of firewalls (master/backup) from
+I'm looking for success stories for the initial bulk transfer/sync of
+What do you guys do for that?
+ Delayed ospfd start?
+ copy states from the second firewall immediately after boot?
+ssh root@fw /sbin/pfctl -S /dev/stdout | /sbin/pfctl -L /dev/stdin
+ tricks with ifstated?
+Giannis
+Greetings,
+man is hashed (/usr/bin/man)
+Alessandro DE LAURENZIS
+Hello,
+the config with masquerading but could not figure out how to link local users to
+I figure, that there are many people like me trying to hack a bit but unwilling
+love to see a sample sendmail config for the stuff that is configured that
+Cheers,
+Uli Grassberger
+I can see that these two variables are needed in the case of someone
+using separate release directories for X and non-X files, but would it
+one or two testing cycles
+It is absolutely Genuine Replacement, since this laptop is out of production
+I've read something about "training the charge controller" about actual battery capabilities, but
+I was planning to boot with some random Knoppix live CD to see if the behaviour was any different
+thanks
+Vultr already support OpenBSD on their servers (you upload the OpenBSD
+install ISO and install it yourself) and their servers cost the same as
+Hi,
+If so, how well does the driver for the two NICs work? How does the box perform in general?
+Thanks!
+Hi,
+Alan Cheng
+to compile the ports myself, which always successfully compile, but always
+Richard Thornton
+Why do you think this? Can you provide an error message or stack trace?
+There is a very good chance to stay like this in the future if you
+design machine which can't be shown to the public yet?
+I should mention that RamNode offers OpenBSD -release without the
+Cheers!
+Ezequiel
+I'm considering setting up a wifi access point using a PC Engines
+However, 'man athn' says
+running on the (relatively slow) ALIX Geode processor? That is, is
+the software crypto likely to limit the available wifi data rate?
+ciao,
+Dept of Astronomy & IUCSS, Indiana University, Bloomington, Indiana, USA
+"There was of course no way of knowing whether you were being watched
+I'm trying to create an appliance like install and want to stop
+In particular when running bioctl to setup a softraid device with
+CRYPTO, console outputs a new disk is attached, but I don't want this
+My guess is a boot option but I've looked around a lot and can't find
+Thanks
+Hi,
+C) change the CPU frequency of only single (arbitrary) cores, leading
+(correct me if I'm wrong!)
+(only a P_CPUPEG for the scheduler, which is probably of limited use in
+a course of action? A user-space implementation seems out of the
+Regards,
+Marinos
+Marinos Yannikos
+make install
+</pre>
+install the files in /usr/src/share/mk before completing the steps
+outlined above!
+Bye, Marcus
+I think the concern is warranted and yes, I expect this to be a
+I have no experience with that configuration, but I had a broadly
+seemed to be able to saturate the wireless link, but it was mostly
+Also note that if kernel crypto monopolizes the CPU, userland
+I am aware of one prior instance of a BIOS failing to complete POST
+after
+softdep can help a lot with big cvs updates, especially on disks which are
+ports) so there are a large number of inode changes that need to be written
+to disk,
+It varies, I probably update the entire ports tree on my laptop once or
+twice a week, and smaller parts if I'm working on them or if I see an
+differences between people (and at different times depending on what
+softdep can help a lot with big cvs updates, especially on disks which are
+ports) so there are a large number of inode changes that need to be written
+to disk,
+It varies, I probably update the entire ports tree on my laptop once or
+twice a week, and smaller parts if I'm working on them or if I see an
+differences between people (and at different times depending on what
+imagine a resourceful person could read a bunch of trademark apps on
+imagine that you'd need some pretty good lawyers spending a lot of time
+SteveT
+imagine a resourceful person could read a bunch of trademark apps on
+imagine that you'd need some pretty good lawyers spending a lot of time
+SteveT
+#user nobody;
+default_type application/octet-stream;
+#log_format main '$remote_addr - $remote_user [$time_local]
+"$request" '
+# '$status $body_bytes_sent "$http_referer" '
+# '"$http_user_agent" "$http_x_forwarded_for"';
+sendfile on;
+#tcp_nopush on;
+#gzip on;
+server_name localhost;
+root /htdocs;
+root /htdocs;
+# Some modules enforce no slash (/) at the end of the URL
+(GlobalRedirect)
+# pass the PHP scripts to FastCGI server listening on
+root /htdocs;
+fastcgi_param SCRIPT_FILENAME /htdocs$fastcgi_script_name;
+include fastcgi_params;
+# concurs with nginx's one
+# deny all;
+# another virtual host using mix of IP-, name-, and port-based
+configuration
+# root /htdocs;
+# HTTPS server
+# server_name localhost;
+# ssl on;
+# ssl_prefer_server_ciphers on;
+# root /htdocs;
+ss
+#user nobody;
+default_type application/octet-stream;
+#log_format main '$remote_addr - $remote_user [$time_local]
+"$request" '
+# '$status $body_bytes_sent "$http_referer" '
+# '"$http_user_agent" "$http_x_forwarded_for"';
+sendfile on;
+#tcp_nopush on;
+#gzip on;
+server_name localhost;
+root /htdocs;
+root /htdocs;
+# Some modules enforce no slash (/) at the end of the URL
+(GlobalRedirect)
+# pass the PHP scripts to FastCGI server listening on
+root /htdocs;
+fastcgi_param SCRIPT_FILENAME /htdocs$fastcgi_script_name;
+include fastcgi_params;
+# concurs with nginx's one
+# deny all;
+# another virtual host using mix of IP-, name-, and port-based
+configuration
+# root /htdocs;
+# HTTPS server
+# server_name localhost;
+# ssl on;
+# ssl_prefer_server_ciphers on;
+# root /htdocs;
+ss
+Thanks - this is how I usually do it but got confused by the upgrade
+Cheers,
+STEFAN
+Thanks - this is how I usually do it but got confused by the upgrade
+Cheers,
+STEFAN
+And what was the answer of Realtek on such question? ;-) It may be nice
+And what was the answer of Realtek on such question? ;-) It may be nice
+I don't know whether this is a good idea, a bad idea, or worth the
+trouble, but I've used sudo to make a poor-man's sandbox in the past,
+mkdir /home/x/hexed-me
+vipw
+usermod -G hexed-me me
+chmod -R o-rwx,g+rwx /home/x/hexed-me
+# Added the following to /etc/sudoers
+visudo
+User_Alias HEXEDMEDOER = me
+Runas_Alias HEXEDMEHEXED = hexed-me
+!preserve_groups
+HEXEDMEDOER ALL = (HEXEDMEHEXED) ALL
+vi bin/firehex
+#! /bin/sh
+sudo -H -u hexed-me firefox
+Is it worth the trouble?
+Does it perhaps open up new vulnerabilities instead?
+Joel Rees
+Look first in your own heart,
+I don't know whether this is a good idea, a bad idea, or worth the
+trouble, but I've used sudo to make a poor-man's sandbox in the past,
+mkdir /home/x/hexed-me
+vipw
+usermod -G hexed-me me
+chmod -R o-rwx,g+rwx /home/x/hexed-me
+# Added the following to /etc/sudoers
+visudo
+User_Alias HEXEDMEDOER = me
+Runas_Alias HEXEDMEHEXED = hexed-me
+!preserve_groups
+HEXEDMEDOER ALL = (HEXEDMEHEXED) ALL
+vi bin/firehex
+#! /bin/sh
+sudo -H -u hexed-me firefox
+Is it worth the trouble?
+Does it perhaps open up new vulnerabilities instead?
+Joel Rees
+Look first in your own heart,
+OpenBSD name should I change? For example, you said before that the
+OpenBSD name may not be removed from the license headers of source
+anything that I have missed?
+support first, then I'll confirm that the problem still exists in
+OpenBSD and finally I'll ask the OpenBSD mailing lists if I can't solve
+comply with OpenBSD's policies, and from reading the mailing lists about
+past situations like this, it appears that OpenBSD is not likely to sue
+OpenBSD name should I change? For example, you said before that the
+OpenBSD name may not be removed from the license headers of source
+anything that I have missed?
+support first, then I'll confirm that the problem still exists in
+OpenBSD and finally I'll ask the OpenBSD mailing lists if I can't solve
+comply with OpenBSD's policies, and from reading the mailing lists about
+past situations like this, it appears that OpenBSD is not likely to sue
+How much time is necessary to build packages during and for a release? How
+much time for snapshots? And how often does this need to be done? I'm trying
+to get an idea how much uptime you would need if somebody who is able to
+I have a few boxes that could host this but I cannot run them for days on
+/jl
+ASCII ribbon campaign ( ) Powered by Lemote Fuloong
+against HTML e-mail X Loongson MIPS and OpenBSD
+attachments / \ Code Blue or Go Home!
+How much time is necessary to build packages during and for a release? How
+much time for snapshots? And how often does this need to be done? I'm trying
+to get an idea how much uptime you would need if somebody who is able to
+I have a few boxes that could host this but I cannot run them for days on
+/jl
+ASCII ribbon campaign ( ) Powered by Lemote Fuloong
+against HTML e-mail X Loongson MIPS and OpenBSD
+attachments / \ Code Blue or Go Home!
+from a good anoncvs server, with /usr/ports on SSD and mounted like this
+it was not widely used, so wasn't worth the maintenance headache and extra
+(This was quite widely used by FreeBSD in the past, but in OpenBSD the main
+between you and an anoncvs mirror isn't very fast, or if you want to hack
+I used had some upgrades and got much faster so I now just fetch directly
+from there, unless I am going to be travelling and want an up-to-date
+from a good anoncvs server, with /usr/ports on SSD and mounted like this
+it was not widely used, so wasn't worth the maintenance headache and extra
+(This was quite widely used by FreeBSD in the past, but in OpenBSD the main
+between you and an anoncvs mirror isn't very fast, or if you want to hack
+I used had some upgrades and got much faster so I now just fetch directly
+from there, unless I am going to be travelling and want an up-to-date
+I believe that somebody who can interpret the message can tell me where to make the
+The CDs are the official (bought) ones and I'm a little surprised that the code on the two
+R/
+Rod/
+I believe that somebody who can interpret the message can tell me where to make the
+The CDs are the official (bought) ones and I'm a little surprised that the code on the two
+R/
+Rod/
+Hi,
+I can remember similar problems when I first tried to install OpenBSD on
+The problem were performance settings in BIOS, that were somehow set to
+With best regards,
+Gregory Edigarov
+Hi,
+I can remember similar problems when I first tried to install OpenBSD on
+The problem were performance settings in BIOS, that were somehow set to
+With best regards,
+Gregory Edigarov
+# This version of the template is a bib-like file with one
+# All I want to get back from you is lines like these (minus the
+# C USA
+# P Arizona
+# T Cactus Grove
+# Z Postal Code
+# A General Delivery
+# O Acme Widgets
+# N Home of the best Acme
+# Do not bother sending this in unless your web site's main page clearly shows
+# DELETE ALL # COMMENT LINES BEFORE SUBMITTING
+C Canada
+P Alberta
+T Edmonton
+O Neotext
+I Duncan Patton a Campbell
+# This version of the template is a bib-like file with one
+# All I want to get back from you is lines like these (minus the
+# C USA
+# P Arizona
+# T Cactus Grove
+# Z Postal Code
+# A General Delivery
+# O Acme Widgets
+# N Home of the best Acme
+# Do not bother sending this in unless your web site's main page clearly shows
+# DELETE ALL # COMMENT LINES BEFORE SUBMITTING
+C Canada
+P Alberta
+T Edmonton
+O Neotext
+I Duncan Patton a Campbell
+Hello,
+shell=""
+groups=""
+user=""
+home=""
+# Store data to $VALUES variable
+VALUES=$(dialog --ok-label "Add" \
+-backtitle "Add a developer" \
+-title "Useradd" \
+-form "Create a new developer" \
+# close fd
+echo $VALUES
+# display values just entered
+I know that zenity can easily do what i want, but it is an X
+do i have any more options rather then split dialogue into two or more
+steps?
+With best regards,
+Gregory Edigarov
+Hello,
+shell=""
+groups=""
+user=""
+home=""
+# Store data to $VALUES variable
+VALUES=$(dialog --ok-label "Add" \
+-backtitle "Add a developer" \
+-title "Useradd" \
+-form "Create a new developer" \
+# close fd
+echo $VALUES
+# display values just entered
+I know that zenity can easily do what i want, but it is an X
+do i have any more options rather then split dialogue into two or more
+steps?
+With best regards,
+Gregory Edigarov
+console out [ATY,Via_A]console in [keyboard] , using ADB
+Cheers
+Fred
+console out [ATY,Via_A]console in [keyboard] , using ADB
+Cheers
+Fred
+source file (and you will see some differences in different source
+something is referring to the overall product, you SHOULD change it,
+If you find a problem that comes from OpenBSD, replicate it on OpenBSD
+source file (and you will see some differences in different source
+something is referring to the overall product, you SHOULD change it,
+If you find a problem that comes from OpenBSD, replicate it on OpenBSD
+Hi Tobias,
+I suppose you mean by unstable under OpenBSD? It was very stable under
+Would it crash the program always in the same place?
+It is the first time I run OpenBSD on this machine, converting it from
+after being certain that I can reproduce these error from reboot to
+in the same place, but a make clean will have it work and have crash ln
+Riccardo
+Hi Tobias,
+I suppose you mean by unstable under OpenBSD? It was very stable under
+Would it crash the program always in the same place?
+It is the first time I run OpenBSD on this machine, converting it from
+after being certain that I can reproduce these error from reboot to
+in the same place, but a make clean will have it work and have crash ln
+Riccardo
+as long as you have an X server running somewhere (the server is what is
+attached to the display), you can run programs (clients) anywhere, local or
+as long as you have an X server running somewhere (the server is what is
+attached to the display), you can run programs (clients) anywhere, local or
+Hi,
+I must be doing something wrong here and need some hints
+Can't open device or file
+ok
+I went through four different burn attempts; one with Dec
+Turning BURN-Free off
+# echo $?
+to disc?
+Thanks in advance,
+-patrick
+Hi,
+I must be doing something wrong here and need some hints
+Can't open device or file
+ok
+I went through four different burn attempts; one with Dec
+Turning BURN-Free off
+# echo $?
+to disc?
+Thanks in advance,
+-patrick
+Raadt (or some other appropriate person from the OpenBSD Foundation)
+desires me to do so, I am happy to research and shepherd the OpenBSD
+trademark in the US; although I am not currently familiar with USPTO
+regulations/procedures in general, I have considerable experience
+dealing with bureaucracy--formerly, I was a member of the US Army and I
+worked for around five years as an employee of a state government, and
+was specifically tasked in both instances with interpreting (and in some
+I am not, however, willing to pay the required fees out of my own
+Carson
+Raadt (or some other appropriate person from the OpenBSD Foundation)
+desires me to do so, I am happy to research and shepherd the OpenBSD
+trademark in the US; although I am not currently familiar with USPTO
+regulations/procedures in general, I have considerable experience
+dealing with bureaucracy--formerly, I was a member of the US Army and I
+worked for around five years as an employee of a state government, and
+was specifically tasked in both instances with interpreting (and in some
+I am not, however, willing to pay the required fees out of my own
+Carson
+Queries to DNS server over IPSec made using host or dig work OK,
+Hi all
+laptop gets its IP and DNS resolvers via DHCP and sets up a route to
+If I use host or dig to query our server, I can see the DNS requests and
+on the tunnel (and on the physical interface too) but nothing traffic
+physical interface on that end, but my tcpdump foo isn't good enough to
+Again, all other traffic works fine, routing tables look ok, AFAICT pf
+(planning to upgrade within a couple of days), and most importantly,
+Does anyone have any idea of what is going on? Apologies in advance if
+important information is missing, and/or this is a known problem and an
+Cheers
+Zé
+Queries to DNS server over IPSec made using host or dig work OK,
+Hi all
+laptop gets its IP and DNS resolvers via DHCP and sets up a route to
+If I use host or dig to query our server, I can see the DNS requests and
+on the tunnel (and on the physical interface too) but nothing traffic
+physical interface on that end, but my tcpdump foo isn't good enough to
+Again, all other traffic works fine, routing tables look ok, AFAICT pf
+(planning to upgrade within a couple of days), and most importantly,
+Does anyone have any idea of what is going on? Apologies in advance if
+important information is missing, and/or this is a known problem and an
+Cheers
+Zé
+Greetings,
+usable) hibernation function (not on all my hardware, but at least for
+I was digging into my scripts in order to apply some quirks before
+In particular, the code already support a specific file to be executed
+in the requested state after running the configuration script and
+suspend,
+hibernate,
+standby,
+resume,
+powerup,
+and
+The suspend and standby actions are run prior to
+The suspend, hibernate and standby actions are run prior to
+performing any other actions (such as disk syncs) and entering the new
+by examining the name by which it was called,
+which is one of
+suspend,
+hibernate,
+standby,
+resume,
+powerup,
+states, but only one for resuming? At the moment, I do not apply any
+Alessandro DE LAURENZIS
+Greetings,
+usable) hibernation function (not on all my hardware, but at least for
+I was digging into my scripts in order to apply some quirks before
+In particular, the code already support a specific file to be executed
+in the requested state after running the configuration script and
+suspend,
+hibernate,
+standby,
+resume,
+powerup,
+and
+The suspend and standby actions are run prior to
+The suspend, hibernate and standby actions are run prior to
+performing any other actions (such as disk syncs) and entering the new
+by examining the name by which it was called,
+which is one of
+suspend,
+hibernate,
+standby,
+resume,
+powerup,
+states, but only one for resuming? At the moment, I do not apply any
+Alessandro DE LAURENZIS
+Hi,
+PID USERNAME PRI NICE SIZE RES STATE WAIT TIME CPU COMMAND
+Marko Cupać
+Hi,
+PID USERNAME PRI NICE SIZE RES STATE WAIT TIME CPU COMMAND
+Marko Cupać
+Dennis
+Dennis
+Hi all,
+Not that long ago we saw a lot of commits related to null checks being
+Now this came up in a discussion I had on IRC and wanted to point out
+and
+So how should I interpret this in relation to the above commit messages?
+kill your program
+lead to people following the rule of null checking before a free call?
+Should the man page be altered to discouraged the use of null checks
+before calls to free?
+Regards,
+Adam Wolk
+Hi all,
+Not that long ago we saw a lot of commits related to null checks being
+Now this came up in a discussion I had on IRC and wanted to point out
+and
+So how should I interpret this in relation to the above commit messages?
+kill your program
+lead to people following the rule of null checking before a free call?
+Should the man page be altered to discouraged the use of null checks
+before calls to free?
+Regards,
+Adam Wolk
+I see your point, but I'm just wondering - if you are recommending that
+I get a lawyer, is that because such a distro would upset the OpenBSD
+community so much that someone would try to take legal action against me?
+I don't want to do anything that would hurt the community, so if
+I see your point, but I'm just wondering - if you are recommending that
+I get a lawyer, is that because such a distro would upset the OpenBSD
+community so much that someone would try to take legal action against me?
+I don't want to do anything that would hurt the community, so if
+Every once in a while compiling xenocara, I get a fatal error when
+tnx, STeve Andre'
+===> kdrive
+no dependencies here yet
+-with-xkb-output=/var/db/xkb --with-default-xkb-rules=base
+-disable-xorg --enable-xcsecurity --enable-kdrive --disable-dmx
+-disable-xnest --disable-xvfb --without-fop --without-xmlto
+-without-xsltproc --disable-silent-rules
+distclean" there first
+Every once in a while compiling xenocara, I get a fatal error when
+tnx, STeve Andre'
+===> kdrive
+no dependencies here yet
+-with-xkb-output=/var/db/xkb --with-default-xkb-rules=base
+-disable-xorg --enable-xcsecurity --enable-kdrive --disable-dmx
+-disable-xnest --disable-xvfb --without-fop --without-xmlto
+-without-xsltproc --disable-silent-rules
+distclean" there first
+reports errors accessing my server sometimes when I have run tests
+I have done much searching and fiddled with various settings and have
+problem (unless it is a hardware vs driver issue for the NIC in the
+server) since I have tested with pf disabled on the server with a client
+dumping the old config in place, but by using what was installed by the
+is different about my certificate compared to what most other people are
+probably doing is that my certificate is a wildcard certificate (valid
+here ever run in to this before? Anyone have any
+John Merriam
+reports errors accessing my server sometimes when I have run tests
+I have done much searching and fiddled with various settings and have
+problem (unless it is a hardware vs driver issue for the NIC in the
+server) since I have tested with pf disabled on the server with a client
+dumping the old config in place, but by using what was installed by the
+is different about my certificate compared to what most other people are
+probably doing is that my certificate is a wildcard certificate (valid
+here ever run in to this before? Anyone have any
+John Merriam
+At the boot loader prompt, enter
+beautify
+script
+verbose
+At the boot loader prompt, enter
+beautify
+script
+verbose
+Hey man,
+I'm not sure about what is happening, but pflog is your best friend ever !
+Try find out if a specific rule is blocking traffic in one of endpoints (
+both ? )
+Cheers,
+Hey man,
+I'm not sure about what is happening, but pflog is your best friend ever !
+Try find out if a specific rule is blocking traffic in one of endpoints (
+both ? )
+Cheers,
+I ran a little log to record time and the output of apm,
+WTF???
+The system log log showed similar situation, indicating that the actual cliff occured (or was
+I ran a little log to record time and the output of apm,
+WTF???
+The system log log showed similar situation, indicating that the actual cliff occured (or was
+Hi Jason
+being the author of GNUstep's batmon and being owner of several laptops
+and having developed and tested on them, I have some un-authoritative
+The behaviour you describe is typical of a dying battery and/or a
+Good batteries (which might be "luck", quality of elements, how well
+they are paired and other factors) will work and perhas age very
+Usually manufacturer batteries are better than cheap ones from China,
+but I also had the opposite experience!
+Do you have a way of knowing the battery status without using the OS?
+For example, you might have a battery led that starts blinking or gets
+Perhaps your battery has LEDs showing its charge or you can access it
+LED turns on?
+Riccardo
+Hi Jason
+being the author of GNUstep's batmon and being owner of several laptops
+and having developed and tested on them, I have some un-authoritative
+The behaviour you describe is typical of a dying battery and/or a
+Good batteries (which might be "luck", quality of elements, how well
+they are paired and other factors) will work and perhas age very
+Usually manufacturer batteries are better than cheap ones from China,
+but I also had the opposite experience!
+Do you have a way of knowing the battery status without using the OS?
+For example, you might have a battery led that starts blinking or gets
+Perhaps your battery has LEDs showing its charge or you can access it
+LED turns on?
+Riccardo
+How this would help me if I had no internet connection?
+because
+installation
+As I said before, my computer does nothing with the hard drive attached,
+Definitely not a drastic step, since my test showed that it was the
+problem
+and it really was because it worked the first time I tried when it
+arrived new
+Does a bad OpenBSD install would change how my BIOS detect my HDD, and
+make all the
+rest hardware stop working when it is plugged, exactly as it happen when
+you put
+a drive in short circuit?
+Regards,
+Henrique Lengler
+How this would help me if I had no internet connection?
+because
+installation
+As I said before, my computer does nothing with the hard drive attached,
+Definitely not a drastic step, since my test showed that it was the
+problem
+and it really was because it worked the first time I tried when it
+arrived new
+Does a bad OpenBSD install would change how my BIOS detect my HDD, and
+make all the
+rest hardware stop working when it is plugged, exactly as it happen when
+you put
+a drive in short circuit?
+Regards,
+Henrique Lengler
+Check out Fortress Linux, possibly using a version of xombrero,
+Myself I was planning to use a separate login for web browser,
+streaming audio visual, etc, alongside an offline desktop for work
+on documents but with ports open to read and send e-mail, access
+minimizing the damage and recovering as quickly as possible following
+In the past code injection has essentially rendered unencryypted
+changed with the recent SSL fixes (I'll give them another go at
+fine, firefox will also resolve DNS calls over the socks connection
+(privoxy and polipo can be used to set up a socks forwarding http
+proxy for other applications and which usually will resolve DNS
+Having used xombrero for a while I tend to configure firefox as
+AdBlock with all filtering options enabled, disable disk and memory
+cache, DNS and page prefetch, spoof the browser ID, I don't use
+this addon bit it gives a good idea of the setting that can be used
+to render firefox anonymous
+None of the above is any use unless the install is relatively
+untainted security wise, I run a very tight firewall also (but not
+yet got round to setting up the monitoring end of things yet), this
+not reliable also - prefereably encrypt DNS, if not then use a
+The net result, I only experience data injection occasionally
+As to the future, EMF issue, how secure are FreeBSD jails?, DNSSEC?,
+port the lot to Fedora, review of current authentication options
+in addition to password strategy -
+Check out Fortress Linux, possibly using a version of xombrero,
+Myself I was planning to use a separate login for web browser,
+streaming audio visual, etc, alongside an offline desktop for work
+on documents but with ports open to read and send e-mail, access
+minimizing the damage and recovering as quickly as possible following
+In the past code injection has essentially rendered unencryypted
+changed with the recent SSL fixes (I'll give them another go at
+fine, firefox will also resolve DNS calls over the socks connection
+(privoxy and polipo can be used to set up a socks forwarding http
+proxy for other applications and which usually will resolve DNS
+Having used xombrero for a while I tend to configure firefox as
+AdBlock with all filtering options enabled, disable disk and memory
+cache, DNS and page prefetch, spoof the browser ID, I don't use
+this addon bit it gives a good idea of the setting that can be used
+to render firefox anonymous
+None of the above is any use unless the install is relatively
+untainted security wise, I run a very tight firewall also (but not
+yet got round to setting up the monitoring end of things yet), this
+not reliable also - prefereably encrypt DNS, if not then use a
+The net result, I only experience data injection occasionally
+As to the future, EMF issue, how secure are FreeBSD jails?, DNSSEC?,
+port the lot to Fedora, review of current authentication options
+in addition to password strategy -
+Upgrade guide is meant for upgrade from release/stable to next
+As you upgraded to current from previous release/stable you need to put
+missing (not sure how often it's updated and how much history is kept)
+Upgrade guide is meant for upgrade from release/stable to next
+As you upgraded to current from previous release/stable you need to put
+missing (not sure how often it's updated and how much history is kept)
+Dear Stuart,
+(local, nodev)
+How often do you fetch/rebuild?
+I plan on making a low power router (not really looking at the APU devices
+Now that I understand what cvsync is, I don't think it would have saved me any
+time with the updates as the longest time seems like my HDD searching for
+Dear Stuart,
+(local, nodev)
+How often do you fetch/rebuild?
+I plan on making a low power router (not really looking at the APU devices
+Now that I understand what cvsync is, I don't think it would have saved me any
+time with the updates as the longest time seems like my HDD searching for
+At the start of this adventure I had the following pertinent
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+that specifying the protocol in the Listen directives might not be
+The Apache docs don't seem to indicate that using Listen directives like
+think I might have an idea of what was going on and it may not really be
+a bug in Apache but if it's not then the behavior should be documented
+Anyway, at this point, I don't think this has much to do with OpenBSD
+John Merriam
+At the start of this adventure I had the following pertinent
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+</VirtualHost>
+that specifying the protocol in the Listen directives might not be
+The Apache docs don't seem to indicate that using Listen directives like
+think I might have an idea of what was going on and it may not really be
+a bug in Apache but if it's not then the behavior should be documented
+Anyway, at this point, I don't think this has much to do with OpenBSD
+John Merriam
+----BEGIN PGP SIGNED MESSAGE-----
+I've got a problem with a piece of non-BSD software that I'm running
+turns out that it's not at a stage where it's receiving almost daily
+that are along with it, when bad things happen to them, this one
+I've checked my ulimits, specifically 'ulimit -u' under the user that
+as I know, that means that I _should_ be getting a core file
+entire filesystem, not just the small separate filesystem that this
+resides on, doing a general search, grepping for 'core', and then
+searching through it for 'sbbs', and I'm not finding the file that I
+The developers do not have any OpenBSD machines available for work on
+the only thing that might get around any issues, at this point, or
+OpenBSD fairly well, but when it comes to kernel internals and things
+along the lines of core debugging and [a lot of the] ulimits, I'm still
+Can anybody tell me if I'm missing anything obvious, and what I might
+be able to do to force a core dump next time this guy segfaults? I
+this package as a fully featured communications hub for myself and
+several other users, and short of the kludgy solution of running a cron
+script job that checks for the process, verifies its health, and
+respawns a new process if necessary every few minutes, I don't know
+Any help is appreciated, feel free to get ahold of me any which way;
+services in the suite are temporarily blocked by the firewall due to my
+Damon Getsman
+Opinions expressed are not necessarily those of the owner of this
+ -Damo
+=Lnqk
+----END PGP SIGNATURE-----
+----BEGIN PGP SIGNED MESSAGE-----
+I've got a problem with a piece of non-BSD software that I'm running
+turns out that it's not at a stage where it's receiving almost daily
+that are along with it, when bad things happen to them, this one
+I've checked my ulimits, specifically 'ulimit -u' under the user that
+as I know, that means that I _should_ be getting a core file
+entire filesystem, not just the small separate filesystem that this
+resides on, doing a general search, grepping for 'core', and then
+searching through it for 'sbbs', and I'm not finding the file that I
+The developers do not have any OpenBSD machines available for work on
+the only thing that might get around any issues, at this point, or
+OpenBSD fairly well, but when it comes to kernel internals and things
+along the lines of core debugging and [a lot of the] ulimits, I'm still
+Can anybody tell me if I'm missing anything obvious, and what I might
+be able to do to force a core dump next time this guy segfaults? I
+this package as a fully featured communications hub for myself and
+several other users, and short of the kludgy solution of running a cron
+script job that checks for the process, verifies its health, and
+respawns a new process if necessary every few minutes, I don't know
+Any help is appreciated, feel free to get ahold of me any which way;
+services in the suite are temporarily blocked by the firewall due to my
+Damon Getsman
+Opinions expressed are not necessarily those of the owner of this
+ -Damo
+=Lnqk
+----END PGP SIGNATURE-----
+# size offset fstype [fsize bsize cpg]
+Set name(s)? (or 'abort' or 'done') [done]
+Signature Verified
+Location of sets? (disk http or 'done') [done]
+mentions the "Cannot determine prefetch area" error that I had never seen
+Adriaan
+# size offset fstype [fsize bsize cpg]
+Set name(s)? (or 'abort' or 'done') [done]
+Signature Verified
+Location of sets? (disk http or 'done') [done]
+mentions the "Cannot determine prefetch area" error that I had never seen
+Adriaan
+This is better than nothing, but it still gives the firefox process
+unlimited access to the X protocol and (through the X protocol) the
+attack were to exploit a firefox buffer overrun), you could have
+a keylogger, and use this to sniff passwords
+(b) write to various user-hexme scripts to make the exploit persistent
+I outlined some ideas for mitigating some of these risks in the thread
+was (is) to run firefox as a separate nonpriviliged user, but via an
+#!/bin/sh
+Extension restrictions, which (in theory) would prevent the firefox
+pointed out that this is a feature, not a bug, of the way X security
+the cut-n-pasted-from-firefox text
+#!/bin/sh
+xsel -o
+echo ''
+I suspect that a slightly fancier script could then insert that text
+back into the regular outside-the-sandbox X cut buffer, but I haven't
+ciao,
+Dept of Astronomy & IUCSS, Indiana University, Bloomington, Indiana, USA
+"There was of course no way of knowing whether you were being watched
+This is better than nothing, but it still gives the firefox process
+unlimited access to the X protocol and (through the X protocol) the
+attack were to exploit a firefox buffer overrun), you could have
+a keylogger, and use this to sniff passwords
+(b) write to various user-hexme scripts to make the exploit persistent
+I outlined some ideas for mitigating some of these risks in the thread
+was (is) to run firefox as a separate nonpriviliged user, but via an
+#!/bin/sh
+Extension restrictions, which (in theory) would prevent the firefox
+pointed out that this is a feature, not a bug, of the way X security
+the cut-n-pasted-from-firefox text
+#!/bin/sh
+xsel -o
+echo ''
+I suspect that a slightly fancier script could then insert that text
+back into the regular outside-the-sandbox X cut buffer, but I haven't
+ciao,
+Dept of Astronomy & IUCSS, Indiana University, Bloomington, Indiana, USA
+"There was of course no way of knowing whether you were being watched
+"prio is ignored when bandwidth shaping is on" so this is useless
+Your best bet is to define your bandwidth requirements appropriately
+"prio is ignored when bandwidth shaping is on" so this is useless
+Your best bet is to define your bandwidth requirements appropriately
+Although now, under heavy disk load, it cannot keep the clock
+You may get different results with other SCA compatible Sparcs or
+Although now, under heavy disk load, it cannot keep the clock
+You may get different results with other SCA compatible Sparcs or
+Hi,
+Some time ago I played a bit with traffic shaping on this box, but
+did not have the time to test it properly and left that disabled on
+Now I've enbaled it again and, although everything seems to work just
+fine, I don't understant what is happening regarding queues
+one for wifi net and one I called torrent net which, as you may expect,
+Basically I want google hangouts traffic to be priorized as much as
+The sum of all sub-queues when I try to saturate the uplink is greater
+When I saturate the link with traffic going out on "q_pri", "q_dow" and
+I need all the uplink to make a video-call, but I really want to
+So, any good soul could waste some time trying to explain all this ?
+Cheers,
+Hi,
+Some time ago I played a bit with traffic shaping on this box, but
+did not have the time to test it properly and left that disabled on
+Now I've enbaled it again and, although everything seems to work just
+fine, I don't understant what is happening regarding queues
+one for wifi net and one I called torrent net which, as you may expect,
+Basically I want google hangouts traffic to be priorized as much as
+The sum of all sub-queues when I try to saturate the uplink is greater
+When I saturate the link with traffic going out on "q_pri", "q_dow" and
+I need all the uplink to make a video-call, but I really want to
+So, any good soul could waste some time trying to explain all this ?
+Cheers,
+finger and said "Nvidia, fuck you" during a speech because of binary
+finger and said "Nvidia, fuck you" during a speech because of binary
+I searched around, and It appears that I have I/O bottleneck, as vmstat
+constantly shows blocked processes even though laptop does close to
+procs memory page disks traps cpu
+ATA standby timer values
+IORDY operation
+IORDY disabling
+NOP command
+READ BUFFER command
+WRITE BUFFER command
+Host Protected Area feature set
+Read look-ahead
+Write cache
+Power Management feature set
+Security Mode feature set
+SMART feature set
+Flush Cache Ext command
+Flush Cache command
+Set Max security extension commands
+Set Features subcommand required
+Power-up in standby feature set
+Advanced Power Management feature set
+DOWNLOAD MICROCODE command
+IDLE IMMEDIATE with UNLOAD FEATURE
+SMART self-test
+SMART error logging
+NOP command
+READ BUFFER command
+WRITE BUFFER command
+Host Protected Area feature set
+Read look-ahead
+Write cache
+Power Management feature set
+SMART feature set
+Flush Cache Ext command
+Flush Cache command
+Set Features subcommand required
+Advanced Power Management feature set
+DOWNLOAD MICROCODE command
+Any advice on where should I start looking for solution?
+Thank you in advance,
+Marko Cupać
+I searched around, and It appears that I have I/O bottleneck, as vmstat
+constantly shows blocked processes even though laptop does close to
+procs memory page disks traps cpu
+ATA standby timer values
+IORDY operation
+IORDY disabling
+NOP command
+READ BUFFER command
+WRITE BUFFER command
+Host Protected Area feature set
+Read look-ahead
+Write cache
+Power Management feature set
+Security Mode feature set
+SMART feature set
+Flush Cache Ext command
+Flush Cache command
+Set Max security extension commands
+Set Features subcommand required
+Power-up in standby feature set
+Advanced Power Management feature set
+DOWNLOAD MICROCODE command
+IDLE IMMEDIATE with UNLOAD FEATURE
+SMART self-test
+SMART error logging
+NOP command
+READ BUFFER command
+WRITE BUFFER command
+Host Protected Area feature set
+Read look-ahead
+Write cache
+Power Management feature set
+SMART feature set
+Flush Cache Ext command
+Flush Cache command
+Set Features subcommand required
+Advanced Power Management feature set
+DOWNLOAD MICROCODE command
+Any advice on where should I start looking for solution?
+Thank you in advance,
+Marko Cupać
+Hi!
+I have used very basic npppd setup for some years and it works for me
+firewall has three network interfaces
+I tried out/thougth of several configuration options, it seems there is
+couple of ways to set it up, for example these two
+this (about this i only thought, no real trial)
+mppe no
+mppe no
+But i am not fan of this because i uses two public addresses and i'd
+specific addresses for two users (tried it and seems to work, but but
+users-file "/etc/npppd/npppd-users"
+mppe no
+and /etc/npppd/npppd-users has
+Which one do you suggest, should i go with the first or second
+configuration? Or maybe rather something else? And also i have these
+questions
+matter much, if framed-ip-address i C-class address it creates routing
+isnt much to do about it from npppd?
+to accept anything (i believe it is not wise to use there openbsd's
+something from inside pool or from the same subnet as pool but outside
+pool and not used on network?
+less efficent in some situations but being more mature is it less likely
+have crashes while trying out stupid configurations?)
+hosts she intends to access? (At least it seems to be good choice
+npppd users into separate subnet (like something virtual build around
+Best regards,
+Imre
+Hi!
+I have used very basic npppd setup for some years and it works for me
+firewall has three network interfaces
+I tried out/thougth of several configuration options, it seems there is
+couple of ways to set it up, for example these two
+this (about this i only thought, no real trial)
+mppe no
+mppe no
+But i am not fan of this because i uses two public addresses and i'd
+specific addresses for two users (tried it and seems to work, but but
+users-file "/etc/npppd/npppd-users"
+mppe no
+and /etc/npppd/npppd-users has
+Which one do you suggest, should i go with the first or second
+configuration? Or maybe rather something else? And also i have these
+questions
+matter much, if framed-ip-address i C-class address it creates routing
+isnt much to do about it from npppd?
+to accept anything (i believe it is not wise to use there openbsd's
+something from inside pool or from the same subnet as pool but outside
+pool and not used on network?
+less efficent in some situations but being more mature is it less likely
+have crashes while trying out stupid configurations?)
+hosts she intends to access? (At least it seems to be good choice
+npppd users into separate subnet (like something virtual build around
+Best regards,
+Imre
+was promised by me to beck@ (and this was totally my own idea from the
+beginning!), as to one of the OpenBSD Foundation directors, after
+won't be possible for me to even half-complete without such decent
+was promised by me to beck@ (and this was totally my own idea from the
+beginning!), as to one of the OpenBSD Foundation directors, after
+won't be possible for me to even half-complete without such decent
+Both work ok, same as above
+Does anyone have a clue of what is going on here?
+Thanks in advance
+Zé
+Both work ok, same as above
+Does anyone have a clue of what is going on here?
+Thanks in advance
+Zé
+- quote --
+- end quote --
+(And the README for the package advises you to create one)
+#!/bin/sh -x
+results in
+ daemon=/usr/local/sbin/squid
+ [ -n ]
+ [ -n /usr/local/sbin/squid ]
+ unset _RC_DEBUG _RC_FORCE
+ getopts df c
+ _name=squid
+ _rc_do _rc_parse_conf
+ _rcflags=
+ _rcuser=
+ _rctimeout=
+ > /dev/null
+ [ -z ]
+ daemon_class=daemon
+ [ -z ]
+ daemon_user=root
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ readonly daemon_class
+ unset _rcflags _rcuser _rctimeout
+ pexp=/usr/local/sbin/squid
+ rcexec=su -l -c daemon -s /bin/sh root -c
+ rc_cmd start
+squid(ok)
+ daemon=/usr/local/sbin/squid
+ [ -n ]
+ [ -n /usr/local/sbin/squid ]
+ unset _RC_DEBUG _RC_FORCE
+ getopts df c
+ _name=squid
+ _rc_do _rc_parse_conf
+ _rcflags=
+ _rcuser=
+ _rctimeout=
+ > /dev/null
+ daemon_class=squid
+ [ -z squid ]
+ [ -z ]
+ daemon_user=root
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ readonly daemon_class
+ unset _rcflags _rcuser _rctimeout
+ pexp=/usr/local/sbin/squid
+ rcexec=su -l -c squid -s /bin/sh root -c
+ rc_cmd start
+squid(ok)
+HTH
+rru
+- quote --
+- end quote --
+(And the README for the package advises you to create one)
+#!/bin/sh -x
+results in
+ daemon=/usr/local/sbin/squid
+ [ -n ]
+ [ -n /usr/local/sbin/squid ]
+ unset _RC_DEBUG _RC_FORCE
+ getopts df c
+ _name=squid
+ _rc_do _rc_parse_conf
+ _rcflags=
+ _rcuser=
+ _rctimeout=
+ > /dev/null
+ [ -z ]
+ daemon_class=daemon
+ [ -z ]
+ daemon_user=root
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ readonly daemon_class
+ unset _rcflags _rcuser _rctimeout
+ pexp=/usr/local/sbin/squid
+ rcexec=su -l -c daemon -s /bin/sh root -c
+ rc_cmd start
+squid(ok)
+ daemon=/usr/local/sbin/squid
+ [ -n ]
+ [ -n /usr/local/sbin/squid ]
+ unset _RC_DEBUG _RC_FORCE
+ getopts df c
+ _name=squid
+ _rc_do _rc_parse_conf
+ _rcflags=
+ _rcuser=
+ _rctimeout=
+ > /dev/null
+ daemon_class=squid
+ [ -z squid ]
+ [ -z ]
+ daemon_user=root
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ [ -n ]
+ readonly daemon_class
+ unset _rcflags _rcuser _rctimeout
+ pexp=/usr/local/sbin/squid
+ rcexec=su -l -c squid -s /bin/sh root -c
+ rc_cmd start
+squid(ok)
+HTH
+rru
+It took a few days, back and forth, as time permitted, but I have this old
+the book by Lucas, and I setup a small monthly donation to the OpenBSD
+Richard Thornton
+console is keyboard/display
+It took a few days, back and forth, as time permitted, but I have this old
+the book by Lucas, and I setup a small monthly donation to the OpenBSD
+Richard Thornton
+console is keyboard/display
+to patch the resolver library because it would guarantee that your
+systems wouldn't look up any of the crummy TLDs that you don't want them
+doing that because I figured it would be a controversial issue and it
+probably wouldn't be accepted for inclusion in OpenBSD and carrying
+It downloads the list of TLDs from IANA then removes the TLDs you want
+to allow then uses the trimmed TLD list that contains the TLDs you want
+to block to create a file that can be included in your DNS server config
+what you were looking for but I am sending it along in case you find it
+#!/usr/bin/perl
+# You should check what this thing is really doing at least
+$smprog = "/usr/sbin/sendmail";
+# I think we should allow at least some TLDs!
+die "I could not find the allowed TLDs file!\n";
+system $downloadcmd;
+file!\\n\\ntldblocker failed to download the TLD file from the following
+# Do a basic sanity check on the downloaded file
+open TLDFH, "<$tempfile";
+@tldsin = <TLDFH>;
+close TLDFH;
+$quickcheck = join "", @tldsin;
+($quickcheck !~ /\nCOM\n/i) ||
+($quickcheck !~ /\nNET\n/i) ||
+($quickcheck !~ /\nORG\n/i) ||
+($quickcheck !~ /\nEDU\n/i) ||
+($quickcheck !~ /\nGOV\n/i) ||
+($quickcheck !~ /\nMIL\n/i) ||
+($quickcheck !~ /\nINT\n/i) ||
+# This doesn't look right, send message to admin
+check!\\n\\nThe TLD file downloaded by tldblocker from the following
+| $smprog $adminaddress";
+undef $quickcheck;
+# See if we need to do anything
+system "mv $tempfile $tldfile";
+# Update if necessary
+open ALLOWEDFH, "<$allowedfile";
+@allowed = <ALLOWEDFH>;
+close ALLOWEDFH;
+chomp $allowed[$i];
+@blocktlds = @tldsin;
+undef @tldsin;
+$blocktldsend = $#blocktlds;
+chomp $blocktlds[$c];
+$c--;
+$blocktldsend--;
+last;
+# Probably a comment?
+$c--;
+$blocktldsend--;
+$c++;
+$zonesoutlen = length $zonesout;
+open OUTFH, ">$outfile";
+syswrite OUTFH, $zonesout, $zonesoutlen;
+close OUTFH;
+unlink $tempfile;
+Setting a cron job to run it once a week or so would probably be a good
+I designed this for ISC BIND which is what I use but it should be easy
+enough to modify it for other DNS servers assuming their configuration
+If anyone wants a copy of my allowedtlds file that basically puts things
+Doing it this way in the DNS server has the advantage that it works for
+all machines that use your DNS servers including Windows and mobile
+Oh, and if you do use this, don't forget that it is there and doing its
+John Merriam
+to patch the resolver library because it would guarantee that your
+systems wouldn't look up any of the crummy TLDs that you don't want them
+doing that because I figured it would be a controversial issue and it
+probably wouldn't be accepted for inclusion in OpenBSD and carrying
+It downloads the list of TLDs from IANA then removes the TLDs you want
+to allow then uses the trimmed TLD list that contains the TLDs you want
+to block to create a file that can be included in your DNS server config
+what you were looking for but I am sending it along in case you find it
+#!/usr/bin/perl
+# You should check what this thing is really doing at least
+$smprog = "/usr/sbin/sendmail";
+# I think we should allow at least some TLDs!
+die "I could not find the allowed TLDs file!\n";
+system $downloadcmd;
+file!\\n\\ntldblocker failed to download the TLD file from the following
+# Do a basic sanity check on the downloaded file
+open TLDFH, "<$tempfile";
+@tldsin = <TLDFH>;
+close TLDFH;
+$quickcheck = join "", @tldsin;
+($quickcheck !~ /\nCOM\n/i) ||
+($quickcheck !~ /\nNET\n/i) ||
+($quickcheck !~ /\nORG\n/i) ||
+($quickcheck !~ /\nEDU\n/i) ||
+($quickcheck !~ /\nGOV\n/i) ||
+($quickcheck !~ /\nMIL\n/i) ||
+($quickcheck !~ /\nINT\n/i) ||
+# This doesn't look right, send message to admin
+check!\\n\\nThe TLD file downloaded by tldblocker from the following
+| $smprog $adminaddress";
+undef $quickcheck;
+# See if we need to do anything
+system "mv $tempfile $tldfile";
+# Update if necessary
+open ALLOWEDFH, "<$allowedfile";
+@allowed = <ALLOWEDFH>;
+close ALLOWEDFH;
+chomp $allowed[$i];
+@blocktlds = @tldsin;
+undef @tldsin;
+$blocktldsend = $#blocktlds;
+chomp $blocktlds[$c];
+$c--;
+$blocktldsend--;
+last;
+# Probably a comment?
+$c--;
+$blocktldsend--;
+$c++;
+$zonesoutlen = length $zonesout;
+open OUTFH, ">$outfile";
+syswrite OUTFH, $zonesout, $zonesoutlen;
+close OUTFH;
+unlink $tempfile;
+Setting a cron job to run it once a week or so would probably be a good
+I designed this for ISC BIND which is what I use but it should be easy
+enough to modify it for other DNS servers assuming their configuration
+If anyone wants a copy of my allowedtlds file that basically puts things
+Doing it this way in the DNS server has the advantage that it works for
+all machines that use your DNS servers including Windows and mobile
+Oh, and if you do use this, don't forget that it is there and doing its
+John Merriam
+Hello,
+I am having a problem with a particular aspect of my attempt to establish
+seem to be doing something wrong, but I have exhausted all of the resources
+Wifi
+ike passive esp \
+ike active esp \
+# ipsecctl -sa
+# ipsecctl -sa
+appears to occur because the flows specify that all traffic originating
+traffic originating from it's IPs, even if it is destined for one of it's
+starts encapsulating the ICMP echo packets and sending them down the
+<SNIP>
+<SNIP>
+<SNIP>
+^C
+So, I think I understand the problem, but I don't have any idea what the
+What is the correct way to implement this scenario, while still directing
+the default route over the IPSEC tunnel?
+Joe Crivello
+Hello,
+I am having a problem with a particular aspect of my attempt to establish
+seem to be doing something wrong, but I have exhausted all of the resources
+Wifi
+ike passive esp \
+ike active esp \
+# ipsecctl -sa
+# ipsecctl -sa
+appears to occur because the flows specify that all traffic originating
+traffic originating from it's IPs, even if it is destined for one of it's
+starts encapsulating the ICMP echo packets and sending them down the
+<SNIP>
+<SNIP>
+<SNIP>
+^C
+So, I think I understand the problem, but I don't have any idea what the
+What is the correct way to implement this scenario, while still directing
+the default route over the IPSEC tunnel?
+Joe Crivello
+Hello,
+PCNT,DEADLINE,XSAVE,NXE,LONG,LAHF,PERF,ITSC,FSGSBASE,SMEP,ERMS
+PCNT,DEADLINE,XSAVE,NXE,LONG,LAHF,PERF,ITSC,FSGSBASE,SMEP,ERMS
+msi
+configured
+Hello,
+PCNT,DEADLINE,XSAVE,NXE,LONG,LAHF,PERF,ITSC,FSGSBASE,SMEP,ERMS
+PCNT,DEADLINE,XSAVE,NXE,LONG,LAHF,PERF,ITSC,FSGSBASE,SMEP,ERMS
+msi
+configured
+[dmesg follows]
+A customer gave me all the ones that had not failed until well out of warranty and I bought a
+bag of superior caps and swapped out all the bad ones and they all have been running for
+Clues? I love these low power skinny boxes in my rack and I'm betting that the problem
+FXSR,SSE,PERF
+removable
+<EOF>
+Rod/
+[dmesg follows]
+A customer gave me all the ones that had not failed until well out of warranty and I bought a
+bag of superior caps and swapped out all the bad ones and they all have been running for
+Clues? I love these low power skinny boxes in my rack and I'm betting that the problem
+FXSR,SSE,PERF
+removable
+<EOF>
+Rod/
+error was probably the same as below, but led me to believe I may have
+ran, so it should be the latest patch branch code),
+compiled/installed/rebooted to the new kernel, then ran through the
+Bad system call (core dumped)
+Bad system call (core dumped)
+Bad system call (core dumped)
+Bad system call (core dumped)
+No connectors reported connected with modes
+Thanks in advance!
+error was probably the same as below, but led me to believe I may have
+ran, so it should be the latest patch branch code),
+compiled/installed/rebooted to the new kernel, then ran through the
+Bad system call (core dumped)
+Bad system call (core dumped)
+Bad system call (core dumped)
+Bad system call (core dumped)
+No connectors reported connected with modes
+Thanks in advance!
+Hi All,
+I've got a OpenBSD installation on Microsoft Hyper-V, and there is a
+Actually the clock seems to be running fine, but all of the sleep
+Also other tools, like ping are giving strange time related output,
+removable
+disabled
+removable
+disabled
+MichaÅ Koc
+Section "InputDevice"
+Identifier "w_stylus"
+Driver "usbtablet"
+Option "Type" "stylus"
+Option "Mode" "Absolute"
+EndSection
+Section "InputDevice"
+Identifier "w_eraser"
+Driver "usbtablet"
+Option "Type" "eraser"
+Option "Mode" "Absolute"
+EndSection
+Section "ServerFlags"
+Option "AllowMouseOpenFail" "True"
+Option "DontZap" "True"
+EndSection
+Section "ServerLayout"
+InputDevice "w_stylus" "SendCoreEvents"
+InputDevice "w_eraser" "SendCoreEvents"
+EndSection
+Section "InputDevice"
+Driver "mouse"
+Option "Protocol" "wsmouse"
+Option "Device" "/dev/wsmouse"
+EndSection
+Joel Rees
+Computer memory is just fancy paper,
+All is a stream of text
+compatibility
+Section "InputDevice"
+Identifier "w_stylus"
+Driver "usbtablet"
+Option "Type" "stylus"
+Option "Mode" "Absolute"
+EndSection
+Section "InputDevice"
+Identifier "w_eraser"
+Driver "usbtablet"
+Option "Type" "eraser"
+Option "Mode" "Absolute"
+EndSection
+Section "ServerFlags"
+Option "AllowMouseOpenFail" "True"
+Option "DontZap" "True"
+EndSection
+Section "ServerLayout"
+InputDevice "w_stylus" "SendCoreEvents"
+InputDevice "w_eraser" "SendCoreEvents"
+EndSection
+Section "InputDevice"
+Driver "mouse"
+Option "Protocol" "wsmouse"
+Option "Device" "/dev/wsmouse"
+EndSection
+Joel Rees
+Computer memory is just fancy paper,
+All is a stream of text
+compatibility
+This behavior manifests while using a 'normal' boot--I did not use the
+OSX bless utility to get the builtin USB controller into ehci mode
+booting this way, I observe the same pauses/slowness when operating on
+the builtin hard drive as mentioned in the thread I started on that
+Anyway, I mention the xhci boot hang behaviour because I know xhci
+development is active, and I thought this result may be
+RTC BIOS diagnostic error ff<clock_battery,ROM_cksum,config_unit,memory_size,fixed_disk,invalid_time>
+This behavior manifests while using a 'normal' boot--I did not use the
+OSX bless utility to get the builtin USB controller into ehci mode
+booting this way, I observe the same pauses/slowness when operating on
+the builtin hard drive as mentioned in the thread I started on that
+Anyway, I mention the xhci boot hang behaviour because I know xhci
+development is active, and I thought this result may be
+RTC BIOS diagnostic error ff<clock_battery,ROM_cksum,config_unit,memory_size,fixed_disk,invalid_time>
+$ ls -al /dev/ksyms
+Not sure whether this is anything to be concerned, so thought I would
+timer, watchdog
+$ ls -al /dev/ksyms
+Not sure whether this is anything to be concerned, so thought I would
+timer, watchdog
+Hello All,
+alias ls='ls'
+alias ls=`ls`
+echo "final command"
+$ echo $?
+final command
+final command
+Kind Regards,
+James
+Hello All,
+alias ls='ls'
+alias ls=`ls`
+echo "final command"
+$ echo $?
+final command
+final command
+Kind Regards,
+James
+never much of an issue when I was only using -RELEASE and -STABLE,
+However, with -CURRENT, while enabling wsmoused does still stop the
+detaching
+Is there a way to have the mouse in both console and X in this situation?
+never much of an issue when I was only using -RELEASE and -STABLE,
+However, with -CURRENT, while enabling wsmoused does still stop the
+detaching
+Is there a way to have the mouse in both console and X in this situation?
+bsd,rd gave a
+Let's install the sets!
+Location of sets? (disk http or 'done') [http] http
+Selected
+De-select
+Selected
+Set name(s)? (or 'abort' or 'done') [done] -all
+Set name(s)? (or 'abort' or 'done') [done] bsd
+Set name(s)? (or 'abort' or 'done') [done] done
+System hostname = andromache
+Which network interface do you wish to configure? = done
+Password for root account? = dfsdfsdfdf
+NTP server? = default
+Do you expect to run the X Window System? = no
+Do you want to suspend on lid close? = no
+What timezone are you in? = Europe/Amsterdam
+Setup a user? = no
+Use DUIDs rather than device names in fstab? = yes
+Use (W)hole disk or (E)dit the MBR? = W
+Use (A)uto layout, (E)dit auto layout, or create (C)ustom layout? = a
+Which disk do you wish to initialize? = done
+Location of sets? = http
+HTTP proxy URL? = none
+Set name(s)? = -all
+Set name(s)? = bsd
+Set name(s)? = done
+yes
+Location of sets? = done
+howto
+db_console unset
+boot>
+erase ^?, werase ^W, kill ^U, intr ^C, status ^T
+(I)nstall, (U)pgrade, (A)utoinstall or (S)hell? A
+Which network interface should be used for the initial DHCP request? (or
+Adriaan
+bsd,rd gave a
+Let's install the sets!
+Location of sets? (disk http or 'done') [http] http
+Selected
+De-select
+Selected
+Set name(s)? (or 'abort' or 'done') [done] -all
+Set name(s)? (or 'abort' or 'done') [done] bsd
+Set name(s)? (or 'abort' or 'done') [done] done
+System hostname = andromache
+Which network interface do you wish to configure? = done
+Password for root account? = dfsdfsdfdf
+NTP server? = default
+Do you expect to run the X Window System? = no
+Do you want to suspend on lid close? = no
+What timezone are you in? = Europe/Amsterdam
+Setup a user? = no
+Use DUIDs rather than device names in fstab? = yes
+Use (W)hole disk or (E)dit the MBR? = W
+Use (A)uto layout, (E)dit auto layout, or create (C)ustom layout? = a
+Which disk do you wish to initialize? = done
+Location of sets? = http
+HTTP proxy URL? = none
+Set name(s)? = -all
+Set name(s)? = bsd
+Set name(s)? = done
+yes
+Location of sets? = done
+howto
+db_console unset
+boot>
+erase ^?, werase ^W, kill ^U, intr ^C, status ^T
+(I)nstall, (U)pgrade, (A)utoinstall or (S)hell? A
+Which network interface should be used for the initial DHCP request? (or
+Adriaan
+erase ^?, werase ^W, kill ^U, intr ^C, status ^T
+(I)nstall, (U)pgrade, (A)utoinstall or (S)hell? i
+At any prompt except password prompts you can escape to a shell by
+Which network interface do you wish to configure? (or 'done') [done]
+Password for root account? (will not echo)
+Password for root account? (again)
+Do you expect to run the X Window System? [yes] no
+Setup a user? (enter a lower-case loginname, or 'no') [no]
+What timezone are you in? ('?' for list) [Australia/Sydney]
+Use DUIDs rather than device names in fstab? [yes]
+Use (W)hole disk, use the (O)penBSD area, or (E)dit the MBR? [OpenBSD]
+# size offset fstype [fsize bsize cpg]
+Use (A)uto layout, (E)dit auto layout, or create (C)ustom layout? [a]
+Let's install the sets!
+Location of sets? (cd disk ftp http or 'done') [cd]
+dump area unavailable
+<EOF>
+Any gurus who can enlighten me?
+Rod/
+erase ^?, werase ^W, kill ^U, intr ^C, status ^T
+(I)nstall, (U)pgrade, (A)utoinstall or (S)hell? i
+At any prompt except password prompts you can escape to a shell by
+Which network interface do you wish to configure? (or 'done') [done]
+Password for root account? (will not echo)
+Password for root account? (again)
+Do you expect to run the X Window System? [yes] no
+Setup a user? (enter a lower-case loginname, or 'no') [no]
+What timezone are you in? ('?' for list) [Australia/Sydney]
+Use DUIDs rather than device names in fstab? [yes]
+Use (W)hole disk, use the (O)penBSD area, or (E)dit the MBR? [OpenBSD]
+# size offset fstype [fsize bsize cpg]
+Use (A)uto layout, (E)dit auto layout, or create (C)ustom layout? [a]
+Let's install the sets!
+Location of sets? (cd disk ftp http or 'done') [cd]
+dump area unavailable
+<EOF>
+Any gurus who can enlighten me?
+Rod/
+Hi there!
+Anybody with an idea? More details needed?
+Cheers,
+STEFAN
+SSDT SSDT SSDT
+"Panasonic"
+Hi there!
+Anybody with an idea? More details needed?
+Cheers,
+STEFAN
+SSDT SSDT SSDT
+"Panasonic"
+waiting, I wasn't through the step of the installer where the file
+create a partition using bootcamp then use bless to boot to usb isostick
+RTC BIOS diagnostic error ff<clock_battery,ROM_cksum,config_unit,memory_size,fixed_disk,invalid_time>
+waiting, I wasn't through the step of the installer where the file
+create a partition using bootcamp then use bless to boot to usb isostick
+RTC BIOS diagnostic error ff<clock_battery,ROM_cksum,config_unit,memory_size,fixed_disk,invalid_time>
+Hi,
+figure out the root of the problem?
+Name Mtu Network Address Ipkts Ierrs Opkts
+Oerrs Colls
+Name Mtu Network Address Ipkts Ierrs Opkts
+Oerrs Colls
+Name Mtu Network Address Ipkts Ierrs Opkts
+Oerrs Colls
+Here's dmesg output
+Hi,
+figure out the root of the problem?
+Name Mtu Network Address Ipkts Ierrs Opkts
+Oerrs Colls
+Name Mtu Network Address Ipkts Ierrs Opkts
+Oerrs Colls
+Name Mtu Network Address Ipkts Ierrs Opkts
+Oerrs Colls
+Here's dmesg output
+I am seeing the same behaviour (apparently a clean exit, no message
+I have upgraded -current several times since I last used IPSec, so I
+I am seeing the same behaviour (apparently a clean exit, no message
+I have upgraded -current several times since I last used IPSec, so I
+of course that I misread something aPid is mentioned and defined on
+ktrace/kdump to see if it's really getting all needed parameters and
+of course that I misread something aPid is mentioned and defined on
+ktrace/kdump to see if it's really getting all needed parameters and
+sectors
+Is there anything I can do to help troubleshoot this?
+Thanks,
+Joe Gidi
+sectors
+Is there anything I can do to help troubleshoot this?
+Thanks,
+Joe Gidi
+local $localip peer $peerip \
+psk "top secret"
+packets isakmpd sees with -L give more hints?
+cheers,
+Sebastian
+local $localip peer $peerip \
+psk "top secret"
+packets isakmpd sees with -L give more hints?
+cheers,
+Sebastian
+this is a difficult issue, because as far as i know,
+there are no tools to query per cpu
+i was also thinking about sending an email, as i think
+i see something vagualy similar on my thinkpad notebook,
+but how to collect data?
+for the sake of this "scientific" experiment, i don't start
+it later to compare)
+a whole night of being off, temperature goes into the
+f
+$ sysctl hw
+f
+this is a difficult issue, because as far as i know,
+there are no tools to query per cpu
+i was also thinking about sending an email, as i think
+i see something vagualy similar on my thinkpad notebook,
+but how to collect data?
+for the sake of this "scientific" experiment, i don't start
+it later to compare)
+a whole night of being off, temperature goes into the
+f
+$ sysctl hw
+f
+here they are, i hope they elaborate a little
+Hilsen Isak
+here they are, i hope they elaborate a little
+Hilsen Isak
+On -current, running apachebench with a large number of concurrent
+end of kernel
+SSDT SSDT SSDT PCCT SSDT TCPA UEFI MSDM ASF! BATB FPDT UEFI
+"SANYO"
+DP idle patterns
+msi
+msi
+configured
+fixed
+Carlin
+It's been a long time since I've used OpenBSD as a desktop so I've got a
+Also, if you do try just be aware that the Chromebox has to be put into
+developer mode and the default BIOS will need to be replaced with
+Gene
+It's been a long time since I've used OpenBSD as a desktop so I've got a
+Also, if you do try just be aware that the Chromebox has to be put into
+developer mode and the default BIOS will need to be replaced with
+Gene
+GDB is free software, covered by the GNU General Public License, and you are
+Loaded symbols for /usr/local/bin/remmina
+Marko Cupać
+GDB is free software, covered by the GNU General Public License, and you are
+Loaded symbols for /usr/local/bin/remmina
+Marko Cupać
+Greetings! I'm trying to take care of the warnings I get in my daily
+Any suggestions as to what this message is telling me? More
+generally, is it normal to get these warnings from a fresh install? I'm
+to comply with the warnings
+criteria (shouldbe, reallyis)
+Best regards,
+Ezequiel
+Greetings! I'm trying to take care of the warnings I get in my daily
+Any suggestions as to what this message is telling me? More
+generally, is it normal to get these warnings from a fresh install? I'm
+to comply with the warnings
+criteria (shouldbe, reallyis)
+Best regards,
+Ezequiel
+Is something wrong with my hardware, like RAM?
+Could someone point me in right direction to resolve this error?
+Is something wrong with my hardware, like RAM?
+Could someone point me in right direction to resolve this error?
+Hello
+more only when i downloaded it with youtube-dl and watched it with mplayer i
+so i hope you answer me about that
+thank you
+Tasos Tsolakidis
+(Operation not permitted)
+(++) from command line, (!!) notice, (II) informational,
+Hello
+more only when i downloaded it with youtube-dl and watched it with mplayer i
+so i hope you answer me about that
+thank you
+Tasos Tsolakidis
+(Operation not permitted)
+(++) from command line, (!!) notice, (II) informational,
+Dear @misc reader,
+direct
+Since I was not able to print, I tried to delete and reinstall the
+printer from the CUPS web interface (and from HPLIP GUI too), but, even
+if the operation seems to complete flawlessly and the
+After enabling "Save debugging information for troubleshooting" in CUPS,
+this is the relevant content of /var/log/cups/error_log
+(not readable by _cups?)
+Thanks in advance for any hints
+Alessandro DE LAURENZIS
+Dear @misc reader,
+direct
+Since I was not able to print, I tried to delete and reinstall the
+printer from the CUPS web interface (and from HPLIP GUI too), but, even
+if the operation seems to complete flawlessly and the
+After enabling "Save debugging information for troubleshooting" in CUPS,
+this is the relevant content of /var/log/cups/error_log
+(not readable by _cups?)
+Thanks in advance for any hints
+Alessandro DE LAURENZIS
+Greetings,
+Great hardware support, except that sound card was completely silent
+I played a bit with the parameters, trying to follow some advices
+revealed a working sound out of the box, confirming the well established
+Long story short, I had a look at the code and ended up with the
+break;
+break;
+Of course, I don't know if this is very machine specific or instead
+it could be of general interest; I'm writing here just in case someone
+had the same problem or the developers consider it useful to add
+Hope this can help
+All the best
+location=front chassis=external special=none
+location=front chassis=external special=none
+location=n/a chassis=internal special=none
+location=n/a chassis=internal special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+name=HD-Audio
+properties=full_duplex,independent
+mode=
+Alessandro DE LAURENZIS
+Greetings,
+Great hardware support, except that sound card was completely silent
+I played a bit with the parameters, trying to follow some advices
+revealed a working sound out of the box, confirming the well established
+Long story short, I had a look at the code and ended up with the
+break;
+break;
+Of course, I don't know if this is very machine specific or instead
+it could be of general interest; I'm writing here just in case someone
+had the same problem or the developers consider it useful to add
+Hope this can help
+All the best
+location=front chassis=external special=none
+location=front chassis=external special=none
+location=n/a chassis=internal special=none
+location=n/a chassis=internal special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+location=n/a chassis=external special=none
+name=HD-Audio
+properties=full_duplex,independent
+mode=
+Alessandro DE LAURENZIS
+I'm curious why you decided to mask the subid here and not just test
+I'm curious why you decided to mask the subid here and not just test
+/root # startx
+(++) from command line, (!!) notice, (II) informational,
+Initializing built-in extension Generic Event Extension
+Initializing built-in extension SHAPE
+Initializing built-in extension MIT-SHM
+Initializing built-in extension XInputExtension
+Initializing built-in extension XTEST
+Initializing built-in extension BIG-REQUESTS
+Initializing built-in extension SYNC
+Initializing built-in extension XKEYBOARD
+Initializing built-in extension XC-MISC
+Initializing built-in extension SECURITY
+Initializing built-in extension XINERAMA
+Initializing built-in extension XFIXES
+Initializing built-in extension RENDER
+Initializing built-in extension RANDR
+Initializing built-in extension COMPOSITE
+Initializing built-in extension DAMAGE
+Initializing built-in extension MIT-SCREEN-SAVER
+Initializing built-in extension DOUBLE-BUFFER
+Initializing built-in extension RECORD
+Initializing built-in extension DPMS
+Initializing built-in extension Present
+Initializing built-in extension X-Resource
+Initializing built-in extension XVideo
+Initializing built-in extension XVideo-MotionCompensation
+Loading extension GLX
+(++) from command line, (!!) notice, (II) informational,
+ATI Radeon QE (AGP), ATI Radeon QF (AGP), ATI Radeon QG (AGP),
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI Mobility Radeon Graphics, CEDAR,
+ATI FirePro (FireGL) Graphics Adapter,
+CAYMAN, CAYMAN, CAYMAN, CAYMAN, CAYMAN, CAYMAN,
+TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS,
+TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS,
+CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS,
+CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, TAHITI, TAHITI, TAHITI, TAHITI,
+TAHITI, TAHITI, TAHITI, TAHITI, TAHITI, TAHITI, TAHITI, TAHITI,
+TAHITI, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN,
+PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN,
+VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE,
+VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE,
+VERDE, VERDE, VERDE, OLAND, OLAND, OLAND, OLAND, OLAND, OLAND, OLAND,
+OLAND, OLAND, OLAND, OLAND, OLAND, OLAND, HAINAN, HAINAN, HAINAN,
+HAINAN, HAINAN, HAINAN, BONAIRE, BONAIRE, BONAIRE, BONAIRE, BONAIRE,
+BONAIRE, BONAIRE, BONAIRE, KABINI, KABINI, KABINI, KABINI, KABINI,
+KABINI, KABINI, KABINI, KABINI, KABINI, KABINI, KABINI, KABINI,
+KABINI, KABINI, KABINI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI,
+KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI,
+KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI,
+HAWAII, HAWAII, HAWAII, HAWAII, HAWAII, HAWAII, HAWAII, HAWAII,
+HAWAII, HAWAII, HAWAII, HAWAII
+/var/log # dmesg
+#AllowAgentForwarding yes
+#AllowTcpForwarding yes
+#GatewayPorts no
+#PermitTTY yes
+#PrintMotd yes
+#PrintLastLog yes
+#TCPKeepAlive yes
+#UseLogin no
+#PermitUserEnvironment no
+#Compression delayed
+#UseDNS yes
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+/root # startx
+(++) from command line, (!!) notice, (II) informational,
+Initializing built-in extension Generic Event Extension
+Initializing built-in extension SHAPE
+Initializing built-in extension MIT-SHM
+Initializing built-in extension XInputExtension
+Initializing built-in extension XTEST
+Initializing built-in extension BIG-REQUESTS
+Initializing built-in extension SYNC
+Initializing built-in extension XKEYBOARD
+Initializing built-in extension XC-MISC
+Initializing built-in extension SECURITY
+Initializing built-in extension XINERAMA
+Initializing built-in extension XFIXES
+Initializing built-in extension RENDER
+Initializing built-in extension RANDR
+Initializing built-in extension COMPOSITE
+Initializing built-in extension DAMAGE
+Initializing built-in extension MIT-SCREEN-SAVER
+Initializing built-in extension DOUBLE-BUFFER
+Initializing built-in extension RECORD
+Initializing built-in extension DPMS
+Initializing built-in extension Present
+Initializing built-in extension X-Resource
+Initializing built-in extension XVideo
+Initializing built-in extension XVideo-MotionCompensation
+Loading extension GLX
+(++) from command line, (!!) notice, (II) informational,
+ATI Radeon QE (AGP), ATI Radeon QF (AGP), ATI Radeon QG (AGP),
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI FirePro (FireGL) Graphics Adapter,
+ATI Mobility Radeon Graphics, CEDAR,
+ATI FirePro (FireGL) Graphics Adapter,
+CAYMAN, CAYMAN, CAYMAN, CAYMAN, CAYMAN, CAYMAN,
+TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS,
+TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS, TURKS,
+CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS,
+CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, CAICOS, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, ARUBA,
+ARUBA, ARUBA, ARUBA, ARUBA, ARUBA, TAHITI, TAHITI, TAHITI, TAHITI,
+TAHITI, TAHITI, TAHITI, TAHITI, TAHITI, TAHITI, TAHITI, TAHITI,
+TAHITI, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN,
+PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN, PITCAIRN,
+VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE,
+VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE, VERDE,
+VERDE, VERDE, VERDE, OLAND, OLAND, OLAND, OLAND, OLAND, OLAND, OLAND,
+OLAND, OLAND, OLAND, OLAND, OLAND, OLAND, HAINAN, HAINAN, HAINAN,
+HAINAN, HAINAN, HAINAN, BONAIRE, BONAIRE, BONAIRE, BONAIRE, BONAIRE,
+BONAIRE, BONAIRE, BONAIRE, KABINI, KABINI, KABINI, KABINI, KABINI,
+KABINI, KABINI, KABINI, KABINI, KABINI, KABINI, KABINI, KABINI,
+KABINI, KABINI, KABINI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI,
+KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI,
+KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI, KAVERI,
+HAWAII, HAWAII, HAWAII, HAWAII, HAWAII, HAWAII, HAWAII, HAWAII,
+HAWAII, HAWAII, HAWAII, HAWAII
+/var/log # dmesg
+#AllowAgentForwarding yes
+#AllowTcpForwarding yes
+#GatewayPorts no
+#PermitTTY yes
+#PrintMotd yes
+#PrintLastLog yes
+#TCPKeepAlive yes
+#UseLogin no
+#PermitUserEnvironment no
+#Compression delayed
+#UseDNS yes
+#PermitTunnel no
+#ChrootDirectory none
+#VersionAddendum none
+removable
+setting,
+(++) from command line, (!!) notice, (II) informational,
+If no devices become available, reconfigure wscons or disable
+ValleyView PO board
+section
+RGB/Color Display
+of range)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+reason)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+out of range)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+pages failed
+(Cannot allocate memory)
+of DCACHE
+removable
+setting,
+(++) from command line, (!!) notice, (II) informational,
+If no devices become available, reconfigure wscons or disable
+section
+RGB/Color Display
+your kernel has
+fix !!
+thnks !!
+removable
+setting,
+(++) from command line, (!!) notice, (II) informational,
+If no devices become available, reconfigure wscons or disable
+ValleyView PO board
+section
+RGB/Color Display
+of range)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+reason)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+of range)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+out of range)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+large for virtual size)
+clock/interlace/doublescan)
+pages failed
+(Cannot allocate memory)
+of DCACHE
+removable
+setting,
+(++) from command line, (!!) notice, (II) informational,
+If no devices become available, reconfigure wscons or disable
+section
+RGB/Color Display
+your kernel has
+fix !!
+thnks !!
+surprised if anything behind Windows and Linux (with a lot of
+hey we propagate this inside, but in fact there's this inside secretely
+surprised if anything behind Windows and Linux (with a lot of
+hey we propagate this inside, but in fact there's this inside secretely
+Dear @misc reader,
+direct
+Since I was not able to print, I tried to delete and reinstall the
+printer from the CUPS web interface (and from HPLIP GUI too), but, even
+if the operation seems to complete flawlessly and the
+After enabling "Save debugging information for troubleshooting" in CUPS,
+this is the content of /var/log/cups/error_log
+(not readable by _cups?)
+Thanks in advance for any hints
+Alessandro DE LAURENZIS
+Dear @misc reader,
+direct
+Since I was not able to print, I tried to delete and reinstall the
+printer from the CUPS web interface (and from HPLIP GUI too), but, even
+if the operation seems to complete flawlessly and the
+After enabling "Save debugging information for troubleshooting" in CUPS,
+this is the content of /var/log/cups/error_log
+(not readable by _cups?)
+Thanks in advance for any hints
+Alessandro DE LAURENZIS
