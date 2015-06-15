@@ -6,7 +6,7 @@
 	  store.ba = require('beer-advocate-api');
   }
 
-  function pretty(rev) {
+  function pretty(rev, url) {
 	  var map = {
 		  beer_name: 'Name',
 		  beer_style: 'Style',
@@ -31,7 +31,9 @@
 
 	  o = o.sort();
 
-	  return(o.join(', '));
+	  o = o.join(', ') + " - " + "http://www.beeradvocate.com" + url;
+
+	  return o.replace(/\n/g, "");
   }
 
   if (msg.match(/^ba:/)) {
@@ -40,7 +42,7 @@
 		  if ( beers[0] && beers[0].beer_url ) {
 			  store.ba.beerPage(beers[0].beer_url, function(reviews) {
 				  if ( reviews.length >= 1) {
-					  cb.call( null, to, from, pretty(reviews[0]));
+					  cb.call( null, to, from, pretty(reviews[0], beers[0].beer_url));
 				  }
 			  });
 		  }
