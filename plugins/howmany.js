@@ -10,6 +10,10 @@
   var resp = ''; 
   if ( ! store.db ) {
     helper.sqlite.verbose();
+    store.map = {
+	mordac: 'Eric Lalonde',
+	qbit: 'abieber'
+	};
     store.db = new helper.sqlite.Database( '/usr/local/share/sqlports' );
     store.query = "select count(distinct pkgname) as num from ports where maintainer like ?";
     store.query_most = "select maintainer as maintainer, count(*) as num from ports where maintainer <> 'The OpenBSD ports mailing-list <ports@openbsd.org>' group by maintainer order by count(*) desc limit 1";
@@ -29,6 +33,10 @@
   if ( msg.match( /^howmany: / ) ) {
     msg = msg.replace( /^howmany: /, '' );
     p = store.db.prepare( store.query );
+
+    if (store.map[msg]) {
+	msg = store.map[msg];
+    }
 
     p.get( [ "%" + msg + "%" ], function( err, row ) {
       if ( !err ) {
