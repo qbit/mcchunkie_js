@@ -5,7 +5,7 @@
 	if (!store.loading || !store.markov) {
 		var markov = require('markov');
 		console.log("reloading markov stuff..");
-		store.markov = markov(1);
+		store.markov = markov();
 		store.loading = true;
 		fs.readFile(__dirname +'/../misc.markov', function(err, data) {
     			if (err) { throw err; }
