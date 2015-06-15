@@ -18,7 +18,7 @@
 	  ];
   }
 
-  if ( helper.isRelevant( msg ) && msg.indexOf( 'tmnt' ) > -1 ) {
+  if (msg.match(/tmnt/i)) {
     resp = store.phrases[ Math.floor( Math.random() * store.phrases.length ) ];
   }
 
