@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "appdotnet": "^0.2.0",
-    "beer-advocate-api": "https://github.com/qbit/beer-advocate-api.git",
+    "beer-advocate-api": "git://github.com/qbit/beer-advocate-api.git",
     "classifier": "^0.1.0",
     "hiredis": "^0.1.17",
     "irc": "^0.3.7",
