@@ -5,6 +5,8 @@
   responses = [
     "that's what she said!",
     "PHRASING, BOOM!",
+    " - Brazzers",
+    "( ͡ʘ ͜ʖ ͡ʘ)",
     "phrasing.",
     "twss!",
     "TWSS!",
