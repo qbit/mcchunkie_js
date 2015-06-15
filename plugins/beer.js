@@ -65,6 +65,7 @@
 
     if ( msg.match( /^beer:/ ) ) {
       msg = msg.replace( /^beer:/, '' );
+	msg = msg.replace(/^\//, "");
       url += "&q=" + msg;
       try { 
         store.get( url, to, from );
