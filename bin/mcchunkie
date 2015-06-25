@@ -289,6 +289,7 @@ function reply(t, frm, resp) {
 	    //xmpp.send(frm, resp);
 	}
 	if (args.t) {
+	    console.log('sending %s "%s"', t, resp);
 	    https.get(teleURL + apiKeys.telegram + '?chat_id=' + t + '&text=' + encodeURI(resp));
 	}
 	if (client) {
@@ -349,12 +350,14 @@ if (args.t) {
 
 		//Too much POST data, kill the connection !
                 if (body.length > 1e6) {
-                    req.connection.destroy();
+		    req.connection.destroy();
 		}
 	    });
 	    req.on('end', function() {
 		var data = JSON.parse(body);
 		var msg = data.message.text;
+
+		console.log(data);
 
 		processMsg(data.message.chat.id, data.message.from.id, msg)
 
@@ -363,7 +366,7 @@ if (args.t) {
 	    });
 	}
     }).listen(8000, '127.0.0.1');
-}
+    }
 
 if (args.i) {
     client = new irc.Client(args.s, args.n, {
@@ -394,21 +397,21 @@ if (args.i) {
 	    console.log('joined ' + chan + ' because ' + from + ' invited me');
 	});
     });
-/*
-    client = new Client({
-	server: {
-	    host: args.s,
-	    port: 6667
-	},
-	nickname: args.n,
-	username: args.n,
-	realname: args.n,
-	channels: channels
-    });
+    /*
+      client = new Client({
+      server: {
+      host: args.s,
+      port: 6667
+      },
+      nickname: args.n,
+      username: args.n,
+      realname: args.n,
+      channels: channels
+      });
     
-    client.on("message:public", function(from, to, msg) {
-	console.log(from,to,msg);
-	processMsg(to, from, msg);
-    });
-*/
+      client.on("message:public", function(from, to, msg) {
+      console.log(from,to,msg);
+      processMsg(to, from, msg);
+      });
+    */
 }

@@ -36,8 +36,9 @@
 	  return o.replace(/\n/g, "");
   }
 
-  if (msg.match(/^ba:/)) {
+  if (msg.match(/^ba:|^\/beer /)) {
 	  msg = msg.replace(/^ba:/, '');
+	  msg = msg.replace(/^\/beer /, '');
 	  store.ba.beerSearch(msg, function(beers) {
 		  if ( beers[0] && beers[0].beer_url ) {
 			  store.ba.beerPage(beers[0].beer_url, function(reviews) {
