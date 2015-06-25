@@ -285,7 +285,7 @@ fs.watch(plugins, function(e, file) {
 function reply(t, frm, resp, proto) {
     t = t || frm;
     proto = proto || 'irc';
-    if (resp) {
+    if (resp && t) {
 	if (args.j && proto === 'xmpp') {
 	    //xmpp.send(frm, resp);
 	}
