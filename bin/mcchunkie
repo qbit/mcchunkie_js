@@ -291,7 +291,7 @@ function reply(t, frm, resp, proto) {
 	}
 	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
-	    var turl = teleURL + apiKeys.telegram + '?chat_id=' + t + encodeURI(resp);
+	    var turl = teleURL + tokens.telegram + '?chat_id=' + t + encodeURI(resp);
 	    console.log(turl);
 	    https.get(turl, function(res) {
 		console.log("statusCode: ", res.statusCode);
