@@ -18,9 +18,14 @@
 
     if ( ! store.msgs ) {
 	store.msgs = {};
-	store.msgs[proto] = [];
-
 	store.spoken_twsses = {};
+    }
+
+    if ( ! store.msgs[proto] ) {
+	store.msgs[proto] = [];
+    }
+
+    if ( ! store.spoken_twsses[proto] ) {
 	store.spoken_twsses[proto] = [];
     }
 
