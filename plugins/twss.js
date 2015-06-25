@@ -1,5 +1,5 @@
 // Desc: watch incoming messages for possible twss jokes. Can be trained.
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp,
   responses = [
@@ -65,10 +65,10 @@
 		  store.bays.train( store.msgs[ store.msgs.length - 2 ], 'funny', function() {
 		    store.spoken_twsses.push( store.msgs[ store.msgs.length - 2 ]);
 		    resp = 'Added funny: "' + store.msgs[ store.msgs.length - 2 ] + '"';
-		    cb.call( null, to, from, resp );
+		    cb.call( null, to, from, resp, proto );
 		  });
 	  } else {
-		    cb.call( null, to, from, 'que?' );
+		    cb.call( null, to, from, 'que?', proto );
 	  }
         } if ( msg === helper.botname + ': no' ) {
           // store.bays.train( store.msgs[ store.msgs.length - 2 ], 'notfunny', function() {
@@ -76,22 +76,22 @@
 		  store.bays.train( store.spoken_twsses[ store.spoken_twsses.length - 1 ], 'notfunny', function() {
 		    // resp = 'Sorry: "' + store.msgs[ store.msgs.length - 2 ] + '"';
 		    resp = 'Sorry: "' + store.spoken_twsses[ store.spoken_twsses.length - 1 ] + '"';
-		    cb.call( null, to, from, resp );
+		    cb.call( null, to, from, resp, proto );
 		  });
 	  } else {
-		    cb.call( null, to, from, 'que?' );
+		    cb.call( null, to, from, 'que?', proto );
 	  }
         } if ( msg.match( /^twss\?$/i ) ) {
           if ( cat !== 'funny' ) {
             resp = 'no.';
-            cb.call( null, to, from, resp );
+            cb.call( null, to, from, resp, proto );
           }
         } else {
           if ( cat === 'funny' ) {
             store.spoken_twsses.push( msg );
             resp = responses[ helper.rand( responses.length ) ];
 	    if ( from !== 'dbtid' ) {
-		    cb.call( null, to, from, resp );
+		    cb.call( null, to, from, resp, proto );
 	    }
           }
         }

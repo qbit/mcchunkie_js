@@ -1,5 +1,5 @@
 // Desc: you know you're South African when
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
 	'use strict';
 var resp;
 
@@ -29,5 +29,5 @@ var resp;
   if ( msg.match( /^ykysaw?/i ) ) {
     resp = "You Know You're a South African When: " + store.phrases[ helper.rand( store.phrases.length ) ];
   }
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });
