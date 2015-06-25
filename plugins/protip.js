@@ -1,5 +1,5 @@
 // Desc: return random protips
-(function(helper, to, from, msg, store, sh_store, cb) {
+(function(helper, to, from, msg, store, sh_store, cb, proto) {
   'use strict';
   var resp;
 
@@ -19,7 +19,7 @@
   if (msg.match(/^brotip\?|^protip\?|^pro-tip\?/i)) {
 	  if (store.authed) {
 		  store.rclient.srandmember('protip', function(e, d) {
-			  cb.call(null, to, from, d);
+			  cb.call(null, to, from, d, proto);
 		  });
 	  }
   }
