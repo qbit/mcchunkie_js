@@ -16,6 +16,7 @@
     "if you know what I mean."
   ];
 
+    console.log(proto);
     if ( ! store.msgs ) {
 	store.msgs = {};
 	store.msgs[proto] = [];
