@@ -291,7 +291,9 @@ function reply(t, frm, resp, proto) {
 	}
 	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
-	    https.get(teleURL + apiKeys.telegram + '?chat_id=' + t + '&text=' + encodeURI(resp), function(res) {
+	    var turl = teleURL + apiKeys.telegram + '?chat_id=' + t + encodeURI(resp);
+	    console.log(turl);
+	    https.get(turl, function(res) {
 		console.log("statusCode: ", res.statusCode);
 		console.log("headers: ", res.headers);
 
@@ -300,13 +302,13 @@ function reply(t, frm, resp, proto) {
 		});
 
 	    }).on('error', function(err) {
-		console.log(err);
-	    });
-	}
-	if (client && proto === 'irc') {
-	    client.say(t, resp);
-	}
-    }
+console.log(err);
+});
+}
+if (client && proto === 'irc') {
+client.say(t, resp);
+}
+}
 }
 
 function processMsg(to, from, msg, proto) {
