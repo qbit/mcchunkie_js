@@ -1,5 +1,5 @@
 // Desc: print bot's uptime
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp, minutes = 0;
   if ( msg === helper.botname + ': uptime' ) {
@@ -11,5 +11,5 @@
     }
   }
 
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });
