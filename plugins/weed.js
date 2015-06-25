@@ -1,5 +1,5 @@
 // Desc: search leafly for types of weed (requires api key)
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp = '', url, i, l, index;
 
@@ -66,7 +66,7 @@
             }
 
             if ( name !== '?' ) {
-              cb.call( null, to, from, resp );
+              cb.call( null, to, from, resp, proto );
             }
           }
         });
@@ -86,7 +86,7 @@
         });
       } catch( e ) {
         resp = "oh shit...";
-        cb.call( null, to, from, resp );
+        cb.call( null, to, from, resp, proto );
       }
     }
   } catch ( error ) {
