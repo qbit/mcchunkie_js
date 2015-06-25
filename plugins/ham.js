@@ -70,7 +70,7 @@
 	if (msg.match(/^ham: |^\/ham / )) {
 		msg = msg.replace(/^ham: /, '');
 		msg = msg.replace(/^\/ham /, '');
-		store.fcc.get(msg, ''), to, from);
+		store.fcc.get(msg, to, from);
 	}
 
 });
