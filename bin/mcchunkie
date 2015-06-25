@@ -370,7 +370,7 @@ if (args.t) {
 		var data = JSON.parse(body);
 		var msg = data.message.text;
 
-		processMsg(data.message.chat.id, data.message.from.id, msg, "telegram")
+		processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram")
 
 		resp.writeHead(200, {'Content-Type': 'application/json'});
 		resp.end('\n');
