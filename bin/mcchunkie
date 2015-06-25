@@ -315,7 +315,7 @@ function processMsg(to, from, msg, proto) {
     var i, resp;
     proto = proto || 'irc';
     for (i in runningPlugins) {
-	if (runningPlugins.hasOwnProperty(i)) {
+	if (runningPlugins.hasOwnProperty(i) && msg) {
 	    try {
 		runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto);
 	    } catch(e) {
