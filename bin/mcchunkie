@@ -313,7 +313,7 @@ function reply(t, frm, resp, proto) {
 
 function processMsg(to, from, msg, proto) {
     var i, resp;
-    
+    proto = proto || 'irc';
     for (i in runningPlugins) {
 	if (runningPlugins.hasOwnProperty(i)) {
 	    try {
