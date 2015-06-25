@@ -394,7 +394,7 @@ if (args.i) {
 	if(client.nick !== args.n) {
 	    //client.send('NICK', args.n);
 	}
-	processMsg(to, from, msg);
+	processMsg(to, from, msg, 'irc');
     });
 
 
