@@ -13,7 +13,7 @@
     
   }
 
-  if ( msg.match( /^version:|^\/version$// ) ) {
+  if ( msg.match( /^version:|^\/version$/ ) ) {
      resp = "I am running on Node.JS " + process.version + ' on ' + process.platform.ucFirst().replace( 'bsd', 'BSD' ) + ' ' + os.release() + '.';
   }
   cb.call( null, to, from, resp, proto );
