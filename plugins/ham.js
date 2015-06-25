@@ -1,7 +1,7 @@
 // Title: ham.js
 // Usage: ham: <callsign>|<string>
 // Desc: query the FCC license database for license info.
-(function(helper, to, from, msg, store, sh_store, cb ) {
+(function(helper, to, from, msg, store, sh_store, cb, proto ) {
 	'use strict';
 	var resp;
 	if (! store.fcc ) {
@@ -59,16 +59,18 @@
 				}
 				if (data.status === 'OK' ) {
 					resp = store.fcc.buildList(data.Licenses.License);
-					cb.call(null, t, frm, resp);
+					cb.call(null, t, frm, resp, proto);
 				} else {
-					cb.call(null, t, frm, data.status);
+					cb.call(null, t, frm, data.status, proto);
 				}
 			});
 		};
 	}
 
-	if (msg.match(/^ham: / )) {
-		store.fcc.get(msg.replace(/^ham: /, ''), to, from);
+	if (msg.match(/^ham: |^\/ham / )) {
+		msg = msg.replace(/^ham: /, '');
+		msg = msg.replace(/^\/ham /, '');
+		store.fcc.get(msg, ''), to, from);
 	}
 
 });

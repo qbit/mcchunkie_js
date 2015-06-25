@@ -1,5 +1,5 @@
 // Desc: quiz players on Extra, General and Tech exams for Ham Radio.
-(function(helper, to, from, msg, store, sh_store, cb) {
+(function(helper, to, from, msg, store, sh_store, cb, proto) {
   'use strict';
   var resp;
 
@@ -29,7 +29,7 @@
 		  store[id].db.randomkey(function(e, d) {
 			  store[id].curr = d;
 			  store[id].db.hget( d, 'question', function(e, q) {
-				  cb.call(null, t, frm, '(' + store[id].curr +') ' + q);
+				  cb.call(null, t, frm, '(' + store[id].curr +') ' + q, proto);
 				  if ( fn ) {
 					  fn.call(null, q);
 				  }
@@ -80,11 +80,11 @@
 						  resp = 'Incorrect answer for ' + store[id].curr + ', ' + frm + '. ' + store.calcRes( frm, store[id].takers[frm], true );
 						  store[id].takers[frm].q = store[id].curr;
 					  }
-					  cb.call(null, t, frm, resp);
+					  cb.call(null, t, frm, resp, proto);
 
 					  if ( store[id].takers[frm] && store[id].takers[frm].total ) {
 						  if ( store[id].takers[frm].total === 35 || store[id].takers[frm].total - store[id].takers[frm].correct >= 9) {
-							  cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ));
+							  cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ), proto);
 							  store[id].takers[frm].total = 0;
 							  store[id].takers[frm].correct = 0;
 						  }
@@ -96,15 +96,15 @@
   }
 
 
-  if (msg.match(/^THQ:/i)) {
+  if (msg.match(/^THQ:|^\/THQ /i)) {
 	  store.randFromTest('t', to, from);
   }
 
-  if (msg.match(/^GHQ:/i)) {
+  if (msg.match(/^GHQ:|^\/GHQ /i)) {
 	  store.randFromTest('g', to, from);
   }
 
-  if (msg.match(/^EHQ:/i)) {
+  if (msg.match(/^EHQ:|^\/EHQ /i)) {
 	  store.randFromTest('e', to, from);
   }
 

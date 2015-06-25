@@ -1,5 +1,5 @@
 // Desc: feed the bot!
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var snacks = [
     'omm nom nom nom',
@@ -13,5 +13,5 @@
       resp = snacks[ helper.rand( snacks.length ) ];
     }
   }
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });

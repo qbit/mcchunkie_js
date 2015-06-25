@@ -1,5 +1,5 @@
 // Desc: query brewerydb for delicious delicious beer
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp, url;
 
@@ -57,7 +57,7 @@
             if ( to === helper.botname ) {
               to = from;
             }
-            cb.call( null, to, from, resp );
+            cb.call( null, to, from, resp, proto );
           }
         });
       };
@@ -71,7 +71,7 @@
         store.get( url, to, from );
       } catch( e ) {
         resp = "oh shit...";
-        cb.call( null, to, from, resp );
+        cb.call( null, to, from, resp, proto );
       }
     }
   } catch ( e ) {

@@ -1,5 +1,5 @@
 // Desc: Daaayum Daaayyyyuuummm DAAAAAAYYYYUUUUMMMMMMMM
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp;
 
@@ -10,5 +10,5 @@
     resp = "Dayum DAYum DAAAAAYUUUUUMMMMM!!!!";
   }
 
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });

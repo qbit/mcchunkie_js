@@ -1,5 +1,5 @@
 // Desc: query openbsd ports for maintainer count info
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
 
   if (os.type() !== 'OpenBSD') {
@@ -20,7 +20,7 @@
   }
 
   var a, p;
-  if ( msg.match( /^mostports:$/ ) ) {
+  if ( msg.match( /^mostports:$|^\/mostports / ) ) {
     p = store.db.prepare( store.query_most );
 
     p.get( [ ], function( err, row ) {
@@ -30,8 +30,9 @@
       }
     });
   }
-  if ( msg.match( /^howmany: / ) ) {
+  if ( msg.match( /^howmany: |^\/howmany / ) ) {
     msg = msg.replace( /^howmany: /, '' );
+    msg = msg.replace( /^\/howmany /, '' );
     p = store.db.prepare( store.query );
 
     if (store.map[msg]) {
@@ -40,7 +41,7 @@
 
     p.get( [ "%" + msg + "%" ], function( err, row ) {
       if ( !err ) {
-        cb.call( null, to, from, msg + ' has ' + row.num + ' ports.' );
+        cb.call( null, to, from, msg + ' has ' + row.num + ' ports.', proto );
       }
     });
   }

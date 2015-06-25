@@ -282,29 +282,30 @@ fs.watch(plugins, function(e, file) {
     loadPlugins(messages, false);
 });
 
-function reply(t, frm, resp) {
+function reply(t, frm, resp, proto) {
     t = t || frm;
+    proto = proto || 'irc';
     if (resp) {
-	if (args.j) {
+	if (args.j && proto === 'xmpp') {
 	    //xmpp.send(frm, resp);
 	}
-	if (args.t) {
+	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
 	    https.get(teleURL + apiKeys.telegram + '?chat_id=' + t + '&text=' + encodeURI(resp));
 	}
-	if (client) {
+	if (client && proto === 'irc') {
 	    client.say(t, resp);
 	}
     }
 }
 
-function processMsg(to, from, msg) {
+function processMsg(to, from, msg, proto) {
     var i, resp;
     
     for (i in runningPlugins) {
 	if (runningPlugins.hasOwnProperty(i)) {
 	    try {
-		runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply);
+		runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto);
 	    } catch(e) {
 		console.log("Error running '" + i + "'\n" + e);
 	    }
@@ -327,7 +328,7 @@ if (args.j) {
       });
 
       xmpp.on('chat', function(from, message) {
-      processMsg(null, from, message);
+      processMsg(null, from, message, 'xmpp');
       });
 
       xmpp.connect({
@@ -357,9 +358,7 @@ if (args.t) {
 		var data = JSON.parse(body);
 		var msg = data.message.text;
 
-		console.log(data);
-
-		processMsg(data.message.chat.id, data.message.from.id, msg)
+		processMsg(data.message.chat.id, data.message.from.id, msg, "telegram")
 
 		resp.writeHead(200, {'Content-Type': 'application/json'});
 		resp.end('\n');
@@ -388,7 +387,7 @@ if (args.i) {
 
 
     client.addListener('pm', function(from, msg) {
-	processMsg(null, from, args.n + ':' + msg);
+	processMsg(null, from, args.n + ':' + msg, 'irc');
     });
 
     client.addListener('invite', function(chan, from) {

@@ -1,5 +1,5 @@
 // Desc: translate to ermahgerd talk
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp;
 
@@ -31,7 +31,7 @@
         //resp = store.ermg( 'doing it!' );
         resp = 'Not doing it out of <3 for lteo';
       }
-      cb.call( null, to, from, resp );
+      cb.call( null, to, from, resp, proto );
       return;
     }
   }
@@ -40,5 +40,5 @@
     //resp = store.ermg( msg );
   }
 
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });

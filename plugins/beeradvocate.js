@@ -1,4 +1,4 @@
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp;
 
@@ -43,7 +43,7 @@
 		  if ( beers[0] && beers[0].beer_url ) {
 			  store.ba.beerPage(beers[0].beer_url, function(reviews) {
 				  if ( reviews.length >= 1) {
-					  cb.call( null, to, from, pretty(reviews[0], beers[0].beer_url));
+					  cb.call( null, to, from, pretty(reviews[0], beers[0].beer_url), proto);
 				  }
 			  });
 		  }

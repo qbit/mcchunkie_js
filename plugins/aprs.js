@@ -1,5 +1,5 @@
 // Desc: query the FCC license database for license info. *requires api key for aprs.fi*
-(function(helper, to, from, msg, store, sh_store, cb ) {
+(function(helper, to, from, msg, store, sh_store, cb, proto) {
 	'use strict';
 	var resp, what, who, parts = msg.split( ' ' );
 	if (! store.aprs ) {
@@ -61,9 +61,9 @@
 				data = JSON.parse(data);
 				if (data.result === 'ok' && data.found > 0) {
 					resp = store.aprs.buildList(data.entries);
-					cb.call(null, t, frm, resp);
+					cb.call(null, t, frm, resp, proto);
 				} else {
-					cb.call(null, t, frm, 'I got nothin.');
+					cb.call(null, t, frm, 'I got nothin.', proto);
 				}
 			});
 		};
