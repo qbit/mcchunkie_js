@@ -22,7 +22,7 @@ var    irc = require('irc'),
     runningMessages = {},
     storage = {},
     args = require('optimist')
-    .usage('$0 [-i] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>')
+    .usage('$0 [-i,-t] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>')
     .demand(['n'])
     .argv,
     client, channels, chanCount = 0,
@@ -287,6 +287,9 @@ function reply(t, frm, resp) {
 	if (args.j) {
 	    //xmpp.send(frm, resp);
 	}
+	if (args.t) {
+	    https.get(teleURL + apiKeys.telegram + '?chat_id=' + t + '&text=' + encodeURI(resp));
+	}
 	if (client) {
 	    client.say(t, resp);
 	}
@@ -335,8 +338,33 @@ if (args.j) {
     */
 }
 
-if (args.i) {
+// Telegram client
+if (args.t) {
+    http.createServer(function(req, resp) {
+	if (req.method == 'POST') {
+	    var body = '';
+	    req.on('data', function(data) {
+		body += data;
 
+		//Too much POST data, kill the connection !
+                if (body.length > 1e6) {
+                    req.connection.destroy();
+		}
+	    });
+	    req.on('end', function() {
+		var data = JSON.parse(body);
+		var msg = data.message.text;
+
+		processMsg(data.message.chat.id, data.message.from.id, msg)
+
+		resp.writeHead(200, {'Content-Type': 'application/json'});
+		resp.end('\n');
+	    });
+	}
+    }).listen(8000, '127.0.0.1');
+}
+
+if (args.i) {
     client = new irc.Client(args.s, args.n, {
 	channels: channels,
 	debug: false,
