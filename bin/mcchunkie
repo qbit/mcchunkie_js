@@ -291,7 +291,17 @@ function reply(t, frm, resp, proto) {
 	}
 	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
-	    https.get(teleURL + apiKeys.telegram + '?chat_id=' + t + '&text=' + encodeURI(resp));
+	    https.get(teleURL + apiKeys.telegram + '?chat_id=' + t + '&text=' + encodeURI(resp), function(res) {
+		console.log("statusCode: ", res.statusCode);
+		console.log("headers: ", res.headers);
+
+		res.on('data', function(d) {
+		    console.log(d)
+		});
+
+	    }).on('error', function(err) {
+		console.log(err);
+	    });
 	}
 	if (client && proto === 'irc') {
 	    client.say(t, resp);
@@ -350,7 +360,7 @@ if (args.t) {
 		body += data;
 
 		//Too much POST data, kill the connection !
-                if (body.length > 1e6) {
+		if (body.length > 1e6) {
 		    req.connection.destroy();
 		}
 	    });
@@ -396,21 +406,21 @@ if (args.i) {
 	    console.log('joined ' + chan + ' because ' + from + ' invited me');
 	});
     });
-    /*
-      client = new Client({
-      server: {
-      host: args.s,
-      port: 6667
-      },
-      nickname: args.n,
-      username: args.n,
-      realname: args.n,
-      channels: channels
-      });
+	/*
+	  client = new Client({
+	  server: {
+	  host: args.s,
+	  port: 6667
+	  },
+	  nickname: args.n,
+	  username: args.n,
+	  realname: args.n,
+	  channels: channels
+	  });
     
-      client.on("message:public", function(from, to, msg) {
-      console.log(from,to,msg);
-      processMsg(to, from, msg);
-      });
-    */
-}
+	  client.on("message:public", function(from, to, msg) {
+	  console.log(from,to,msg);
+	  processMsg(to, from, msg);
+	  });
+	*/
+    }
