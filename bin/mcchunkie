@@ -298,17 +298,17 @@ function reply(t, frm, resp, proto) {
 		console.log("headers: ", res.headers);
 
 		res.on('data', function(d) {
-		    console.log(d)
+		    console.log(d.toString())
 		});
 
 	    }).on('error', function(err) {
-console.log(err);
-});
-}
-if (client && proto === 'irc') {
-client.say(t, resp);
-}
-}
+		console.log(err);
+	    });
+	}
+	if (client && proto === 'irc') {
+	    client.say(t, resp);
+	}
+    }
 }
 
 function processMsg(to, from, msg, proto) {
