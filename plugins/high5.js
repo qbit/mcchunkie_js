@@ -13,7 +13,7 @@
 
   if ( helper.isRelevant( msg ) ) { 
     msg = msg.trim();
-    if (msg.match(/o\/)) {
+    if (msg.match(/o\//)) {
       resp = '\\o';
     }
     if (msg.match(/\\o/)) {
