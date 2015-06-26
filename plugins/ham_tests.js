@@ -3,6 +3,22 @@
   'use strict';
   var resp;
 
+        if (msg.match(/^\/help$|^help:$/)) {
+                if (proto === 'telegram') {
+                        resp = "/thq - Ask ham radio test questions from the Technician question pool.\n"; 
+			resp += "/ghq - Ask ham radio test questions from the General question pool.\n";
+			resp += "/ehq - Ask ham radio test questions from the Extra question pool.\n"
+                } else {
+                        resp = "thq: - Ask ham radio test questions from the Technician question pool.\n"; 
+			resp += "ghq: - Ask ham radio test questions from the General question pool.\n";
+			resp += "ehq: - Ask ham radio test questions from the Extra question pool.\n"
+                }
+
+                cb.call(null, to, from, resp, proto);
+                return;
+        }
+
+
   if (!store.t && ! store.g && ! store.e) {
 	  store.t = {};
 	  store.t.db = redis.createClient();

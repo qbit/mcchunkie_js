@@ -4,7 +4,12 @@
 	var resp, what, who, parts = msg.split( ' ' );
 
 	if (msg.match(/^\/help$|^help:$/)) {
-		resp = "/aprs [loc,wx] [callsign] - Return the last APRS entry for a given callsign. It can return callsigns with a suffix as well.";
+                if (proto === 'telegram') {
+			resp = "/aprs [loc,wx] [callsign] - Return the last APRS entry for a given callsign. It can return callsigns with a suffix as well.";
+                } else {
+			resp = "aprs: [loc,wx] [callsign] - Return the last APRS entry for a given callsign. It can return callsigns with a suffix as well.";
+                }
+
 		cb.call(null, to, from, resp, proto);
 		return;
 	}

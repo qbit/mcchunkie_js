@@ -2,8 +2,6 @@
 (function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp;
-  if ( helper.isRelevant( msg ) ) {
-  }
 
   if ( msg === 'freedom' ) {
     resp = 'MERIKA!';

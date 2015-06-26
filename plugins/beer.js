@@ -3,6 +3,17 @@
   'use strict';
   var resp, url;
 
+  if (msg.match(/^\/help$|^help:$/)) {
+		if (proto === 'telegram') {
+                	resp = "/bdb [beer] - Returns BreweryDB info fora given beer.";
+		} else {
+                	resp = "bdb: [beer] - Returns BreweryDB info fora given beer.";
+		}
+
+                cb.call(null, to, from, resp, proto);
+                return;
+  }
+
   try {
 
     if ( ! store.url ) {
@@ -63,8 +74,9 @@
       };
     }
 
-    if ( msg.match( /^beer:/ ) ) {
+    if ( msg.match( /^bdb:|^\/bdb/ ) ) {
       msg = msg.replace( /^beer:/, '' );
+      msg = msg.replace( /^\/beer /, '' );
 	msg = msg.replace(/^\//, "");
       url += "&q=" + msg;
       try { 

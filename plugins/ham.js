@@ -4,6 +4,18 @@
 (function(helper, to, from, msg, store, sh_store, cb, proto ) {
 	'use strict';
 	var resp;
+
+        if (msg.match(/^\/help$|^help:$/)) {
+                if (proto === 'telegram') {
+                        resp = "/ham [callsign] - Returns data from the FCC database about a given callsign (ham or otherwise)."
+                } else {
+                        resp = "ham: [callsign] - Returns data from the FCC database about a given callsign (ham or otherwise)."
+                }
+
+                cb.call(null, to, from, resp, proto);
+                return;
+        }
+
 	if (! store.fcc ) {
 		store.fcc = {};
 		store.fcc.query_url = 'http://data.fcc.gov/api/license-view/basicSearch/getLicenses?searchValue=%S&format=json';

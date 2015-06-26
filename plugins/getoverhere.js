@@ -3,6 +3,10 @@
   'use strict';
   var resp;
 
+  if (proto !== 'irc') {
+    return;
+  }
+
   if (msg.match(/^getoverhere: (.*)$/i)) {
 	  msg = msg.replace(/^getoverhere: /, '');
 	  var str = '~~~~>' + msg,
@@ -19,5 +23,5 @@
 	  },1000);
   }
 
-  // cb.call( null, to, from, resp, proto );
+  cb.call( null, to, from, resp, proto );
 });

@@ -3,6 +3,17 @@
   'use strict';
   var resp;
 
+  if (msg.match(/^\/help$|^help:$/)) {
+		if (proto === 'telegram') {
+			resp = '/beer [beer] - get BeerAdvocate information for [beer].';
+		} else {
+			resp = 'beer: [beer] - get BeerAdvocate information for [beer].';
+		}
+
+                cb.call(null, to, from, resp, proto);
+                return;
+  }
+
   if ( msg.match( /cheese burger/i ) ) {
     resp = "Dayum DAYum DAAAAAYUUUUUMMMMM!!!!";
   }

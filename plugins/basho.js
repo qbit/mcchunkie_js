@@ -2,6 +2,14 @@
 (function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp;
+
+  if (msg.match(/^\/help$|^help:$/)) {
+                resp = "basho - looks for the phrase 'basho' anywhere in a line and returns a haiku from basho.";
+                cb.call(null, to, from, resp, proto);
+                return;
+  }
+
+
   if ( ! store.phrases ) {
 	  store.phrases = [
 		"A autumn wind\n More white\n Than the rocks in the rocky mountain.\n",

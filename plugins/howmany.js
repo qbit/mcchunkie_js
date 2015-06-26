@@ -6,6 +6,18 @@
 	  return;
   }
 
+        if (msg.match(/^\/help$|^help:$/)) {
+                if (proto === 'telegram') {
+                        resp = "/howmany [openbsd developer short name] - Returns how many ports a given OpenBSD developer maintaines.";
+                } else {
+                        resp = "howmany: [openbsd developer short name] - Returns how many ports a given OpenBSD developer maintaines.";
+                }
+
+                cb.call(null, to, from, resp, proto);
+                return;
+        }
+
+
   from = from || to;
   var resp = ''; 
   if ( ! store.db ) {

@@ -2,6 +2,17 @@
   'use strict';
   var resp;
 
+  if (msg.match(/^\/help$|^help:$/)) {
+		if (proto === 'telegram') {
+			resp = '/beer [beer] - get BeerAdvocate information for [beer].';
+		} else {
+			resp = 'beer: [beer] - get BeerAdvocate information for [beer].';
+		}
+
+                cb.call(null, to, from, resp, proto);
+                return;
+  }
+
   if (! store.ba) {
 	  store.ba = require('beer-advocate-api');
   }
@@ -36,8 +47,8 @@
 	  return o.replace(/\n/g, "");
   }
 
-  if (msg.match(/^ba:|^\/beer /)) {
-	  msg = msg.replace(/^ba:/, '');
+  if (msg.match(/^beer:|^\/beer /)) {
+	  msg = msg.replace(/^beer:/, '');
 	  msg = msg.replace(/^\/beer /, '');
 	  store.ba.beerSearch(msg, function(beers) {
 		  if ( beers[0] && beers[0].beer_url ) {
