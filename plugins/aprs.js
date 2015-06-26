@@ -2,6 +2,13 @@
 (function(helper, to, from, msg, store, sh_store, cb, proto) {
 	'use strict';
 	var resp, what, who, parts = msg.split( ' ' );
+
+	if (msg.match(/^\/help$|^help:$)) {
+		resp = "/aprs [loc,wx] [callsign] - Return the last APRS entry for a given callsign. It can return callsigns with a suffix as well.";
+		cb.call(null, to, from, resp, proto);
+		return;
+	}
+
 	if (! store.aprs ) {
 		store.aprs = {};
 		store.aprs.url = 'http://api.aprs.fi/api/get?';
