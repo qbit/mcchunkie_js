@@ -69,8 +69,9 @@
 		};
 	}
 
-	if (msg.match(/^aprs: / )) {
+	if (msg.match(/^aprs: |^\/aprs / )) {
 		msg = msg.replace(/^aprs: /, '');
+		msg = msg.replace(/^\/aprs /, '');
 		parts = msg.split(' ');
 		what = parts[0];
 		who = parts[1];

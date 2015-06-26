@@ -96,15 +96,15 @@
   }
 
 
-  if (msg.match(/^THQ:|^\/THQ /i)) {
+  if (msg.match(/^THQ:|^\/THQ$/i)) {
 	  store.randFromTest('t', to, from);
   }
 
-  if (msg.match(/^GHQ:|^\/GHQ /i)) {
+  if (msg.match(/^GHQ:|^\/GHQ$/i)) {
 	  store.randFromTest('g', to, from);
   }
 
-  if (msg.match(/^EHQ:|^\/EHQ /i)) {
+  if (msg.match(/^EHQ:|^\/EHQ$/i)) {
 	  store.randFromTest('e', to, from);
   }
 
