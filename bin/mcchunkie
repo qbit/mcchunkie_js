@@ -376,7 +376,7 @@ if (args.t) {
 		resp.end('\n');
 	    });
 	} else {
-	    resp.writeHead(404);
+	    resp.writeHead(200);
 	    resp.end('\n');
 	}
     }).listen(8000, '127.0.0.1');
