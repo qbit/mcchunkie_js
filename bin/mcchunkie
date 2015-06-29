@@ -375,9 +375,12 @@ if (args.t) {
 		resp.writeHead(200, {'Content-Type': 'application/json'});
 		resp.end('\n');
 	    });
+	} else {
+	    resp.writeHead(404);
+	    resp.end('\n');
 	}
     }).listen(8000, '127.0.0.1');
-    }
+}
 
 if (args.i) {
     client = new irc.Client(args.s, args.n, {
