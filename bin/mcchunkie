@@ -326,6 +326,7 @@ function processMsg(to, from, msg, proto) {
 }
 
 if (args.j) {
+    var srvr = args.j.split('@')[1];
     xmpp.on('online', function() {
 	console.log('xmpp online');
     });
@@ -340,7 +341,7 @@ if (args.j) {
 
     xmpp.on('groupchat', function(conference, from, message, stamp) {
 	console.log(conference, from , message, stamp);
-	processMsg(null, from, message, 'xmpp');
+	processMsg(null, from + '@' + srvr, message, 'xmpp');
     });
 
     xmpp.on('chat', function(from, message) {
@@ -352,8 +353,7 @@ if (args.j) {
 	password: args.p
     });
 
-    // TODO - make this a conf param
-    xmpp.join('discussion@conference.cobug.org/mcchunkie');
+    xmpp.join('discussion@conference'+ srvr + '/' + args.n);
     xmpp.getRoster();
 }
 
