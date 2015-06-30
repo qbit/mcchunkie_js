@@ -287,7 +287,11 @@ function reply(t, frm, resp, proto) {
     proto = proto || 'irc';
     if (resp && t) {
 	if (args.j && proto === 'xmpp') {
-	    xmpp.send(frm, resp);
+	    if (frm.match('conference')) {
+		xmpp.send(frm, resp, true);
+	    } else {
+		xmpp.send(frm, resp);
+	    }
 	}
 	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
@@ -385,37 +389,37 @@ if (args.t) {
 	    resp.end('\n');
 	}
     }).listen(8000, '127.0.0.1');
-}
+    }
 
-if (args.i) {
-    client = new irc.Client(args.s, args.n, {
-	channels: channels,
-	debug: false,
-	userName: args.n
-    });
-
-    client.addListener('error', function(err) {
-	console.log(err);
-    });
-
-    client.addListener('message', function(from, to, msg, tater) {
-	if(client.nick !== args.n) {
-	    //client.send('NICK', args.n);
-	}
-	processMsg(to, from, msg, 'irc');
-    });
-
-
-    client.addListener('pm', function(from, msg) {
-	processMsg(null, from, args.n + ':' + msg, 'irc');
-    });
-
-    client.addListener('invite', function(chan, from) {
-	channels.push(chan);
-	client.join(chan, function() {
-	    console.log('joined ' + chan + ' because ' + from + ' invited me');
+    if (args.i) {
+	client = new irc.Client(args.s, args.n, {
+	    channels: channels,
+	    debug: false,
+	    userName: args.n
 	});
-    });
+
+	client.addListener('error', function(err) {
+	    console.log(err);
+	});
+
+	client.addListener('message', function(from, to, msg, tater) {
+	    if(client.nick !== args.n) {
+		//client.send('NICK', args.n);
+	    }
+	    processMsg(to, from, msg, 'irc');
+	});
+
+
+	client.addListener('pm', function(from, msg) {
+	    processMsg(null, from, args.n + ':' + msg, 'irc');
+	});
+
+	client.addListener('invite', function(chan, from) {
+	    channels.push(chan);
+	    client.join(chan, function() {
+		console.log('joined ' + chan + ' because ' + from + ' invited me');
+	    });
+	});
 	/*
 	  client = new Client({
 	  server: {
