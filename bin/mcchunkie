@@ -339,9 +339,11 @@ if (args.j) {
 	xmpp.acceptSubscription(from);
     });
 
+    var room = 'discussion@conference.' + srvr + '/' +args.n;
+    
     xmpp.on('groupchat', function(conference, from, message, stamp) {
 	console.log(conference, from , message, stamp);
-	processMsg(null, from + '@' + srvr, message, 'xmpp');
+	processMsg(null, room, message, 'xmpp');
     });
 
     xmpp.on('chat', function(from, message) {
@@ -353,7 +355,7 @@ if (args.j) {
 	password: args.p
     });
 
-    xmpp.join('discussion@conference.'+ srvr + '/' + args.n);
+    xmpp.join(room);
     xmpp.getRoster();
 }
 
