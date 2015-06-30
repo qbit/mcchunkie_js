@@ -7,7 +7,7 @@ var    irc = require('irc'),
     url = require('url'),
     nconf = require('nconf'),
     redis = require('redis'),
-    //	xmpp = require('simple-xmpp'),
+    xmpp = require('simple-xmpp'),
     rclient = redis.createClient( null, null, {
 	auth_pass: process.env.REDIS_PASS
     }),
@@ -287,7 +287,7 @@ function reply(t, frm, resp, proto) {
     proto = proto || 'irc';
     if (resp && t) {
 	if (args.j && proto === 'xmpp') {
-	    //xmpp.send(frm, resp);
+	    xmpp.send(frm, resp);
 	}
 	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
@@ -326,31 +326,34 @@ function processMsg(to, from, msg, proto) {
 }
 
 if (args.j) {
-    /*
-      xmpp.on('online', function() {
-      console.log('xmpp online');
-      });
+    xmpp.on('online', function() {
+	console.log('xmpp online');
+    });
 
-      xmpp.on('error', function(err) {
-      console.log(err);
-      });
+    xmpp.on('error', function(err) {
+	console.log(err);
+    });
 
-      xmpp.on('subscribe', function(from) {
-      xmpp.acceptSubscription(from);
-      });
+    xmpp.on('subscribe', function(from) {
+	xmpp.acceptSubscription(from);
+    });
 
-      xmpp.on('chat', function(from, message) {
-      processMsg(null, from, message, 'xmpp');
-      });
+    xmpp.on('groupchat', function(conference, from, message, stamp) {
+	console.log('%s says %s on %s on %s at %s', from, message, conference, stamp.substr(0,9), stamp.substr(10));
+	processMsg(null, from, message, 'xmpp');
+    });
 
-      xmpp.connect({
-      jid: args.j,
-      password: args.p,
-      host: args.s
-      });
+    xmpp.on('chat', function(from, message) {
+	processMsg(null, from, message, 'xmpp');
+    });
 
-      xmpp.getRoster();
-    */
+    xmpp.connect({
+	jid: args.j,
+	password: args.p,
+	host: args.s
+    });
+
+    xmpp.getRoster();
 }
 
 // Telegram client
