@@ -342,8 +342,7 @@ if (args.j) {
     var room = 'discussion@conference.' + srvr + '/' +args.n;
     
     xmpp.on('groupchat', function(conference, from, message, stamp) {
-	console.log(conference, from , message, stamp);
-	processMsg(null, room, message, 'xmpp');
+	processMsg(null, conference, message, 'xmpp');
     });
 
     xmpp.on('chat', function(from, message) {
