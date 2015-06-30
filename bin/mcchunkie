@@ -349,8 +349,7 @@ if (args.j) {
 
     xmpp.connect({
 	jid: args.j,
-	password: args.p,
-	host: args.s
+	password: args.p
     });
 
     xmpp.getRoster();
