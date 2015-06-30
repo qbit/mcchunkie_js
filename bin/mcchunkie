@@ -339,7 +339,7 @@ if (args.j) {
     });
 
     xmpp.on('groupchat', function(conference, from, message, stamp) {
-	console.log('%s says %s on %s on %s at %s', from, message, conference, stamp.substr(0,9), stamp.substr(10));
+	console.log(conference, from , message, stamp);
 	processMsg(null, from, message, 'xmpp');
     });
 
@@ -353,7 +353,7 @@ if (args.j) {
     });
 
     // TODO - make this a conf param
-    xmpp.join('discussion@conference.cobug.org');
+    xmpp.join('discussion@conference.cobug.org/mcchunkie');
     xmpp.getRoster();
 }
 
