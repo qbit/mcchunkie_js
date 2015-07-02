@@ -38,54 +38,55 @@
 		}
 	    }
 
+	    console.log(text);
 	    return text.join(', ');
 	};
-store.aprs.buildList = function(entries) {
-var i, l, r, list;
+	store.aprs.buildList = function(entries) {
+	    var i, l, r, list;
 
-if (entries.length > 1) {
-r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
-			} else {
-			    r = '%l (http://aprs.fi)';
-			}
+	    if (entries.length > 1) {
+		r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
+	    } else {
+		r = '%l (http://aprs.fi)';
+	    }
 
-				    r = r.replace('%d', entries.length);
-				    r = r.replace('%l', store.aprs.parseEntry(entries[0]));
-				    return r;
-				   };
-			  store.aprs.whats = {
-		loc: true,
-		wx: true
-	    };
-	    store.aprs.get = function(what, who, t, frm, prot) {
-		var aprs_url = store.aprs.url,
-		    options = {
-			headers: {
-			    'User-Agent': 'mcchunkie/1.0.0 (+http://github.com/qbit/mcchunkie)'
-			}
-		    };
-
-		store.aprs_options.what = what;
-		store.aprs_options.name = who;
-
-		aprs_url += store.aprs.qs.stringify(store.aprs_options);
-
-		helper.httpGet(aprs_url, options, function(err, data) {
-		    var f;
-
-		    store.aprs_options.what = '';
-		    store.aprs_options.name = '';
-
-		    data = JSON.parse(data);
-		    if (data.result === 'ok' && data.found > 0) {
-			resp = store.aprs.buildList(data.entries);
-			cb.call(null, t, frm, resp, prot);
-		    } else {
-			cb.call(null, t, frm, 'I got nothin.', prot);
+	    r = r.replace('%d', entries.length);
+	    r = r.replace('%l', store.aprs.parseEntry(entries[0]));
+	    return r;
+	};
+	store.aprs.whats = {
+	    loc: true,
+	    wx: true
+	};
+	store.aprs.get = function(what, who, t, frm, prot) {
+	    var aprs_url = store.aprs.url,
+		options = {
+		    headers: {
+			'User-Agent': 'mcchunkie/1.0.0 (+http://github.com/qbit/mcchunkie)'
 		    }
-		});
-	    };
-	}
+		};
+
+	    store.aprs_options.what = what;
+	    store.aprs_options.name = who;
+
+	    aprs_url += store.aprs.qs.stringify(store.aprs_options);
+
+	    helper.httpGet(aprs_url, options, function(err, data) {
+		var f;
+
+		store.aprs_options.what = '';
+		store.aprs_options.name = '';
+
+		data = JSON.parse(data);
+		if (data.result === 'ok' && data.found > 0) {
+		    resp = store.aprs.buildList(data.entries);
+		    cb.call(null, t, frm, resp, prot);
+		} else {
+		    cb.call(null, t, frm, 'I got nothin.', prot);
+		}
+	    });
+	};
+    }
 
     if (msg.match(/^aprs: |^\/aprs / )) {
 	msg = msg.replace(/^aprs: /, '');
