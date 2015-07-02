@@ -25,11 +25,11 @@
 	    name: ''
 	};
 	store.aprs.parseEntry = function(entry) {
-	    var l, text = [];
+	    var l, text = [], u;
 	    
 	    if (entry.lng && entry.lat) {
-		var u = 'http://aprs.fi/#!lat=LAT&lng=%LNG';
-		text.push(u.replace('LAT', entry.lat).replace('LNG', entry.lng));
+		u = 'http://aprs.fi/#!lat=LAT&lng=%LNG';
+		text.push(u.replace(/LAT/, entry.lat).replace(/LNG/, entry.lng));
 	    }
 	    
 	    for (l in entry) {
@@ -40,20 +40,20 @@
 
 	    return text.join(', ');
 	};
-	    store.aprs.buildList = function(entries) {
-		var i, l, r, list;
+store.aprs.buildList = function(entries) {
+var i, l, r, list;
 
-		if (entries.length > 1) {
-		    r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
-		} else {
-		    r = '%l';
-		}
+if (entries.length > 1) {
+r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
+			} else {
+			    r = '%l (http://aprs.fi)';
+			}
 
-		r = r.replace('%d', entries.length);
-		r = r.replace('%l', store.aprs.parseEntry(entries[0]));
-		return r;
-	    };
-	    store.aprs.whats = {
+				    r = r.replace('%d', entries.length);
+				    r = r.replace('%l', store.aprs.parseEntry(entries[0]));
+				    return r;
+				   };
+			  store.aprs.whats = {
 		loc: true,
 		wx: true
 	    };
