@@ -34,7 +34,8 @@
 	    }
 
 	    if (entry.lng && entry.lat) {
-		u = 'http://aprs.fi/?call=' + entry.name
+		u = 'http://aprs.fi/?call=' + entry.name;
+		text.push(u);
 	    }
 	    
 	    console.log(text);
