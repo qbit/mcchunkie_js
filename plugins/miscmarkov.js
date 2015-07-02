@@ -1,4 +1,4 @@
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
 	'use strict';
 	var resp;
 
@@ -16,7 +16,8 @@
 	}
 
 	if (msg.match(/misckov/i)) {
-		resp = store.markov.respond(msg, 30).join(' ');
-		cb.call( null, to, from, resp );
+		var s = msg.split(' ');
+		resp = store.markov.forward(s[helper.rand(s.length)], 30).join(' ');
+		cb.call( null, to, from, resp, proto );
 	}
 });
