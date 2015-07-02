@@ -28,7 +28,7 @@
 	    var l, text = [], u;
 	    
 	    if (entry.lng && entry.lat) {
-		u = 'http://aprs.fi/#!lat=LAT&lng=%LNG';
+		u = 'http://aprs.fi/#!lat=LAT&lng=LNG';
 		text.push(u.replace(/LAT/, entry.lat).replace(/LNG/, entry.lng));
 	    }
 	    
