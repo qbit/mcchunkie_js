@@ -27,17 +27,17 @@
 	store.aprs.parseEntry = function(entry) {
 	    var l, text = [], u;
 	    
-	    if (entry.lng && entry.lat) {
-		u = 'http://aprs.fi/#!lat=LAT&lng=LNG';
-		text.push(u.replace(/LAT/, entry.lat).replace(/LNG/, entry.lng));
-	    }
-	    
 	    for (l in entry) {
 		if (entry.hasOwnProperty(l)) {
 		    text.push(l + ': ' + entry[l]);
 		}
 	    }
 
+	    if (entry.lng && entry.lat) {
+		u = 'http://aprs.fi/#!lat=LAT&lng=LNG';
+		text.push(u.replace(/LAT/, entry.lat).replace(/LNG/, entry.lng));
+	    }
+	    
 	    console.log(text);
 	    return text.join(', ');
 	};
@@ -47,7 +47,7 @@
 	    if (entries.length > 1) {
 		r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
 	    } else {
-		r = '%l (http://aprs.fi)';
+		r = '%l';
 	    }
 
 	    r = r.replace('%d', entries.length);
