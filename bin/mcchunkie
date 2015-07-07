@@ -124,7 +124,14 @@ rclient.on('message', function(channel, data) {
 	    }
 
 	    if (proto === "telegram") {
-		teleSay(chan, msg);
+		if (chan.match(/,/)) {
+		    var parts = chan.split(',');
+		    for (i = 0, l = parts.length; i < l; i++) {
+			teleSay(parts[i], msg);
+		    }
+		} else {
+		    teleSay(chan, msg);
+		}
 	    }
 
 	    if (proto === "xmpp") {
