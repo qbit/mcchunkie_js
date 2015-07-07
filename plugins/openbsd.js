@@ -8,43 +8,40 @@
 
     var resp = [], parts, list, p, cat, scat, s, a,b,c,d;
 
-    if ( helper.isRelevant( msg ) ) {
-	if ( msg.match( /^openbsd|^\/openbsd/i ) ) {
-	    msg = msg.replace( helper.botname, '' );
-	    msg = msg.replace( ':', '' );
-	    msg = msg.replace( '^/', '' );
-	    msg = msg.trim();
+    if ( msg.match( /^openbsd:|^\/openbsd /i ) ) {
+	msg = msg.replace( ':', '' );
+	msg = msg.replace( '^/', '' );
+	msg = msg.trim();
 
-	    parts = msg.split( ' ' ); 
+	parts = msg.split( ' ' ); 
 
-	    cat = parts[1];
-	    scat = parts[2];
+	cat = parts[1];
+	scat = parts[2];
 
-	    s = store.openbsd || sh_store.openbsd;
+	s = store.openbsd || sh_store.openbsd;
 
-	    if ( s[cat] && ! scat ) {
-		for ( a in s[cat] ) {
-		    resp.push( a, '=>', s[cat][a].date + '.' );
+	if ( s[cat] && ! scat ) {
+	    for ( a in s[cat] ) {
+		resp.push( a, '=>', s[cat][a].date + '.' );
+	    }
+	} else if( s[cat] && scat ) {
+	    resp.push( scat, '=>', s[cat][scat].date + '.' );
+	} else {
+	    if ( ! cat ) {
+		for ( cat in s ) {
+		    for ( a in s[cat] ) {
+			resp.push( cat, a, '=>', s[cat][a].date + '.' );
+		    }
+		    resp.push( '\n' );
 		}
-	    } else if( s[cat] && scat ) {
-		resp.push( scat, '=>', s[cat][scat].date + '.' );
 	    } else {
-		if ( ! cat ) {
-		    for ( cat in s ) {
-			for ( a in s[cat] ) {
-			    resp.push( cat, a, '=>', s[cat][a].date + '.' );
-			}
-			resp.push( '\n' );
+		for ( c in s ) {
+		    if ( c.length === cat.length ) {
+			resp.push( "did you mean '" + c + "'?" );
 		    }
-		} else {
-		    for ( c in s ) {
-			if ( c.length === cat.length ) {
-			    resp.push( "did you mean '" + c + "'?" );
-			}
-		    }
-		    if ( resp.length === 0 ) {
-			resp.push( 'not sure what that is..' );
-		    }
+		}
+		if ( resp.length === 0 ) {
+		    resp.push( 'not sure what that is..' );
 		}
 	    }
 	}
