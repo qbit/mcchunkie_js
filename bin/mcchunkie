@@ -99,7 +99,7 @@ rclient.on("error", function (err) {
 
 rclient.on('message', function(channel, data) {
     dlog(' in message');
-    var o = data.toString().split('^'), i, l, value, msg, chan, str;
+    var o = data.toString().split('^'), i, l, value, msg, chan, proto, str;
     
     value = o[o.length - 1];
     
@@ -117,17 +117,32 @@ rclient.on('message', function(channel, data) {
 	    if (runningMessages[o[0]]) {
 		msg = runningMessages[o[0]].message;
 		chan = runningMessages[o[0]].channel;
+		proto = runningMessages[o[0]].proto;
 		for (i = 1, l = o.length; i < l; i++) {
 		    msg = msg.replace('$' + i, o[i]);
 		}
 	    }
 
-	    if (!chan) {
-		channels.forEach(function(c) {
-		    client.say(c, msg);
-		});
-	    } else {
-		client.say(chan, msg);
+	    if (proto === "telegram") {
+		teleSay(chan, msg);
+	    }
+
+	    if (proto === "xmpp") {
+		if (chan.match('conference')) {
+		    xmpp.send(chan, msg, true);
+		} else {
+		    xmpp.send(chan, msg);
+		}
+	    }
+
+	    if (proto === "irc") {
+		if (!chan) {
+		    channels.forEach(function(c) {
+			client.say(c, msg);
+		    });
+		} else {
+		    client.say(chan, msg);
+		}
 	    }
 	});
     });
@@ -282,6 +297,22 @@ fs.watch(plugins, function(e, file) {
     loadPlugins(messages, false);
 });
 
+function teleSay(t, resp) {
+    var turl = teleURL + tokens.telegram + '/sendMessage?chat_id=' + t + '&text=' + encodeURI(resp);
+    console.log(turl);
+    https.get(turl, function(res) {
+	console.log("statusCode: ", res.statusCode);
+	console.log("headers: ", res.headers);
+
+	res.on('data', function(d) {
+	    console.log(d.toString())
+	});
+
+    }).on('error', function(err) {
+	console.log(err);
+    });
+}
+
 function reply(t, frm, resp, proto) {
     t = t || frm;
     proto = proto || 'irc';
@@ -295,19 +326,7 @@ function reply(t, frm, resp, proto) {
 	}
 	if (args.t && proto === 'telegram') {
 	    console.log('sending %s "%s"', t, resp);
-	    var turl = teleURL + tokens.telegram + '/sendMessage?chat_id=' + t + '&text=' + encodeURI(resp);
-	    console.log(turl);
-	    https.get(turl, function(res) {
-		console.log("statusCode: ", res.statusCode);
-		console.log("headers: ", res.headers);
-
-		res.on('data', function(d) {
-		    console.log(d.toString())
-		});
-
-	    }).on('error', function(err) {
-		console.log(err);
-	    });
+	    teleSay(t, resp);
 	}
 	if (client && proto === 'irc') {
 	    client.say(t, resp);
@@ -315,80 +334,80 @@ function reply(t, frm, resp, proto) {
     }
 }
 
-function processMsg(to, from, msg, proto) {
-    var i, resp;
-    proto = proto || 'irc';
-    for (i in runningPlugins) {
-	if (runningPlugins.hasOwnProperty(i) && msg) {
-	    try {
-		runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto);
-	    } catch(e) {
-		console.log("Error running '" + i + "'\n" + e);
+    function processMsg(to, from, msg, proto) {
+	var i, resp;
+	proto = proto || 'irc';
+	for (i in runningPlugins) {
+	    if (runningPlugins.hasOwnProperty(i) && msg) {
+		try {
+		    runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto);
+		} catch(e) {
+		    console.log("Error running '" + i + "'\n" + e);
+		}
 	    }
 	}
     }
-}
 
-if (args.j) {
-    var srvr = args.j.split('@')[1];
-    xmpp.on('online', function() {
-	console.log('xmpp online');
-    });
+    if (args.j) {
+	var srvr = args.j.split('@')[1];
+	xmpp.on('online', function() {
+	    console.log('xmpp online');
+	});
 
-    xmpp.on('error', function(err) {
-	console.log(err);
-    });
+	xmpp.on('error', function(err) {
+	    console.log(err);
+	});
 
-    xmpp.on('subscribe', function(from) {
-	xmpp.acceptSubscription(from);
-    });
+	xmpp.on('subscribe', function(from) {
+	    xmpp.acceptSubscription(from);
+	});
 
-    var room = 'discussion@conference.' + srvr + '/' +args.n;
+	var room = 'discussion@conference.' + srvr + '/' +args.n;
     
-    xmpp.on('groupchat', function(conference, from, message, stamp) {
-	processMsg(null, conference, message, 'xmpp');
-    });
+	xmpp.on('groupchat', function(conference, from, message, stamp) {
+	    processMsg(null, conference, message, 'xmpp');
+	});
 
-    xmpp.on('chat', function(from, message) {
-	processMsg(null, from, message, 'xmpp');
-    });
+	xmpp.on('chat', function(from, message) {
+	    processMsg(null, from, message, 'xmpp');
+	});
 
-    xmpp.connect({
-	jid: args.j,
-	password: args.p
-    });
+	xmpp.connect({
+	    jid: args.j,
+	    password: args.p
+	});
 
-    xmpp.join(room);
-    xmpp.getRoster();
-}
+	xmpp.join(room);
+	xmpp.getRoster();
+    }
 
-// Telegram client
-if (args.t) {
-    http.createServer(function(req, resp) {
-	if (req.method == 'POST') {
-	    var body = '';
-	    req.on('data', function(data) {
-		body += data;
+    // Telegram client
+    if (args.t) {
+	http.createServer(function(req, resp) {
+	    if (req.method == 'POST') {
+		var body = '';
+		req.on('data', function(data) {
+		    body += data;
 
-		//Too much POST data, kill the connection !
-		if (body.length > 1e6) {
-		    req.connection.destroy();
-		}
-	    });
-	    req.on('end', function() {
-		var data = JSON.parse(body);
-		var msg = data.message.text;
+		    //Too much POST data, kill the connection !
+		    if (body.length > 1e6) {
+			req.connection.destroy();
+		    }
+		});
+		req.on('end', function() {
+		    var data = JSON.parse(body);
+		    var msg = data.message.text;
 
-		processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram")
+		    processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram")
 
-		resp.writeHead(200, {'Content-Type': 'application/json'});
+		    resp.writeHead(200, {'Content-Type': 'application/json'});
+		    resp.end('\n');
+		});
+	    } else {
+		resp.writeHead(200);
 		resp.end('\n');
-	    });
-	} else {
-	    resp.writeHead(200);
-	    resp.end('\n');
-	}
-    }).listen(8000, '127.0.0.1');
+	    }
+	}).listen(8000, '127.0.0.1');
     }
 
     if (args.i) {
