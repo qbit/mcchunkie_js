@@ -6,11 +6,11 @@
 	return this.charAt(0).toUpperCase() + this.substr(1);
     };
 
-    var resp = [], parts, list, p, cat, scat, s, a,b,c,d;
+    var resp = [], parts, list, p, base, cat, scat, s, a,b,c,d;
 
     if ( msg.match( /^openbsd:|^\/openbsd |^bitrig:|^\/bitrig /i ) ) {
 	msg = msg.replace( ':', '' );
-	msg = msg.replace( '^/', '' );
+	msg = msg.replace( /^\//, '' );
 	msg = msg.trim();
 
 	parts = msg.split( ' ' ); 
