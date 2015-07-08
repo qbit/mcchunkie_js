@@ -8,17 +8,18 @@
 
     var resp = [], parts, list, p, cat, scat, s, a,b,c,d;
 
-    if ( msg.match( /^openbsd:|^\/openbsd /i ) ) {
+    if ( msg.match( /^openbsd:|^\/openbsd |^bitrig:|^\/bitrig /i ) ) {
 	msg = msg.replace( ':', '' );
 	msg = msg.replace( '^/', '' );
 	msg = msg.trim();
 
 	parts = msg.split( ' ' ); 
 
+	base = parts[0];
 	cat = parts[1];
 	scat = parts[2];
 
-	s = store.openbsd || sh_store.openbsd;
+	s = store[base] || sh_store[base];
 
 	if ( s[cat] && ! scat ) {
 	    for ( a in s[cat] ) {
