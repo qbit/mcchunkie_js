@@ -21,6 +21,8 @@
 
 	s = store[base] || sh_store[base];
 
+	resp.push(base);
+
 	if ( s[cat] && ! scat ) {
 	    for ( a in s[cat] ) {
 		resp.push( a, '=>', s[cat][a].date + '.' );
