@@ -1,5 +1,5 @@
 // Desc: print the tales of Wq
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp; 
   
@@ -18,6 +18,6 @@
   }
 
   setTimeout( function() {
-    cb.call( null, to, from, resp );
+    cb.call( null, to, from, resp, proto );
   }, 10000 );
 });

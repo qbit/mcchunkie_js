@@ -1,5 +1,5 @@
 // Desc: respond randomly to ooyfb
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp, 
   resps = [
@@ -15,5 +15,5 @@
     resp = resps[ helper.rand( resps.length ) ];
   }
 
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });

@@ -1,5 +1,5 @@
 // Desc: return random TMNT quotes (really hard to find good ones!)
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
 	'use strict';
 	var resp;
 
@@ -22,5 +22,5 @@
     resp = store.phrases[ Math.floor( Math.random() * store.phrases.length ) ];
   }
 
-  cb.call( null, to, from, resp );
+  cb.call( null, to, from, resp, proto );
 });

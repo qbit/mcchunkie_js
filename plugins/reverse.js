@@ -1,5 +1,5 @@
 // Desc: reverse a string
-(function( helpers, to, from, msg, storage, sh_store, cb ) {
+(function( helpers, to, from, msg, storage, sh_store, cb, proto ) {
   // Plugin to reverse every msg that is passed in.
   'use strict';
   if ( helpers.isRelevant( msg ) && msg.indexOf( 'reverse' ) > -1 ) {
@@ -8,6 +8,6 @@
     msg = msg.replace( 'reverse', '' );
 
     var resp = msg.split("").reverse().join("");
-    cb.call( null, to, from, resp );
+    cb.call( null, to, from, resp, proto );
   }
 });

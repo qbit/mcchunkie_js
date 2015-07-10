@@ -1,5 +1,5 @@
 // Desc: tell $person $msg next time you see them
-(function( helper, to, from, msg, store, sh_store, cb ) {
+(function( helper, to, from, msg, store, sh_store, cb, proto ) {
   'use strict';
   var resp, i, a = [], msgto, msgfrm, rest;
 
@@ -33,7 +33,7 @@
         // to = i;
 
         delete store.msgs[i];
-        cb.call( null, to, from, resp );
+        cb.call( null, to, from, resp, proto );
       }
     }
   }
