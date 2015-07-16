@@ -4360,13 +4360,13 @@ SOFTWARE.
 	    var maybePlural = (keyword.length == 1) ? '' : keyword + 's';
 
 	    // Go through all the things and find the first one that matches.
-	    for (var emoji in allEmojis) {
-		var keywords = allEmojis[emoji].keywords;
+	    for (var emoji in store.emoji) {
+		var keywords = store.emoji[emoji].keywords;
 		if (emoji == keyword || emoji == maybeSingular || emoji == maybePlural ||
 		    (keywords && keywords.indexOf(keyword) >= 0) ||
 		    (keywords && keywords.indexOf(maybeSingular) >= 0) ||
 		    (keywords && keywords.indexOf(maybePlural) >= 0))
-		    return allEmojis[emoji].char;
+		    return store.emoji[emoji].char;
 	    }
 	    return '';
 	}
