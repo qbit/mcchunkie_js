@@ -4409,7 +4409,7 @@ SOFTWARE.
 	    r.push(store.translateWord(words[i]));
 	}
 
-	resp = resp.join(' ');
+	resp = r.join(' ');
 	cb.call( null, to, from, resp );
     }
 });
