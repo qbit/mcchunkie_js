@@ -18,7 +18,7 @@
 
   if (msg.match(/^snapplefact\?/i)) {
 	  if (store.authed) {
-		  store.rclient.srandmember('snapplefact', function(e, d) {
+		  store.rclient.srandmember('snapplefacts', function(e, d) {
 			  cb.call(null, to, from, d, proto);
 		  });
 	  }
