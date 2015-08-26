@@ -96,11 +96,11 @@
 			    resp = 'Incorrect answer for ' + store[id].curr + ', ' + frm + '. ' + store.calcRes( frm, store[id].takers[frm], true );
 			    store[id].takers[frm].q = store[id].curr;
 			}
-			cb.call(null, t, frm, resp, prot);
+			cb.call(null, t, frm, resp, proto);
 
 			if ( store[id].takers[frm] && store[id].takers[frm].total ) {
 			    if ( store[id].takers[frm].total === 35 || store[id].takers[frm].total - store[id].takers[frm].correct >= 9) {
-				cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ), prot);
+				cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ), proto);
 				store[id].takers[frm].total = 0;
 				store[id].takers[frm].correct = 0;
 			    }
