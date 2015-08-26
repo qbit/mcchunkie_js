@@ -96,11 +96,11 @@
 			    resp = 'Incorrect answer for ' + store[id].curr + ', ' + frm + '. ' + store.calcRes( frm, store[id].takers[frm], true );
 			    store[id].takers[frm].q = store[id].curr;
 			}
-			cb.call(null, t, frm, resp, proto);
+			cb.call(null, t, frm, resp, prot);
 
 			if ( store[id].takers[frm] && store[id].takers[frm].total ) {
 			    if ( store[id].takers[frm].total === 35 || store[id].takers[frm].total - store[id].takers[frm].correct >= 9) {
-				cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ), proto);
+				cb.call(null, t, frm, store.calcRes( frm, store[id].takers[frm] ), prot);
 				store[id].takers[frm].total = 0;
 				store[id].takers[frm].correct = 0;
 			    }
@@ -113,15 +113,15 @@
 
 
     if (msg.match(/^THQ:|^\/THQ$/i)) {
-	store.randFromTest('t', to, from, proto);
+	store.randFromTest('t', to, from, null, proto);
     }
 
     if (msg.match(/^GHQ:|^\/GHQ$/i)) {
-	store.randFromTest('g', to, from, proto);
+	store.randFromTest('g', to, from, null, proto);
     }
 
     if (msg.match(/^EHQ:|^\/EHQ$/i)) {
-	store.randFromTest('e', to, from, proto);
+	store.randFromTest('e', to, from, null, proto);
     }
 
     if ( store.t.curr !== '' ) {
