@@ -30,8 +30,7 @@
 	    for (l in entry) {
 		if (entry.hasOwnProperty(l)) {
 		    if (l.match(/time/)) {
-			var nd = new Date(0);
-			entry[l] = nd.setUTCSeconds(entry[l]);
+			entry[l] = new Date(parseInt(entry[l], 10) * 1000);
 	    	    // Units
 		    } else if (l.match(/speed/)) {
 		    	entry[l] = entry[l] + "kph";
