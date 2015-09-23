@@ -29,10 +29,14 @@
 	    
 	    for (l in entry) {
 		if (entry.hasOwnProperty(l)) {
+		    if (l.match(/time/)) {
+			var nd = new Date(0);
+			entry[l] = nd.setUTCSeconds(entry[l]);
+		    }
 		    text.push(l + ': ' + entry[l]);
 		}
 	    }
-
+	    
 	    if (entry.lng && entry.lat) {
 		u = 'http://aprs.fi/?call=' + entry.name;
 		text.push(u);
@@ -56,36 +60,36 @@
 	};
 	store.aprs.whats = {
 	    loc: true,
-	    wx: true
-	};
-	store.aprs.get = function(what, who, t, frm, prot) {
-	    var aprs_url = store.aprs.url,
-		options = {
-		    headers: {
-			'User-Agent': 'mcchunkie/1.0.0 (+http://github.com/qbit/mcchunkie)'
+		wx: true
+	    };
+	    store.aprs.get = function(what, who, t, frm, prot) {
+		var aprs_url = store.aprs.url,
+		    options = {
+			headers: {
+			    'User-Agent': 'mcchunkie/1.0.0 (+http://github.com/qbit/mcchunkie)'
+			}
+		    };
+
+		store.aprs_options.what = what;
+		store.aprs_options.name = who;
+
+		aprs_url += store.aprs.qs.stringify(store.aprs_options);
+
+		helper.httpGet(aprs_url, options, function(err, data) {
+		    var f;
+
+		    store.aprs_options.what = '';
+		    store.aprs_options.name = '';
+
+		    data = JSON.parse(data);
+		    if (data.result === 'ok' && data.found > 0) {
+			resp = store.aprs.buildList(data.entries);
+			cb.call(null, t, frm, resp, prot);
+		    } else {
+			cb.call(null, t, frm, 'I got nothin.', prot);
 		    }
-		};
-
-	    store.aprs_options.what = what;
-	    store.aprs_options.name = who;
-
-	    aprs_url += store.aprs.qs.stringify(store.aprs_options);
-
-	    helper.httpGet(aprs_url, options, function(err, data) {
-		var f;
-
-		store.aprs_options.what = '';
-		store.aprs_options.name = '';
-
-		data = JSON.parse(data);
-		if (data.result === 'ok' && data.found > 0) {
-		    resp = store.aprs.buildList(data.entries);
-		    cb.call(null, t, frm, resp, prot);
-		} else {
-		    cb.call(null, t, frm, 'I got nothin.', prot);
-		}
-	    });
-	};
+		});
+	    };
     }
 
     if (msg.match(/^aprs: |^\/aprs / )) {
