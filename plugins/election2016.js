@@ -23,7 +23,7 @@
 	    "Richard Matthew Snowden (RMS) 2018!",
 	    "Sweet baby Jesus, 0018!",
 	    "Yuuus! 2018!",
-	    "Theo de Raadt 2018!"
+	    "Theo de Raadt 2018!",
 	    "Cast your vote for Bruce Schneier using priv/pub key in 2018!",
 	    "Jill Stein!!!!! 2018!",
 	    "Gary Johnson for realz this time 2018!"
