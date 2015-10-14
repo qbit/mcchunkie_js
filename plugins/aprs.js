@@ -31,6 +31,11 @@
 		if (entry.hasOwnProperty(l)) {
 		    if (l.match(/time/)) {
 			entry[l] = new Date(parseInt(entry[l], 10) * 1000);
+	    	    // Units
+		    } else if (l.match(/speed/)) {
+		    	entry[l] = entry[l] + "kph";
+		    } else if (l.match(/altitude/)) {
+		    	entry[l] = entry[l] + "m";
 		    }
 		    text.push(l + ': ' + entry[l]);
 		}
@@ -47,18 +52,18 @@
 	store.aprs.buildList = function(entries) {
 	    var i, l, r, list;
 
-		if (entries.length > 1) {
-		    r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
-		} else {
-		    r = '%l';
-		}
+	    if (entries.length > 1) {
+		r = 'I found %d entries (from http://aprs.fi), here is the first: %l';
+	    } else {
+		r = '%l';
+	    }
 
-		r = r.replace('%d', entries.length);
-		r = r.replace('%l', store.aprs.parseEntry(entries[0]));
-		return r;
-	    };
-	    store.aprs.whats = {
-		loc: true,
+	    r = r.replace('%d', entries.length);
+	    r = r.replace('%l', store.aprs.parseEntry(entries[0]));
+	    return r;
+	};
+	store.aprs.whats = {
+	    loc: true,
 		wx: true
 	    };
 	    store.aprs.get = function(what, who, t, frm, prot) {
@@ -89,17 +94,17 @@
 		    }
 		});
 	    };
+    }
+
+    if (msg.match(/^aprs: |^\/aprs / )) {
+	msg = msg.replace(/^aprs: /, '');
+	msg = msg.replace(/^\/aprs /, '');
+	parts = msg.split(' ');
+	what = parts[0];
+	who = parts[1];
+	if ( store.aprs.whats[what] ) {
+	    store.aprs.get(what, who, to, from, proto);
 	}
+    }
 
-	if (msg.match(/^aprs: |^\/aprs / )) {
-	    msg = msg.replace(/^aprs: /, '');
-		msg = msg.replace(/^\/aprs /, '');
-		parts = msg.split(' ');
-		what = parts[0];
-		who = parts[1];
-		if ( store.aprs.whats[what] ) {
-		    store.aprs.get(what, who, to, from, proto);
-		}
-	    }
-
-	});
+});
