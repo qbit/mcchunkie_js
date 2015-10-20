@@ -3,6 +3,7 @@
   "name": "mcchunkie",
   "description": "IRC Bot",
   "version": "0.0.1",
+  "license": "ISC",
   "homepage": "https://github.com/qbit/mcchunkie",
   "repository": {
     "type": "git",
