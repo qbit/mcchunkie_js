@@ -1,6 +1,6 @@
 'use strict';
-//var Client = require("irc-client"),
-var    irc = require('irc'),
+var pledge = require('node-pledge'),
+    irc = require('irc'),
     fs = require('fs'),
     http = require('http'),
     https = require('https'),
@@ -32,6 +32,8 @@ var    irc = require('irc'),
     dlog = function(msg) {
 	console.log(msg);
     };
+
+pledge.init("stdio flock proc rpath wpath cpath inet dns ioctl prot_exec");
 
 rclient.auth(process.env.REDIS_PASS, function(err, res) {
     console.log(err, res, "authed with:", process.env.REDIS_PASS);
