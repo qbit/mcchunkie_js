@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 var pledge = require('node-pledge'),
     irc = require('irc'),
@@ -46,7 +47,7 @@ fs.stat( apiKeys, function( err, stat ) {
 	throw err;
     }
     if (stat.size > 0) {
-	fs.readFile('api_keys.json', 'utf8', function(err, data) {
+	fs.readFile(apiKeys, 'utf8', function(err, data) {
 	    if (err){
 		throw err;
 	    }
