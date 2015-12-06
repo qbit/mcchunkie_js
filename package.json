@@ -18,7 +18,7 @@
     "irc-client": "0.0.2",
     "markov": "0.0.7",
     "nconf": "^0.8.2",
-    "node-pledge": "^1.0.3",
+    "node-pledge": "^1.0.5",
     "node-xmpp-client": "^2.0.2",
     "optimist": "^0.6.1",
     "pushover-notifications": "^0.2.2",
