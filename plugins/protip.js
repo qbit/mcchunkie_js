@@ -18,7 +18,7 @@
 
   if (msg.match(/^\/[pb]rotip\?|^brotip\?|^protip\?|^pro-tip\?/i)) {
       if (store.authed) {
-	  store.rclient.llrange('l_protips', function(e, max) {
+	  store.rclient.send_command('llrange', ['l_protips', function(e, max) {
 	      var idx = helper.rand(parseInt(Math.ceil(max), 10));
 	      store.rclient.lindex(idx, 'l_protips', function(e, d) {
 		  store.rclient.hget('protip_votes', idx, function(e, count) {
@@ -26,7 +26,7 @@
 		      cb.call(null, to, from, d, proto);
 		  });
 	      });
-	  });
+	  }]);
       }
   }
 
