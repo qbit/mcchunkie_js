@@ -23,7 +23,7 @@
 	      store.rclient.lindex('l_protips', idx, function(e, d) {
 		  
 		  if (d) {
-		      d = d.replace(/^\s+//g);
+		      d = d.replace(/^\s+/, '');
 		  }
 		  
 		  store.rclient.hget('protip_votes', idx, function(e, count) {
