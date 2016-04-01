@@ -21,12 +21,12 @@
     }
 
     if (msg.match(/^\d+\+\+/)) {
-	id = getID(msg);
+	var id = getID(msg);
 	store.rclient.hincrby('protip_votes', id, 1, function() {});
     }
 
     if (msg.match(/^\d+\--/)) {
-	id = getID(msg);
+	var id = getID(msg);
 	store.rclient.hincrby('protip_votes', id, -1, function() {});
     }
 
