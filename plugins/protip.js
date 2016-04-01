@@ -16,6 +16,20 @@
 	}
     }
 
+    function getID(id) {
+	return id.replace(/\+\+.*$/, '').replace(/--.*$/, '');
+    }
+
+    if (msg.match(/^\d+\+\+/)) {
+	id = getID(msg);
+	store.rclient.hincrby('protip_votes', id, 1, function() {});
+    }
+
+    if (msg.match(/^\d+\--/)) {
+	id = getID(msg);
+	store.rclient.hincrby('protip_votes', id, -1, function() {});
+    }
+
     if (msg.match(/^\/[pb]rotip\?|^brotip\?|^protip\?|^pro-tip\?/i)) {
 	if (store.authed) {
 	    store.rclient.llen('l_protips', function(e, max) {
@@ -28,10 +42,10 @@
 		  
 		    store.rclient.hget('protip_votes', idx, function(e, count) {
 			if (count === null) {
-			    d = "(0) " + d;
+			    d = "(0) " + d + " id: " + idx;
 			    cb.call(null, to, from, d, proto);
 			} else {
-			    d = "(" + count + ") " + d;
+			    d = "(" + count + ") " + d + " id: " + idx;
 			    cb.call(null, to, from, d, proto);
 			}
 		    });
@@ -40,10 +54,10 @@
 	}
     }
 
-if (msg.match(/^\/[pb]rotip:|^brotip:|^protip:|^pro-tip:/i )) {
-if (store.authed) {
-msg = msg.replace(/\/[pb]rotip|^brotip: |^protip: |^pro-tip: /i, '');
-store.rclient.rpush('l_protips', msg);
-}
-}
+    if (msg.match(/^\/[pb]rotip:|^brotip:|^protip:|^pro-tip:/i )) {
+	if (store.authed) {
+	    msg = msg.replace(/\/[pb]rotip|^brotip: |^protip: |^pro-tip: /i, '');
+	    store.rclient.rpush('l_protips', msg);
+	}
+    }
 });
