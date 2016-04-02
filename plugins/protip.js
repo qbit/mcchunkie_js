@@ -39,10 +39,10 @@
 	    
 	    store.rclient.hget('protip_votes', idx, function(e, count) {
 		if (count === null) {
-		    d = "(0:" + id + ") " + d;
+		    d = "(0:" + idx + ") " + d;
 		    fn.call(null, d);
 		} else {
-		    d = "(" + count + ":" + id + ") " + d;
+		    d = "(" + count + ":" + idx + ") " + d;
 		    fn.call(null, d);
 		}
 	    });
