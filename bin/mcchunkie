@@ -413,12 +413,16 @@ if (args.t) {
 	    });
 	    req.on('end', function() {
 		var data = JSON.parse(body);
-		var msg = data.message.text;
+		if (data && data.message) {
+		    var msg = data.message.text;
 
-		processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram")
+		    processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram");
 
-		resp.writeHead(200, {'Content-Type': 'application/json'});
-		resp.end('\n');
+		    resp.writeHead(200, {'Content-Type': 'application/json'});
+		    resp.end('\n');
+		} else {
+		    console.log(body, data);
+		}
 	    });
 	} else {
 	    resp.writeHead(200);
