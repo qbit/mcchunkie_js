@@ -316,7 +316,7 @@ function teleSay(t, resp) {
 	console.log("headers: ", res.headers);
 
 	res.on('data', function(d) {
-	    console.log(d.toString())
+	    console.log(d.toString());
 	});
 
     }).on('error', function(err) {
@@ -421,6 +421,8 @@ if (args.t) {
 		    resp.writeHead(200, {'Content-Type': 'application/json'});
 		    resp.end('\n');
 		} else {
+		    resp.writeHead(200);
+		    resp.end('\n');
 		    console.log(body, data);
 		}
 	    });
