@@ -1,8 +1,8 @@
-(function( helper, to, from, msg, store, sh_store, cb, proto ) {
+(function(helper, to, from, msg, store, sh_store, cb, proto) {
   'use strict';
   var resp = "";
-  if ( helper.isRelevant( msg ) ) {
-    if ( msg.match( "/tgif/i" ) ) {
+  if (helper.isRelevant(msg)) {
+    if (msg.match(/tgif/i)) {
       resp += "____________ ___________  _____   __\n"
       resp += "|  ___| ___ \\_   _|  _  \\/ _ \\ \\ / /\n"
       resp += "| |_  | |_/ / | | | | | / /_\\ \\ V / \n"
@@ -10,11 +10,11 @@
       resp += "| |   | |\\ \\ _| |_| |/ /| | | || |\n"
       resp += "\\_|   \\_| \\_|\\___/|___/ \\_| |_/\\_/\n"
 
-      setTimeout( function() {
+      setTimeout(function() {
         resp = '(It really is, somewhere)';
-        cb.call( null, to, from, resp, proto );
-      }, 5000 );
+        cb.call(null, to, from, resp, proto);
+      }, 5000);
     }
   }
-  cb.call( null, to, from, resp, proto );
+  cb.call(null, to, from, resp, proto);
 });
