@@ -36,9 +36,11 @@ var pledge = require('node-pledge'),
 
 pledge.init("stdio flock proc rpath wpath cpath inet dns ioctl prot_exec");
 
-rclient.auth(process.env.REDIS_PASS, function(err, res) {
-    console.log(err, res, "authed with:", process.env.REDIS_PASS);
-});
+if (process.env.REDIS_PASS) {
+  rclient.auth(process.env.REDIS_PASS, function(err, res) {
+      console.log(err, res, "authed with:", process.env.REDIS_PASS);
+  });
+}
 
 nconf.file({ file: storageFile });
 
