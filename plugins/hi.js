@@ -1,4 +1,4 @@
-// Desc: respond to people who love us
+// Desc: hi
 (function( helper, to, from, msg, store, sh_store, cb, proto ) {
 	'use strict';
 	var resp;
