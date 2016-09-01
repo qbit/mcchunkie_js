@@ -19,12 +19,12 @@
     "markov": "0.0.7",
     "nconf": "^0.8.4",
     "node-pledge": "^1.0.5",
-    "node-xmpp-client": "^3.0.0",
+    "node-xmpp-client": "^3.0.2",
     "optimist": "^0.6.1",
-    "pushover-notifications": "^0.2.2",
-    "redis": "^2.6.0-0",
+    "pushover-notifications": "^0.2.3",
+    "redis": "^2.6.2",
     "reds": "^0.2.5",
-    "sqlite3": "^3.1.2"
+    "sqlite3": "^3.1.4"
   },
   "devDependencies": {},
   "optionalDependencies": {},
