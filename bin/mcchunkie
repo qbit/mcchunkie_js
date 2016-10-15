@@ -25,11 +25,12 @@ var pledge = require('node-pledge'),
     runningMessages = {},
     storage = {},
     args = require('optimist')
-    .usage('$0 [-i,-t] -n <nick> -s <server> -c <chan1>,<chan2>\n -j <xmpp jid> -p <xmpp password>')
+    .usage('$0 [-i,-t,-x,-m] -n <nick> -s <server> -c <chan1>,<chan2>')
     .demand(['n'])
     .argv,
     client, channels, chanCount = 0,
     tokens = {},
+    sdk = require("matrix-js-sdk"),
     dlog = function(msg) {
 	console.log(msg);
     };
@@ -44,21 +45,13 @@ if (process.env.REDIS_PASS) {
 
 nconf.file({ file: storageFile });
 
-fs.stat( apiKeys, function( err, stat ) {
-    if ( err ) {
-	throw err;
+var stat = fs.statSync(apiKeys);
+if (stat.size > 0) {
+    var data = fs.readFileSync(apiKeys, 'utf8');
+    if (typeof data === 'string'){
+	tokens = JSON.parse(data);
     }
-    if (stat.size > 0) {
-	fs.readFile(apiKeys, 'utf8', function(err, data) {
-	    if (err){
-		throw err;
-	    }
-	    if (typeof data === 'string'){
-		tokens = JSON.parse(data);
-	    }
-	});
-    }
-});
+}
 
 function loadStorage(fn) {
     dlog("loading storage");
@@ -330,7 +323,7 @@ function reply(t, frm, resp, proto) {
     t = t || frm;
     proto = proto || 'irc';
     if (resp && t) {
-	if (args.j && proto === 'xmpp') {
+	if (tokens.xmpp_user && proto === 'xmpp') {
 	    if (frm.match('conference')) {
 		xmpp.send(frm, resp, true);
 	    } else {
@@ -343,6 +336,15 @@ function reply(t, frm, resp, proto) {
 	}
 	if (client && proto === 'irc') {
 	    client.say(t, resp);
+	}
+
+	if (authedClient && proto == 'matrix') {
+	    var content = {
+		msgtype: "m.text",
+		body: resp
+	    };
+	    console.log(t, content);
+	    authedClient.sendMessage(t, content);
 	}
     }
 }
@@ -361,124 +363,148 @@ function processMsg(to, from, msg, proto) {
     }
 }
 
-if (args.j) {
-    var srvr = args.j.split('@')[1];
+var authedClient;
+if (args.m) {
+    // matrix.org
+    var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
+	console.log("On login: Err %j, res %j", err, res);
 
-    xmpp = new xmppClient({
-	jid: args.j,
-	pssword: args.p
-    });
-   
-    xmpp.on('online', function() {
-	console.log('xmpp online');
-    });
-
-    xmpp.on('error', function(err) {
-	console.log(err);
-    });
-
-    xmpp.on('subscribe', function(from) {
-	xmpp.acceptSubscription(from);
-    });
-
-    var room = 'discussion@conference.' + srvr + '/' +args.n;
-    
-    xmpp.on('groupchat', function(conference, from, message, stamp) {
-	processMsg(null, conference, message, 'xmpp');
-    });
-
-    xmpp.on('chat', function(from, message) {
-	processMsg(null, from, message, 'xmpp');
-    });
-
-    xmpp.connect({
-	jid: args.j,
-	password: args.p
-    });
-
-//    xmpp.join(room);
-//    xmpp.getRoster();
-}
-
-// Telegram client
-if (args.t) {
-    http.createServer(function(req, resp) {
-	if (req.method == 'POST') {
-	    var body = '';
-	    req.on('data', function(data) {
-		body += data;
-
-		//Too much POST data, kill the connection !
-		if (body.length > 1e6) {
-		    req.connection.destroy();
-		}
-	    });
-	    req.on('end', function() {
-		var data = JSON.parse(body);
-		if (data && data.message) {
-		    var msg = data.message.text;
-
-		    processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram");
-
-		    resp.writeHead(200, {'Content-Type': 'application/json'});
-		    resp.end('\n');
-		} else {
-		    resp.writeHead(200);
-		    resp.end('\n');
-		    console.log(body, data);
-		}
-	    });
-	} else {
-	    resp.writeHead(200);
-	    resp.end('\n');
-	}
-    }).listen(8000, '127.0.0.1');
-}
-
-if (args.i) {
-    client = new irc.Client(args.s, args.n, {
-	channels: channels,
-	debug: false,
-	userName: args.n
-    });
-
-    client.addListener('error', function(err) {
-	console.log(err);
-    });
-
-    client.addListener('message', function(from, to, msg, tater) {
-	if(client.nick !== args.n) {
-	    //client.send('NICK', args.n);
-	}
-	processMsg(to, from, msg, 'irc');
-    });
-
-
-    client.addListener('pm', function(from, msg) {
-	processMsg(null, from, args.n + ':' + msg, 'irc');
-    });
-
-    client.addListener('invite', function(chan, from) {
-	channels.push(chan);
-	client.join(chan, function() {
-	    console.log('joined ' + chan + ' because ' + from + ' invited me');
+	authedClient = sdk.createClient({
+	    baseUrl: "https://matrix.org",
+	    accessToken: res.access_token,
+	    userId: res.user_id
 	});
+
+	authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
+	    if (toStartOfTimeline || event.getType() !== "m.room.message") {
+		return;
+	    }
+
+	    processMsg(room.roomId, event.getSender(), event.getContent().body, "matrix");
+
+	});
+	authedClient.startClient();
     });
-    /*
-      client = new Client({
-      server: {
-      host: args.s,
-      port: 6667
-      },
-      nickname: args.n,
-      username: args.n,
-      realname: args.n,
-      channels: channels
-      });
-    
-      client.on("message:public", function(from, to, msg) {
-      console.log(from,to,msg);
-      processMsg(to, from, msg);
-      });
-    */
 }
+
+if (args.x) {
+    var srvr = tokens.xmpp_user.split('@')[1];
+
+	xmpp = new xmppClient({
+	    jid: tokens.xmpp_user,
+	    pssword: tokens.xmpp_pass
+	});
+   
+	xmpp.on('online', function() {
+	    console.log('xmpp online');
+	});
+
+	xmpp.on('error', function(err) {
+	    console.log(err);
+	});
+
+	xmpp.on('subscribe', function(from) {
+	    xmpp.acceptSubscription(from);
+	});
+
+	var room = 'discussion@conference.' + srvr + '/' +args.n;
+    
+	xmpp.on('groupchat', function(conference, from, message, stamp) {
+	    processMsg(null, conference, message, 'xmpp');
+	});
+
+	xmpp.on('chat', function(from, message) {
+	    processMsg(null, from, message, 'xmpp');
+	});
+
+	xmpp.connect({
+	    jid: tokens.xmpp_user,
+	    password: tokens.xmpp_pass
+	});
+
+	//    xmpp.join(room);
+	//    xmpp.getRoster();
+    }
+
+    // Telegram client
+    if (args.t) {
+	http.createServer(function(req, resp) {
+	    if (req.method == 'POST') {
+		var body = '';
+		req.on('data', function(data) {
+		    body += data;
+
+		    //Too much POST data, kill the connection !
+		    if (body.length > 1e6) {
+			req.connection.destroy();
+		    }
+		});
+		req.on('end', function() {
+		    var data = JSON.parse(body);
+		    if (data && data.message) {
+			var msg = data.message.text;
+
+			processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram");
+
+			resp.writeHead(200, {'Content-Type': 'application/json'});
+			resp.end('\n');
+		    } else {
+			resp.writeHead(200);
+			resp.end('\n');
+			console.log(body, data);
+		    }
+		});
+	    } else {
+		resp.writeHead(200);
+		resp.end('\n');
+	    }
+	}).listen(8000, '127.0.0.1');
+    }
+
+    if (args.i) {
+	client = new irc.Client(args.s, args.n, {
+	    channels: channels,
+	    debug: false,
+	    userName: args.n
+	});
+
+	client.addListener('error', function(err) {
+	    console.log(err);
+	});
+
+	client.addListener('message', function(from, to, msg, tater) {
+	    if(client.nick !== args.n) {
+		//client.send('NICK', args.n);
+	    }
+	    processMsg(to, from, msg, 'irc');
+	});
+
+
+	client.addListener('pm', function(from, msg) {
+	    processMsg(null, from, args.n + ':' + msg, 'irc');
+	});
+
+	client.addListener('invite', function(chan, from) {
+	    channels.push(chan);
+	    client.join(chan, function() {
+		console.log('joined ' + chan + ' because ' + from + ' invited me');
+	    });
+	});
+	/*
+	  client = new Client({
+	  server: {
+	  host: args.s,
+	  port: 6667
+	  },
+	  nickname: args.n,
+	  username: args.n,
+	  realname: args.n,
+	  channels: channels
+	  });
+    
+	  client.on("message:public", function(from, to, msg) {
+	  console.log(from,to,msg);
+	  processMsg(to, from, msg);
+	  });
+	*/
+    }
