@@ -60,7 +60,7 @@
 			r = r.replace('%l', store.fcc.parseLicense(licenses[0]));
 			return r;
 		};
-		store.fcc.get = function(param, t, frm) {
+		store.fcc.get = function(param, t, frm, proto) {
 			var u = store.fcc.query_url.replace('%S', param);
 			helper.httpGet(u, {}, function(err, data) {
 				try {
@@ -82,7 +82,7 @@
 	if (msg.match(/^ham: |^\/ham / )) {
 		msg = msg.replace(/^ham: /, '');
 		msg = msg.replace(/^\/ham /, '');
-		store.fcc.get(msg, to, from);
+		store.fcc.get(msg, to, from, proto);
 	}
 
 });
