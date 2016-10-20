@@ -375,6 +375,14 @@ if (args.m) {
 	    userId: res.user_id
 	});
 
+        authedClient.on("RoomMember.membership", function(event, member) {
+            if (member.membership === "invite" && member.name === args.n) {
+                authedClient.joinRoom(member.roomId).done(function() {
+                    console.log("Auto-joined %s", member.roomId);
+                });
+            }
+        });
+
 	authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
 	    if (toStartOfTimeline || event.getType() !== "m.room.message") {
 		return;
