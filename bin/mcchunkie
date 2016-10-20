@@ -380,7 +380,8 @@ if (args.m) {
 		return;
 	    }
 
-	    processMsg(room.roomId, event.getSender(), event.getContent().body, "matrix");
+            var from = event.sender.name || event.getSender();
+	    processMsg(room.roomId, from, event.getContent().body, "matrix");
 
 	});
 	authedClient.startClient();
@@ -427,42 +428,42 @@ if (args.x) {
     }
 
     // Telegram client
-    if (args.t) {
-	http.createServer(function(req, resp) {
-	    if (req.method == 'POST') {
-		var body = '';
-		req.on('data', function(data) {
-		    body += data;
+if (args.t) {
+    http.createServer(function(req, resp) {
+	if (req.method == 'POST') {
+	    var body = '';
+	    req.on('data', function(data) {
+		body += data;
 
-		    //Too much POST data, kill the connection !
-		    if (body.length > 1e6) {
-			req.connection.destroy();
-		    }
-		});
-		req.on('end', function() {
-		    var data = JSON.parse(body);
-		    if (data && data.message) {
-			var msg = data.message.text;
+		//Too much POST data, kill the connection !
+		if (body.length > 1e6) {
+		    req.connection.destroy();
+		}
+	    });
+	    req.on('end', function() {
+		var data = JSON.parse(body);
+		if (data && data.message) {
+		    var msg = data.message.text;
 
-			processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram");
+		    processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram");
 
-			resp.writeHead(200, {'Content-Type': 'application/json'});
-			resp.end('\n');
-		    } else {
-			resp.writeHead(200);
-			resp.end('\n');
-			console.log(body, data);
-		    }
-		});
-	    } else {
-		resp.writeHead(200);
-		resp.end('\n');
-	    }
-	}).listen(8000, '127.0.0.1');
-    }
+		    resp.writeHead(200, {'Content-Type': 'application/json'});
+		    resp.end('\n');
+		} else {
+		    resp.writeHead(200);
+		    resp.end('\n');
+		    console.log(body, data);
+		}
+	    });
+	} else {
+	    resp.writeHead(200);
+	    resp.end('\n');
+	}
+    }).listen(8000, '127.0.0.1');
+}
 
-    if (args.i) {
-	client = new irc.Client(args.s, args.n, {
+if (args.i) {
+    client = new irc.Client(args.s, args.n, {
 	    channels: channels,
 	    debug: false,
 	    userName: args.n
