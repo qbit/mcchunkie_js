@@ -304,7 +304,7 @@ fs.watch(plugins, function(e, file) {
 });
 
 function teleSay(t, resp) {
-    var turl = teleURL + tokens.telegram + '/sendMessage?chat_id=' + t + '&text=' + encodeURI(resp);
+    var turl = teleURL + tokens.telegram + '/sendMessage?parse_mode=Markdown&chat_id=' + t + '&text=' + encodeURI(resp);
     console.log(turl);
     https.get(turl, function(res) {
 	console.log("statusCode: ", res.statusCode);
