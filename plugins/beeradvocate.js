@@ -17,7 +17,7 @@
 	  store.ba = require('beer-advocate-api');
   }
 
-  function pretty(rev, url) {
+  function pretty(rev, url, proto) {
 	  var map = {
 		  beer_name: 'Name',
 		  beer_style: 'Style',
@@ -32,10 +32,22 @@
 		  pDev: 'pDev'
 	  }, i, o = [];
 
+          function f(p) {
+            if (p !== "irc") {
+              return "\n";
+            }
+          }
+
+          function g(a, p) {
+            if (p !== "irc") {
+              return "**" + a + "**";
+            }
+          }
+
 	  if (rev) {
 		  for(i in rev) {
 			  if (map.hasOwnProperty(i) && rev.hasOwnProperty(i)) {
-				  o.push(map[i] + ': ' + rev[i] || '?');
+				  o.push(g(map[i], proto) + ': ' + rev[i].replace("\n", "") || '?' + f(proto));
 			  }
 		  }
 	  }
@@ -44,7 +56,7 @@
 
 	  o = o.join(', ') + " - " + "http://www.beeradvocate.com" + url;
 
-	  return o.replace(/\n/g, "");
+	  return o;
   }
 
   if (msg.match(/^beer:|^\/beer /)) {
