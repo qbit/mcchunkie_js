@@ -59,7 +59,12 @@
 
 	  o = o.sort();
 
-	  o = o.join(', ') + " - " + "http://www.beeradvocate.com" + url;
+          if (proto === 'irc') {
+            o = o.join(', ') + " - " + "http://www.beeradvocate.com" + url;
+          } else {
+            o = o.join(',\n') + "\n" + "http://www.beeradvocate.com" + url;
+          }
+
 
 	  return o;
   }
@@ -71,7 +76,7 @@
 		  if ( beers[0] && beers[0].beer_url ) {
 			  store.ba.beerPage(beers[0].beer_url, function(reviews) {
 				  if ( reviews.length >= 1) {
-					  cb.call( null, to, from, pretty(reviews[0], beers[0].beer_url), proto);
+					  cb.call( null, to, from, pretty(reviews[0], beers[0].beer_url, proto), proto);
 				  }
 			  });
 		  }
