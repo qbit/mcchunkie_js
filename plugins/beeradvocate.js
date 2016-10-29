@@ -39,9 +39,14 @@
           }
 
           function g(a, p) {
-            if (p !== "irc") {
-              return "**" + a + "**";
+            if (p === "telegram") {
+              a = "*" + a + "*";
             }
+            if (p === "matrix") {
+              a = "**" + a + "**";
+            }
+
+            return a;
           }
 
 	  if (rev) {
