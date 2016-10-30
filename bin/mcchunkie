@@ -343,8 +343,7 @@ function reply(t, frm, resp, proto) {
 		msgtype: "m.text",
 		body: resp
 	    };
-	    console.log(t, content);
-	    authedClient.sendMessage(t, content);
+	    authedClient.sendHtmlMessage(t, content);
 	}
     }
 }

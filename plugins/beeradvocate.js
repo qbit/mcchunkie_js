@@ -33,9 +33,14 @@
 	  }, i, o = [];
 
           function f(p) {
-            if (p !== "irc") {
-              return "\n";
+            var a = "";
+            if (p === "telegram") {
+              a = a + "\n";
             }
+            if (p === "matrix") {
+              a = a + "<br />";
+            }
+            return a;
           }
 
           function g(a, p) {
@@ -43,7 +48,7 @@
               a = "*" + a + "*";
             }
             if (p === "matrix") {
-              a = "**" + a + "**";
+              a = "<b>" + a + "</b>";
             }
 
             return a;
@@ -61,8 +66,12 @@
 
           if (proto === 'irc') {
             o = o.join(', ') + " - " + "http://www.beeradvocate.com" + url;
-          } else {
+          }
+          if (proto === 'telegram') {
             o = o.join(',\n') + "\n" + "http://www.beeradvocate.com" + url;
+          }
+          if (proto === 'matrix') {
+            o = o.join(',<br />') + "\n" + "http://www.beeradvocate.com" + url;
           }
 
 
