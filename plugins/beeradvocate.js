@@ -71,7 +71,7 @@
             o = o.join(',\n') + "\n" + "http://www.beeradvocate.com" + url;
           }
           if (proto === 'matrix') {
-            o = o.join(',<br />') + "\n" + "http://www.beeradvocate.com" + url;
+            o = o.join(',<br />') + "<br />" + "http://www.beeradvocate.com" + url;
           }
 
 
