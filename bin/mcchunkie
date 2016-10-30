@@ -339,7 +339,7 @@ function reply(t, frm, resp, proto) {
 	}
 
 	if (authedClient && proto == 'matrix') {
-	    authedClient.sendHtmlMessage(t, resp);
+	    authedClient.sendHtmlMessage(t, resp, resp);
 	}
     }
 }
