@@ -14,7 +14,7 @@
   }
 
   if ( msg.match( /^version:|^\/version$/ ) ) {
-      resp = "I am running on Node.JS " + process.version + '(' + process.versions.openssl +') on ' + process.platform.ucFirst().replace( 'bsd', 'BSD' ) + ' ' + os.release() + '.';
+      resp = "I am running on Node.JS " + process.version + ' (' + process.versions.openssl +') on ' + process.platform.ucFirst().replace( 'bsd', 'BSD' ) + ' ' + os.release() + '.';
   }
   cb.call( null, to, from, resp, proto );
 });
