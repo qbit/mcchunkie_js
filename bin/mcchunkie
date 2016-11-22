@@ -8,11 +8,9 @@ var pledge = require('node-pledge'),
     url = require('url'),
     nconf = require('nconf'),
     redis = require('redis'),
+    rclient,
     xmpp,
     xmppClient = require('node-xmpp-client'),
-    rclient = redis.createClient( null, null, {
-	auth_pass: process.env.REDIS_PASS
-    }),
     os = require('os'),
     // pushover = require('pushover-notifications'),
     helpers,
@@ -37,10 +35,39 @@ var pledge = require('node-pledge'),
 
 pledge.init("stdio flock proc rpath wpath cpath inet dns ioctl prot_exec");
 
+rclient = redis.createClient( null, null, {
+  auth_pass: process.env.REDIS_PASS
+});
+
 if (process.env.REDIS_PASS) {
   rclient.auth(process.env.REDIS_PASS, function(err, res) {
       console.log(err, res, "authed with:", process.env.REDIS_PASS);
   });
+}
+
+var WebStore = function(opt) {
+  this.debug = false;
+  for (var i in opt) {
+    if (opt.hasOwnProperty(i)) {
+      this[i] = opt[i];
+    }
+  }
+  console.log("Creating WebStore");
+};
+
+WebStore.prototype.getItem = function(item) {
+  console.log("getItem", item);
+  return this[item] || null;
+}
+
+WebStore.prototype.setItem = function(item, val) {
+  console.log("setItem", item, "=>", val);
+  this[item] = val;
+}
+
+WebStore.prototype.removeItem = function(item) {
+  console.log("removeItem", item);
+  delete this[item];
 }
 
 nconf.file({ file: storageFile });
@@ -367,7 +394,9 @@ if (args.m) {
 	authedClient = sdk.createClient({
 	    baseUrl: "https://matrix.org",
 	    accessToken: res.access_token,
-	    userId: res.user_id
+	    userId: res.user_id,
+	    deviceId: res.device_id,
+	    sessionStore: new sdk.WebStorageSessionStore(new WebStore({debug: true}))
 	});
 
         authedClient.on("RoomMember.membership", function(event, member) {
