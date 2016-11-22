@@ -388,14 +388,13 @@ function processMsg(to, from, msg, proto) {
 var authedClient;
 if (args.m) {
     // matrix.org
-    var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
-	console.log("On login: Err %j, res %j", err, res);
-
+ 
+    function authClient(baseUrl, accessToken, uid, deviceId) {
 	authedClient = sdk.createClient({
-	    baseUrl: "https://matrix.org",
-	    accessToken: res.access_token,
-	    userId: res.user_id,
-	    deviceId: tokens.device_id || res.device_id,
+	    baseUrl: baseUrl,
+	    accessToken: accessToken,//res.access_token,
+	    userId: uid, //res.user_id,
+	    deviceId: deviceId, //res.device_id,
 	    sessionStore: new sdk.WebStorageSessionStore(new WebStore({debug: true}))
 	});
 
@@ -417,7 +416,16 @@ if (args.m) {
 
 	});
 	authedClient.startClient();
-    });
+    }
+
+    if (!tokens.matrix_access_token) {
+      var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
+  	console.log("On login: Err %j, res %j", err, res);
+        authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
+      });
+    } else {
+        authClient("https://" + tokens.matrix_home_server, tokens.matrix_access_token, tokens.matrix_user_id, tokens.matrix_device_id);
+    }
 }
 
 if (args.x) {
