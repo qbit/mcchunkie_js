@@ -395,7 +395,7 @@ if (args.m) {
 	    baseUrl: "https://matrix.org",
 	    accessToken: res.access_token,
 	    userId: res.user_id,
-	    deviceId: res.device_id,
+	    deviceId: tokens.device_id || res.device_id,
 	    sessionStore: new sdk.WebStorageSessionStore(new WebStore({debug: true}))
 	});
 
