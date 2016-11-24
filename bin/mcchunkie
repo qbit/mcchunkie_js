@@ -418,14 +418,15 @@ if (args.m) {
 	authedClient.startClient();
     }
 
-    if (!tokens.matrix_access_token) {
+    //if (!tokens.matrix_access_token) {
       var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
   	console.log("On login: Err %j, res %j", err, res);
+        //authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
         authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
       });
-    } else {
-        authClient("https://" + tokens.matrix_home_server, tokens.matrix_access_token, tokens.matrix_user_id, tokens.matrix_device_id);
-    }
+    //} else {
+    //    authClient("https://" + tokens.matrix_home_server, tokens.matrix_access_token, tokens.matrix_user_id, tokens.matrix_device_id);
+    //}
 }
 
 if (args.x) {
