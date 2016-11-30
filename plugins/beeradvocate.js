@@ -27,9 +27,7 @@
 		  brewery_country: 'Country',
 		  ba_score: 'BA Score',
 		  ba_rating: 'BA Rating',
-		  bros_score: 'Bros Score',
-		  rAvg: 'rAvg',
-		  pDev: 'pDev'
+		  bros_score: 'Bros Score'
 	  }, i, o = [];
 
           function f(p) {
