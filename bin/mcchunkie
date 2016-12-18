@@ -70,6 +70,7 @@ function WebStore(opt) {
 WebStore.prototype._sync = function(purge) {
     var self = this;
 
+    console.log("ECWS: ", "sync", purge);
     // delete everything in redis
     if (purge) {
 	this.rclient.del(this.prefix);
@@ -89,14 +90,17 @@ WebStore.prototype._sync = function(purge) {
 };
 
 WebStore.prototype.getItem = function(item) {
+    console.log("Getting: ", item);
     return this.data[item] || null;
 };
 
 WebStore.prototype.setItem = function(item, value) {
+    console.log("Setting: ", item);
     this.data[item] = value;
 };
 
 WebStore.prototype.removeItem = function(item) {
+    console.log("Removing: ", item);
     this.rclient.hdel(this.prefix, item);
 };
 
@@ -418,42 +422,43 @@ function processMsg(to, from, msg, proto) {
 var authedClient;
 if (args.m) {
     // matrix.org
- 
-    function authClient(baseUrl, accessToken, uid, deviceId) {
-	authedClient = sdk.createClient({
-	    baseUrl: baseUrl,
-	    accessToken: accessToken,//res.access_token,
-	    userId: uid, //res.user_id,
-	    deviceId: deviceId, //res.device_id,
-	    sessionStore: new sdk.WebStorageSessionStore(new WebStore({debug: true}))
+     setTimeout(function() {
+	 function authClient(baseUrl, accessToken, uid, deviceId) {
+	     authedClient = sdk.createClient({
+		 baseUrl: baseUrl,
+		 accessToken: accessToken,//res.access_token,
+		 userId: uid, //res.user_id,
+		 deviceId: deviceId, //res.device_id,
+		 sessionStore: new sdk.WebStorageSessionStore(new WebStore({debug: true}))
+	     });
+
+             authedClient.on("RoomMember.membership", function(event, member) {
+		 if (member.membership === "invite" && member.name === args.n) {
+                     authedClient.joinRoom(member.roomId).done(function() {
+			 console.log("Auto-joined %s", member.roomId);
+                     });
+		 }
+             });
+
+	     authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
+		 if (toStartOfTimeline || event.getType() !== "m.room.message") {
+		     return;
+		 }
+
+		 var from = event.sender.name || event.getSender();
+		 processMsg(room.roomId, from, event.getContent().body, "matrix");
+
+	     });
+	     authedClient.startClient();
+	 }
+
+	 //if (!tokens.matrix_access_token) {
+	 var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
+  	    console.log("On login: Err %j, res %j", err, res);
+            //authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
+            authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
 	});
-
-        authedClient.on("RoomMember.membership", function(event, member) {
-            if (member.membership === "invite" && member.name === args.n) {
-                authedClient.joinRoom(member.roomId).done(function() {
-                    console.log("Auto-joined %s", member.roomId);
-                });
-            }
-        });
-
-	authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
-	    if (toStartOfTimeline || event.getType() !== "m.room.message") {
-		return;
-	    }
-
-            var from = event.sender.name || event.getSender();
-	    processMsg(room.roomId, from, event.getContent().body, "matrix");
-
-	});
-	authedClient.startClient();
-    }
-
-    //if (!tokens.matrix_access_token) {
-      var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
-  	console.log("On login: Err %j, res %j", err, res);
-        //authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
-        authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
-      });
+    }, 5000);
     //} else {
     //    authClient("https://" + tokens.matrix_home_server, tokens.matrix_access_token, tokens.matrix_user_id, tokens.matrix_device_id);
     //}
