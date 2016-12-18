@@ -422,38 +422,39 @@ function processMsg(to, from, msg, proto) {
 var authedClient;
 if (args.m) {
     // matrix.org
-     setTimeout(function() {
-	 function authClient(baseUrl, accessToken, uid, deviceId) {
-	     authedClient = sdk.createClient({
-		 baseUrl: baseUrl,
-		 accessToken: accessToken,//res.access_token,
-		 userId: uid, //res.user_id,
-		 deviceId: deviceId, //res.device_id,
-		 sessionStore: new sdk.WebStorageSessionStore(new WebStore({debug: true}))
-	     });
+    var ws = new WebStore({});
+    setTimeout(function() {
+	function authClient(baseUrl, accessToken, uid, deviceId) {
+	    authedClient = sdk.createClient({
+		baseUrl: baseUrl,
+		accessToken: accessToken,//res.access_token,
+		userId: uid, //res.user_id,
+		deviceId: deviceId, //res.device_id,
+		sessionStore: new sdk.WebStorageSessionStore(ws)
+	    });
 
-             authedClient.on("RoomMember.membership", function(event, member) {
-		 if (member.membership === "invite" && member.name === args.n) {
-                     authedClient.joinRoom(member.roomId).done(function() {
-			 console.log("Auto-joined %s", member.roomId);
-                     });
-		 }
-             });
+            authedClient.on("RoomMember.membership", function(event, member) {
+		if (member.membership === "invite" && member.name === args.n) {
+                    authedClient.joinRoom(member.roomId).done(function() {
+			console.log("Auto-joined %s", member.roomId);
+                    });
+		}
+            });
 
-	     authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
-		 if (toStartOfTimeline || event.getType() !== "m.room.message") {
-		     return;
-		 }
+	    authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
+		if (toStartOfTimeline || event.getType() !== "m.room.message") {
+		    return;
+		}
 
-		 var from = event.sender.name || event.getSender();
-		 processMsg(room.roomId, from, event.getContent().body, "matrix");
+		var from = event.sender.name || event.getSender();
+		processMsg(room.roomId, from, event.getContent().body, "matrix");
 
-	     });
-	     authedClient.startClient();
-	 }
+	    });
+	    authedClient.startClient();
+	}
 
-	 //if (!tokens.matrix_access_token) {
-	 var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
+	//if (!tokens.matrix_access_token) {
+	var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
   	    console.log("On login: Err %j, res %j", err, res);
             //authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
             authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
