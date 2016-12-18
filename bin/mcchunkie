@@ -45,30 +45,60 @@ if (process.env.REDIS_PASS) {
   });
 }
 
-var WebStore = function(opt) {
-  this.debug = false;
-  for (var i in opt) {
-    if (opt.hasOwnProperty(i)) {
-      this[i] = opt[i];
+function WebStore(opt) {
+    var self = this;
+
+    this.prefix = opt.prefix || "ecws";
+    
+    this.connected = false;
+    this.data = {};
+    this.rclient = redis.createClient(null, null, {});
+    this.rclient.on("error", function(err) {
+	throw err;
+    });
+
+    this.rclient.on("connect", function() {
+        self.connected = true;
+        self._sync(false);
+    });
+    
+    setInterval(function() {
+	self._sync(true);
+    }, 1000);
+}
+
+WebStore.prototype._sync = function(purge) {
+    var self = this;
+
+    // delete everything in redis
+    if (purge) {
+	this.rclient.del(this.prefix);
+	
+	// sync all memory to redis
+	for (var key in this.data) {
+	    this.rclient.hset(this.prefix, key, this.data[key]);
+	}
     }
-  }
-  console.log("Creating WebStore");
+
+    // sync all of redis to memory
+    this.rclient.hgetall(this.prefix, function(err, data) {
+	for (var key in data) {
+	    self.data[key] = data[key];
+	}
+    });
 };
 
 WebStore.prototype.getItem = function(item) {
-  console.log("getItem", item);
-  return this[item] || null;
-}
+    return this.data[item] || null;
+};
 
-WebStore.prototype.setItem = function(item, val) {
-  console.log("setItem", item, "=>", val);
-  this[item] = val;
-}
+WebStore.prototype.setItem = function(item, value) {
+    this.data[item] = value;
+};
 
 WebStore.prototype.removeItem = function(item) {
-  console.log("removeItem", item);
-  delete this[item];
-}
+    this.rclient.hdel(this.prefix, item);
+};
 
 nconf.file({ file: storageFile });
 
