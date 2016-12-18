@@ -70,7 +70,6 @@ function WebStore(opt) {
 WebStore.prototype._sync = function(purge) {
     var self = this;
 
-    console.log("ECWS: ", "sync", purge);
     // delete everything in redis
     if (purge) {
 	this.rclient.del(this.prefix);
@@ -90,17 +89,14 @@ WebStore.prototype._sync = function(purge) {
 };
 
 WebStore.prototype.getItem = function(item) {
-    console.log("Getting: ", item);
     return this.data[item] || null;
 };
 
 WebStore.prototype.setItem = function(item, value) {
-    console.log("Setting: ", item);
     this.data[item] = value;
 };
 
 WebStore.prototype.removeItem = function(item) {
-    console.log("Removing: ", item);
     this.rclient.hdel(this.prefix, item);
 };
 
