@@ -15,6 +15,9 @@
 
   if ( msg.match( /^version:|^\/version$/ ) ) {
       resp = "I am running on Node.JS " + process.version + ' (' + process.versions.openssl +') on ' + process.platform.ucFirst().replace( 'bsd', 'BSD' ) + ' ' + os.release() + '.';
+      if (process.platform !== "openbsd") {
+	  resp += "\n:(";
+      }
   }
-  cb.call( null, to, from, resp, proto );
+    cb.call( null, to, from, resp, proto );
 });
