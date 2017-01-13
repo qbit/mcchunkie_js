@@ -35,6 +35,28 @@ var pledge = require('node-pledge'),
 
 pledge.init("stdio flock proc rpath wpath cpath inet dns ioctl prot_exec");
 
+String.prototype.escapeHTML = function() {
+    var htmlEntities = {
+	"&": "&amp;",
+	"'": '&#39;',
+	"/": '&#x2F;',
+	"<": "&lt;",
+	">": "&gt;",
+	'"': '&quot;'
+    };
+    return this.replace(/[&<>"'\/]/g, function (s) {
+	return htmlEntities[s];
+    });
+};
+
+String.prototype.isHTML = function() {
+    var isHTML = false;
+    if (this.match(/[&<>"'\/]/)) {
+	isHTML = true;
+    }
+    return isHTML;
+};
+
 rclient = redis.createClient( null, null, {
   auth_pass: process.env.REDIS_PASS
 });
@@ -463,12 +485,12 @@ if (args.m) {
 
 if (args.x) {
     var srvr = tokens.xmpp_user.split('@')[1];
-
+    
     xmpp = new xmppClient({
 	jid: tokens.xmpp_user,
 	pssword: tokens.xmpp_pass
     });
-   
+    
     xmpp.on('online', function() {
 	console.log('xmpp online');
     });
@@ -476,7 +498,7 @@ if (args.x) {
     xmpp.on('error', function(err) {
 	console.log(err);
     });
-
+    
     xmpp.on('subscribe', function(from) {
 	xmpp.acceptSubscription(from);
     });
