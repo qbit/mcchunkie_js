@@ -18,6 +18,9 @@
       if (process.platform !== "openbsd") {
 	  resp += "\n:(";
       }
+      if (process.platform === "openbsd") {
+	  resp += " \o/";
+      }
   }
     cb.call( null, to, from, resp, proto );
 });
