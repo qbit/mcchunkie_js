@@ -8,6 +8,7 @@ var pledge = require('node-pledge'),
     url = require('url'),
     nconf = require('nconf'),
     redis = require('redis'),
+    localStore = require('node-localstorage),
     rclient,
     xmpp,
     xmppClient = require('node-xmpp-client'),
@@ -440,7 +441,8 @@ function processMsg(to, from, msg, proto) {
 var authedClient;
 if (args.m) {
     // matrix.org
-    var ws = new WebStore({});
+    //var ws = new WebStore({});
+    var ws = new localStore('./webStorage');
     setTimeout(function() {
 	function authClient(baseUrl, accessToken, uid, deviceId) {
 	    authedClient = sdk.createClient({
