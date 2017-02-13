@@ -4,16 +4,24 @@
   var resp,
   responses = [
     "that's what she said!",
+    "that's what he said!",
+    "that's what they said!",
     "PHRASING, BOOM!",
     " - Brazzers",
     "( ͡ʘ ͜ʖ ͡ʘ)",
     "phrasing.",
     "twss!",
-    "TWSS!",
+    "twhs!",
+    "twts!",
+    "TWHS!",
+    "TWTS!",
     "heuheuhuheuheuhe",
     "ohlol, that's what she said!",
+    "ohlol, that's what he said!",
+    "ohlol, that's what they said!",
     "ew! you guys are sick!",
-    "if you know what I mean."
+    "if you know what I mean.",
+    "go on..."
   ];
 
     if ( ! store.msgs ) {
