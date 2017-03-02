@@ -30,24 +30,21 @@
     }
 
     to = to || "notsupported";
-
-    if ( ! store.msg[proto] ) {
-	store.msg[proto] = [];
+    
+    if ( ! store.spoken_twsses[proto] ) {
+	store.spoken_twsses[proto] = {};
+	store.msgs[proto] = {};
     }
-
+    
     if ( ! store.msgs[proto][to] ) {
 	store.msgs[proto][to] = [];
-    }
-
-    if ( ! store.spoken_twsses[proto] ) {
-	store.spoken_twsses[proto] = [];
     }
 
     if ( ! store.spoken_twsses[proto][to] ) {
 	store.spoken_twsses[proto][to] = [];
     }
 
-    store.msgs[proto].push( msg );
+    store.msgs[proto][to].push( msg );
 
     if ( ! helper.isRelevant( msg ) || msg === helper.botname + ': no' ) {
 
