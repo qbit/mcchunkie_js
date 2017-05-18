@@ -35,7 +35,7 @@ var irc = require('irc'),
 
 if (os.platform() === 'openbsd') {
   var pledge = require('node-pledge')
-  pledge.init('stdio flock proc rpath wpath cpath inet dns ioctl prot_exec')
+  pledge.init('stdio flock proc rpath wpath cpath chown inet dns tty prot_exec fattr')
 }
 
 String.prototype.escapeHTML = function () {
