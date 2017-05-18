@@ -1,590 +1,587 @@
 #!/usr/bin/env node
-'use strict';
-var pledge = require('node-pledge'),
-    irc = require('irc'),
-    fs = require('fs'),
-    http = require('http'),
-    https = require('https'),
-    url = require('url'),
-    nconf = require('nconf'),
-    redis = require('redis'),
-    localStore = require('node-localstorage').LocalStorage,
-    rclient,
-    xmpp,
-    xmppClient = require('node-xmpp-client'),
-    os = require('os'),
+'use strict'
+var irc = require('irc'),
+  fs = require('fs'),
+  http = require('http'),
+  https = require('https'),
+  url = require('url'),
+  nconf = require('nconf'),
+  redis = require('redis'),
+  localStore = require('node-localstorage').LocalStorage,
+  rclient,
+  xmpp,
+  xmppClient = require('node-xmpp-client'),
+  os = require('os'),
     // pushover = require('pushover-notifications'),
-    helpers,
-    apiKeys = __dirname + '/../api_keys.json',
-    plugins = __dirname + '/../plugins',
-    messages = __dirname + '/../messages',
-    storageFile = __dirname + '/../shared_storage.json',
-    teleURL = 'https://api.telegram.org/bot',
-    runningPlugins = {},
-    runningMessages = {},
-    storage = {},
-    args = require('optimist')
+  helpers,
+  apiKeys = __dirname + '/../api_keys.json',
+  plugins = __dirname + '/../plugins',
+  messages = __dirname + '/../messages',
+  storageFile = __dirname + '/../shared_storage.json',
+  teleURL = 'https://api.telegram.org/bot',
+  runningPlugins = {},
+  runningMessages = {},
+  storage = {},
+  args = require('optimist')
     .usage('$0 [-i,-t,-x,-m] -n <nick> -s <server> -c <chan1>,<chan2>')
     .demand(['n'])
     .argv,
-    client, channels, chanCount = 0,
-    tokens = {},
-    sdk = require("matrix-js-sdk"),
-    dlog = function(msg) {
-	console.log(msg);
-    };
+  client, channels, chanCount = 0,
+  tokens = {},
+  sdk = require('matrix-js-sdk'),
+  dlog = function (msg) {
+    console.log(msg)
+  }
 
-pledge.init("stdio flock proc rpath wpath cpath inet dns ioctl prot_exec");
+if (os.platform() === 'openbsd') {
+  var pledge = require('node-pledge')
+  pledge.init('stdio flock proc rpath wpath cpath inet dns ioctl prot_exec')
+}
 
-String.prototype.escapeHTML = function() {
-    var htmlEntities = {
-	"&": "&amp;",
-	"'": '&#39;',
-	"/": '&#x2F;',
-	"<": "&lt;",
-	">": "&gt;",
-	'"': '&quot;'
-    };
-    return this.replace(/[&<>"'\/]/g, function (s) {
-	return htmlEntities[s];
-    });
-};
+String.prototype.escapeHTML = function () {
+  var htmlEntities = {
+    '&': '&amp;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;'
+  }
+  return this.replace(/[&<>"'\/]/g, function (s) {
+    return htmlEntities[s]
+  })
+}
 
-String.prototype.isHTML = function() {
-    var isHTML = false;
-    if (this.match(/[&<>"'\/]/)) {
-	isHTML = true;
-    }
-    return isHTML;
-};
+String.prototype.isHTML = function () {
+  var isHTML = false
+  if (this.match(/[&<>"'\/]/)) {
+    isHTML = true
+  }
+  return isHTML
+}
 
-rclient = redis.createClient( null, null, {
+rclient = redis.createClient(null, null, {
   auth_pass: process.env.REDIS_PASS
-});
+})
 
 if (process.env.REDIS_PASS) {
-  rclient.auth(process.env.REDIS_PASS, function(err, res) {
-      console.log(err, res, "authed with:", process.env.REDIS_PASS);
-  });
+  rclient.auth(process.env.REDIS_PASS, function (err, res) {
+    console.log(err, res, 'authed with:', process.env.REDIS_PASS)
+  })
 }
 
-function WebStore(opt) {
-    var self = this;
+function WebStore (opt) {
+  var self = this
 
-    this.prefix = opt.prefix || "ecws";
-    
-    this.connected = false;
-    this.data = {};
-    this.rclient = redis.createClient(null, null, {});
-    this.rclient.on("error", function(err) {
-	throw err;
-    });
+  this.prefix = opt.prefix || 'ecws'
 
-    this.rclient.on("connect", function() {
-        self.connected = true;
-        self._sync(false);
-    });
-    
-    setInterval(function() {
-	self._sync(true);
-    }, 1000);
+  this.connected = false
+  this.data = {}
+  this.rclient = redis.createClient(null, null, {})
+  this.rclient.on('error', function (err) {
+    throw err
+  })
+
+  this.rclient.on('connect', function () {
+    self.connected = true
+    self._sync(false)
+  })
+
+  setInterval(function () {
+    self._sync(true)
+  }, 1000)
 }
 
-WebStore.prototype._sync = function(purge) {
-    var self = this;
+WebStore.prototype._sync = function (purge) {
+  var self = this
 
     // delete everything in redis
-    if (purge) {
-	this.rclient.del(this.prefix);
-	
+  if (purge) {
+    this.rclient.del(this.prefix)
+
 	// sync all memory to redis
-	for (var key in this.data) {
-	    this.rclient.hset(this.prefix, key, this.data[key]);
-	}
+    for (var key in this.data) {
+	    this.rclient.hset(this.prefix, key, this.data[key])
     }
+  }
 
     // sync all of redis to memory
-    this.rclient.hgetall(this.prefix, function(err, data) {
-	for (var key in data) {
-	    self.data[key] = data[key];
-	}
-    });
-};
-
-WebStore.prototype.getItem = function(item) {
-    return this.data[item] || null;
-};
-
-WebStore.prototype.setItem = function(item, value) {
-    this.data[item] = value;
-};
-
-WebStore.prototype.removeItem = function(item) {
-    this.rclient.hdel(this.prefix, item);
-};
-
-nconf.file({ file: storageFile });
-
-var stat = fs.statSync(apiKeys);
-if (stat.size > 0) {
-    var data = fs.readFileSync(apiKeys, 'utf8');
-    if (typeof data === 'string'){
-	tokens = JSON.parse(data);
+  this.rclient.hgetall(this.prefix, function (err, data) {
+    for (var key in data) {
+	    self.data[key] = data[key]
     }
+  })
 }
 
-function loadStorage(fn) {
-    dlog("loading storage");
-    storage.shared = {};
-    fs.exists(storageFile, function(exists) {
-	if (exists) {
-	    fs.readFile(storageFile, 'utf8', function(err, data) {
-		if (err) {
-		    throw err;
-		}
-		if (data) {
-		    storage.shared = JSON.parse(data.toString());
+WebStore.prototype.getItem = function (item) {
+  return this.data[item] || null
+}
+
+WebStore.prototype.setItem = function (item, value) {
+  this.data[item] = value
+}
+
+WebStore.prototype.removeItem = function (item) {
+  this.rclient.hdel(this.prefix, item)
+}
+
+nconf.file({ file: storageFile })
+
+var stat = fs.statSync(apiKeys)
+if (stat.size > 0) {
+  var data = fs.readFileSync(apiKeys, 'utf8')
+  if (typeof data === 'string') {
+    tokens = JSON.parse(data)
+  }
+}
+
+function loadStorage (fn) {
+  dlog('loading storage')
+  storage.shared = {}
+  fs.exists(storageFile, function (exists) {
+    if (exists) {
+	    fs.readFile(storageFile, 'utf8', function (err, data) {
+      if (err) {
+		    throw err
+      }
+      if (data) {
+		    storage.shared = JSON.parse(data.toString())
 		    if (fn) {
-			fn.call();
+      fn.call()
 		    }
-		}
-	    });
-	} else {
-	    storage.shared = {};
+      }
+	    })
+    } else {
+	    storage.shared = {}
 	    if (fn) {
-		fn.call();
+      fn.call()
 	    }
-	}
-    });
+    }
+  })
 }
 
-function saveStorage(fn) {
-    dlog('saving storage');
-    fs.writeFile(storageFile, JSON.stringify(storage.shared), function(err) {
-	if (err) {
-	    throw err;
-	}
-	if (fn) {
-	    fn.call();
-	}
-    });
+function saveStorage (fn) {
+  dlog('saving storage')
+  fs.writeFile(storageFile, JSON.stringify(storage.shared), function (err) {
+    if (err) {
+	    throw err
+    }
+    if (fn) {
+	    fn.call()
+    }
+  })
 }
 
-loadStorage();
+loadStorage()
 
-rclient.on("error", function (err) {
-    console.log("Error " + err);
-});
+rclient.on('error', function (err) {
+  console.log('Error ' + err)
+})
 
-rclient.on('message', function(channel, data) {
-    dlog(' in message');
-    var o = data.toString().split('^'), i, l, value, msg, chan, proto, str;
-    
-    value = o[o.length - 1];
-    
-    str = data.toString()
+rclient.on('message', function (channel, data) {
+  dlog(' in message')
+  var o = data.toString().split('^'), i, l, value, msg, chan, proto, str
+
+  value = o[o.length - 1]
+
+  str = data.toString()
 	.replace(value, '')
 	.replace(/\^/g, ':')
 	.trim()
-	.replace(/:$/, '');
-    
-    if (! str.match('mcchat')) {
-	nconf.set(str + ':date', value);
-    }
-    nconf.save(function() {
-	loadStorage(function() {
+	.replace(/:$/, '')
+
+  if (!str.match('mcchat')) {
+    nconf.set(str + ':date', value)
+  }
+  nconf.save(function () {
+    loadStorage(function () {
 	    if (runningMessages[o[0]]) {
-		msg = runningMessages[o[0]].message;
-		chan = runningMessages[o[0]].channel;
-		proto = runningMessages[o[0]].proto;
-		for (i = 1, l = o.length; i < l; i++) {
-		    msg = msg.replace('$' + i, o[i]);
-		}
+      msg = runningMessages[o[0]].message
+      chan = runningMessages[o[0]].channel
+      proto = runningMessages[o[0]].proto
+      for (i = 1, l = o.length; i < l; i++) {
+		    msg = msg.replace('$' + i, o[i])
+      }
 	    }
 
-	    if (proto === "telegram") {
-		if (chan.match(/,/)) {
-		    var parts = chan.split(',');
+	    if (proto === 'telegram') {
+      if (chan.match(/,/)) {
+		    var parts = chan.split(',')
 		    for (i = 0, l = parts.length; i < l; i++) {
-			teleSay(parts[i], msg);
+      teleSay(parts[i], msg)
 		    }
-		} else {
-		    teleSay(chan, msg);
-		}
+      } else {
+		    teleSay(chan, msg)
+      }
 	    }
 
-	    if (proto === "xmpp") {
-		if (chan.match('conference')) {
-		    xmpp.send(chan, msg, true);
-		} else {
-		    xmpp.send(chan, msg);
-		}
+	    if (proto === 'xmpp') {
+      if (chan.match('conference')) {
+		    xmpp.send(chan, msg, true)
+      } else {
+		    xmpp.send(chan, msg)
+      }
 	    }
 
-	    if (proto === "irc") {
-		if (!chan) {
-		    channels.forEach(function(c) {
-			client.say(c, msg);
-		    });
-		} else {
-		    client.say(chan, msg);
-		}
+	    if (proto === 'irc') {
+      if (!chan) {
+		    channels.forEach(function (c) {
+      client.say(c, msg)
+		    })
+      } else {
+		    client.say(chan, msg)
+      }
 	    }
-	});
-    });
-});
+    })
+  })
+})
 
-rclient.subscribe(args.n);
+rclient.subscribe(args.n)
 
 helpers = {
-    botname: args.n,
-    path: __dirname,
-    rand: function(len) {
-	return Math.floor(Math.random() * len);
-    },
+  botname: args.n,
+  path: __dirname,
+  rand: function (len) {
+    return Math.floor(Math.random() * len)
+  },
     // pushover: new pushover({
     //   token: tokens.pushover
     // }),
-    pHolder: function(str, array) {
+  pHolder: function (str, array) {
 	// lol - PHOLDER!
-	var i, l = array.length;
-	for (i = 0; i < l; i++) {
-	    str = str.replace('$' + parseInt(i + 1, 10), array[i]);
-	}
-	return str;
-    },
-    httpGet: function(u, opts, cb) {
-	u = url.parse(u);
-	var i;
-	for (i in opts) {
-	    if (opts.hasOwnProperty(i)) {
-		if (! u[i]) {
-		    u[i] = opts[i];
-		}
-	    }
-	}
-	http.get(u, function(res) {
-	    var d = [];
-	    res.on('data', function(chunk) {
-		d.push(chunk);
-	    }).on('end', function() {
-		cb.call(null, null, d.join(''));
-	    });
-	}).on('error', function(er) {
-	    cb.call(null, er);
-	});
-    },
-    reds: require('reds'),
-    adn: require('appdotnet'),
-    classifier: require('classifier'),
-    sqlite: require('sqlite3'),
-    isRelevant: function(msg) {
-	if (msg.indexOf(this.botname) > -1) {
-	    return true;
-	}
-	return false;
+    var i, l = array.length
+    for (i = 0; i < l; i++) {
+	    str = str.replace('$' + parseInt(i + 1, 10), array[i])
     }
-};
+    return str
+  },
+  httpGet: function (u, opts, cb) {
+    u = url.parse(u)
+    var i
+    for (i in opts) {
+	    if (opts.hasOwnProperty(i)) {
+      if (!u[i]) {
+		    u[i] = opts[i]
+      }
+	    }
+    }
+    http.get(u, function (res) {
+	    var d = []
+	    res.on('data', function (chunk) {
+      d.push(chunk)
+	    }).on('end', function () {
+      cb.call(null, null, d.join(''))
+	    })
+    }).on('error', function (er) {
+	    cb.call(null, er)
+    })
+  },
+  reds: require('reds'),
+  adn: require('appdotnet'),
+  classifier: require('classifier'),
+  sqlite: require('sqlite3'),
+  isRelevant: function (msg) {
+    if (msg.indexOf(this.botname) > -1) {
+	    return true
+    }
+    return false
+  }
+}
 
 if (args.c) {
-    channels = args.c.split(',');
-    channels.forEach(function(c) {
-	channels[chanCount] = '#' + c.trim();
-	chanCount++;
-    });
+  channels = args.c.split(',')
+  channels.forEach(function (c) {
+    channels[chanCount] = '#' + c.trim()
+    chanCount++
+  })
 }
 
-function loadPlugin(file, ismsg) {
-    dlog('loadPlugin');
-    fs.readFile(file, 'utf8', function(err, data) {
-	if (err) {
-	    throw err;
-	}
-	var t, n;
-	if (data) {
+function loadPlugin (file, ismsg) {
+  dlog('loadPlugin')
+  fs.readFile(file, 'utf8', function (err, data) {
+    if (err) {
+	    throw err
+    }
+    var t, n
+    if (data) {
 	    try {
-		n = file.split('/');
-		n = n[n.length - 1];
-		if (ismsg) {
-		    t = eval(data.toString());
-		    runningMessages[n] = t();
-		} else {
-		    runningPlugins[n] = eval(data.toString());
-		    storage[n] = {};
+      n = file.split('/')
+      n = n[n.length - 1]
+      if (ismsg) {
+		    t = eval(data.toString())
+		    runningMessages[n] = t()
+      } else {
+		    runningPlugins[n] = eval(data.toString())
+		    storage[n] = {}
 		    if (tokens[n]) {
-			storage[n].token = tokens[n];
+      storage[n].token = tokens[n]
 		    }
-		}
-	    } catch(e) {
-		console.log('Syntax error in "' + file + '"\n' + e);
+      }
+	    } catch (e) {
+      console.log('Syntax error in "' + file + '"\n' + e)
 	    }
-	}
-    });
+    }
+  })
 }
 
-function loadPlugins(dir, harsh) {
-    dlog('load plugins');
-    if (harsh) {
-	runningPlugins = {};
-    } else {
-	runningMessages = {};
-    }
+function loadPlugins (dir, harsh) {
+  dlog('load plugins')
+  if (harsh) {
+    runningPlugins = {}
+  } else {
+    runningMessages = {}
+  }
 
-    var results = [];
+  var results = []
 
-    //get all the files in the plugin dir recursively.
-    var walk = function(dir, done) {
-	fs.readdir(dir, function(err, list) {
-	    if (err) return done(err);
-	    var pending = list.length;
-	    if (!pending) return done(null, results);
-	    list.forEach(function(file) {
-		file = dir + '/' + file;
-		fs.stat(file, function(err, stat) {
+    // get all the files in the plugin dir recursively.
+  var walk = function (dir, done) {
+    fs.readdir(dir, function (err, list) {
+	    if (err) return done(err)
+	    var pending = list.length
+	    if (!pending) return done(null, results)
+	    list.forEach(function (file) {
+      file = dir + '/' + file
+      fs.stat(file, function (err, stat) {
 		    if (stat && stat.isDirectory()) {
-			walk(file, function(err, res) {
-			    results = results.concat(res);
-			    if (!--pending) done(null, results);
-			});
+      walk(file, function (err, res) {
+			    results = results.concat(res)
+			    if (!--pending) done(null, results)
+      })
 		    } else {
-			results.push(file);
-			if (!--pending) done(null, results);
+      results.push(file)
+      if (!--pending) done(null, results)
 		    }
-		});
-	    });
-	});
-    };
+      })
+	    })
+    })
+  }
 
-    //Iterate each file
-    walk(dir, function(err, results) {
-	if (err) throw err;
-	var i,l = results.length, file;
+    // Iterate each file
+  walk(dir, function (err, results) {
+    if (err) throw err
+    var i, l = results.length, file
 
-	for (i = 0; i < l; i++) {
-	    file = results[i];
+    for (i = 0; i < l; i++) {
+	    file = results[i]
 	    if (file.indexOf('~') === -1) {
-		if (harsh) {
+      if (harsh) {
 		    if (file.indexOf('.js') > -1) {
-			loadPlugin(file);
+      loadPlugin(file)
 		    }
-		} else {
-		    loadPlugin(file, true);
-		}
+      } else {
+		    loadPlugin(file, true)
+      }
 	    }
-	}
-    });
+    }
+  })
 }
 
-loadPlugins(plugins, true);
-loadPlugins(messages, false);
+loadPlugins(plugins, true)
+loadPlugins(messages, false)
 
-fs.watch(plugins, function(e, file) {
-    loadPlugins(plugins, true);
-    loadPlugins(messages, false);
-});
+fs.watch(plugins, function (e, file) {
+  loadPlugins(plugins, true)
+  loadPlugins(messages, false)
+})
 
-function teleSay(t, resp) {
-    var turl = teleURL + tokens.telegram + '/sendMessage?parse_mode=Markdown&chat_id=' + t + '&text=' + encodeURI(resp);
-    console.log(turl);
-    https.get(turl, function(res) {
-	console.log("statusCode: ", res.statusCode);
-	console.log("headers: ", res.headers);
+function teleSay (t, resp) {
+  var turl = teleURL + tokens.telegram + '/sendMessage?parse_mode=Markdown&chat_id=' + t + '&text=' + encodeURI(resp)
+  console.log(turl)
+  https.get(turl, function (res) {
+    console.log('statusCode: ', res.statusCode)
+    console.log('headers: ', res.headers)
 
-	res.on('data', function(d) {
-	    console.log(d.toString());
-	});
-
-    }).on('error', function(err) {
-	console.log(err);
-    });
+    res.on('data', function (d) {
+	    console.log(d.toString())
+    })
+  }).on('error', function (err) {
+    console.log(err)
+  })
 }
 
-function reply(t, frm, resp, proto) {
-    t = t || frm;
-    proto = proto || 'irc';
-    if (resp && t) {
-	if (tokens.xmpp_user && proto === 'xmpp') {
+function reply (t, frm, resp, proto) {
+  t = t || frm
+  proto = proto || 'irc'
+  if (resp && t) {
+    if (tokens.xmpp_user && proto === 'xmpp') {
 	    if (frm.match('conference')) {
-		xmpp.send(frm, resp, true);
+      xmpp.send(frm, resp, true)
 	    } else {
-		xmpp.send(frm, resp);
+      xmpp.send(frm, resp)
 	    }
-	}
-	if (args.t && proto === 'telegram') {
-	    console.log('sending %s "%s"', t, resp);
-	    teleSay(t, resp);
-	}
-	if (client && proto === 'irc') {
-	    client.say(t, resp);
-	}
-
-	if (authedClient && proto == 'matrix') {
-	    authedClient.sendHtmlMessage(t, resp, resp);
-	}
     }
+    if (args.t && proto === 'telegram') {
+	    console.log('sending %s "%s"', t, resp)
+	    teleSay(t, resp)
+    }
+    if (client && proto === 'irc') {
+	    client.say(t, resp)
+    }
+
+    if (authedClient && proto == 'matrix') {
+	    authedClient.sendHtmlMessage(t, resp, resp)
+    }
+  }
 }
 
-function processMsg(to, from, msg, proto) {
-    var i, resp;
-    proto = proto || 'irc';
-    for (i in runningPlugins) {
-	if (runningPlugins.hasOwnProperty(i) && msg) {
+function processMsg (to, from, msg, proto) {
+  var i, resp
+  proto = proto || 'irc'
+  for (i in runningPlugins) {
+    if (runningPlugins.hasOwnProperty(i) && msg) {
 	    try {
-		runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto);
-	    } catch(e) {
-		console.log("Error running '" + i + "'\n" + e);
+      runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto)
+	    } catch (e) {
+      console.log("Error running '" + i + "'\n" + e)
 	    }
-	}
     }
+  }
 }
 
-var authedClient;
+var authedClient
 if (args.m) {
     // matrix.org
-    //var ws = new WebStore({});
-    var ws = new localStore('./webStorage');
-    setTimeout(function() {
-	function authClient(baseUrl, accessToken, uid, deviceId) {
+    // var ws = new WebStore({});
+  var ws = new localStore('./webStorage')
+  setTimeout(function () {
+    function authClient (baseUrl, accessToken, uid, deviceId) {
 	    authedClient = sdk.createClient({
-		baseUrl: baseUrl,
-		accessToken: accessToken,//res.access_token,
-		userId: uid, //res.user_id,
-		deviceId: deviceId, //res.device_id,
-		sessionStore: new sdk.WebStorageSessionStore(ws)
-	    });
+      baseUrl: baseUrl,
+      accessToken: accessToken, // res.access_token,
+      userId: uid, // res.user_id,
+      deviceId: deviceId, // res.device_id,
+      sessionStore: new sdk.WebStorageSessionStore(ws)
+	    })
 
-            authedClient.on("RoomMember.membership", function(event, member) {
-		if (member.membership === "invite" && member.name === args.n) {
-                    authedClient.joinRoom(member.roomId).done(function() {
-			console.log("Auto-joined %s", member.roomId);
-                    });
-		}
-            });
+	    authedClient.on('RoomMember.membership', function (event, member) {
+      if (member.membership === 'invite' && member.name === args.n) {
+		    authedClient.joinRoom(member.roomId).done(function () {
+      console.log('Auto-joined %s', member.roomId)
+		    })
+      }
+	    })
 
-	    authedClient.on("Room.timeline", function(event, room, toStartOfTimeline) {
-		if (toStartOfTimeline || event.getType() !== "m.room.message") {
-		    return;
-		}
+	    authedClient.on('Room.timeline', function (event, room, toStartOfTimeline) {
+      if (toStartOfTimeline || event.getType() !== 'm.room.message') {
+		    return
+      }
 
-		var from = event.sender.name || event.getSender();
-		processMsg(room.roomId, from, event.getContent().body, "matrix");
+      var from = event.sender.name || event.getSender()
+      processMsg(room.roomId, from, event.getContent().body, 'matrix')
+	    })
+	    authedClient.startClient()
+    }
 
-	    });
-	    authedClient.startClient();
-	}
-
-	//if (!tokens.matrix_access_token) {
-	var login = sdk.createClient("https://matrix.org").loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
-  	    console.log("On login: Err %j, res %j", err, res);
-            //authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
-            authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
-	});
-    }, 5000);
-    //} else {
-    //    authClient("https://" + tokens.matrix_home_server, tokens.matrix_access_token, tokens.matrix_user_id, tokens.matrix_device_id);
-    //}
+    if (!tokens.matrix_access_token) {
+	    var login = sdk.createClient('https://' + tokens.matrix_home_server).loginWithPassword(tokens.matrix_user, tokens.matrix_pass, function (err, res) {
+  		console.log('On login: Err %j, res %j', err, res)
+		// authClient("https://" + res.home_server, res.access_token, res.user_id, res.device_id);
+      authClient('https://' + res.home_server, res.access_token, res.user_id, res.device_id)
+	    })
+    } else {
+	    authClient('https://' + tokens.matrix_home_server, tokens.matrix_access_token, tokens.matrix_user_id, tokens.matrix_device_id)
+    }
+  }, 5000)
 }
 
 if (args.x) {
-    var srvr = tokens.xmpp_user.split('@')[1];
-    
-    xmpp = new xmppClient({
-	jid: tokens.xmpp_user,
-	pssword: tokens.xmpp_pass
-    });
-    
-    xmpp.on('online', function() {
-	console.log('xmpp online');
-    });
+  var srvr = tokens.xmpp_user.split('@')[1]
 
-    xmpp.on('error', function(err) {
-	console.log(err);
-    });
-    
-    xmpp.on('subscribe', function(from) {
-	xmpp.acceptSubscription(from);
-    });
+  xmpp = new xmppClient({
+    jid: tokens.xmpp_user,
+    pssword: tokens.xmpp_pass
+  })
 
-    var room = 'discussion@conference.' + srvr + '/' +args.n;
-    
-    xmpp.on('groupchat', function(conference, from, message, stamp) {
-	processMsg(null, conference, message, 'xmpp');
-    });
+  xmpp.on('online', function () {
+    console.log('xmpp online')
+  })
 
-    xmpp.on('chat', function(from, message) {
-	processMsg(null, from, message, 'xmpp');
-    });
+  xmpp.on('error', function (err) {
+    console.log(err)
+  })
 
-    xmpp.connect({
-	jid: tokens.xmpp_user,
-	password: tokens.xmpp_pass
-    });
+  xmpp.on('subscribe', function (from) {
+    xmpp.acceptSubscription(from)
+  })
 
+  var room = 'discussion@conference.' + srvr + '/' + args.n
 
+  xmpp.on('groupchat', function (conference, from, message, stamp) {
+    processMsg(null, conference, message, 'xmpp')
+  })
+
+  xmpp.on('chat', function (from, message) {
+    processMsg(null, from, message, 'xmpp')
+  })
+
+  xmpp.connect({
+    jid: tokens.xmpp_user,
+    password: tokens.xmpp_pass
+  })
 }
 
-    // Telegram client
+// Telegram client
 if (args.t) {
-    http.createServer(function(req, resp) {
-	if (req.method == 'POST') {
-	    var body = '';
-	    req.on('data', function(data) {
-		body += data;
+  http.createServer(function (req, resp) {
+    if (req.method == 'POST') {
+	    var body = ''
+	    req.on('data', function (data) {
+      body += data
 
-		//Too much POST data, kill the connection !
-		if (body.length > 1e6) {
-		    req.connection.destroy();
-		}
-	    });
-	    req.on('end', function() {
-		var data = JSON.parse(body);
-		if (data && data.message) {
-		    var msg = data.message.text;
+		// Too much POST data, kill the connection !
+      if (body.length > 1e6) {
+		    req.connection.destroy()
+      }
+	    })
+	    req.on('end', function () {
+      var data = JSON.parse(body)
+      if (data && data.message) {
+		    var msg = data.message.text
 
-		    processMsg(data.message.chat.id, data.message.from.first_name, msg, "telegram");
+		    processMsg(data.message.chat.id, data.message.from.first_name, msg, 'telegram')
 
-		    resp.writeHead(200, {'Content-Type': 'application/json'});
-		    resp.end('\n');
-		} else {
-		    resp.writeHead(200);
-		    resp.end('\n');
-		    console.log(body, data);
-		}
-	    });
-	} else {
-	    resp.writeHead(200);
-	    resp.end('\n');
-	}
-    }).listen(8000, '127.0.0.1');
+		    resp.writeHead(200, {'Content-Type': 'application/json'})
+		    resp.end('\n')
+      } else {
+		    resp.writeHead(200)
+		    resp.end('\n')
+		    console.log(body, data)
+      }
+	    })
+    } else {
+	    resp.writeHead(200)
+	    resp.end('\n')
+    }
+  }).listen(8000, '127.0.0.1')
 }
 
 if (args.i) {
-    client = new irc.Client(args.s, args.n, {
-	channels: channels,
-	debug: false,
-	userName: args.n
-	});
+  client = new irc.Client(args.s, args.n, {
+    channels: channels,
+    debug: false,
+    userName: args.n
+  })
 
-    client.addListener('error', function(err) {
-	console.log(err);
-    });
+  client.addListener('error', function (err) {
+    console.log(err)
+  })
 
-    client.addListener('message', function(from, to, msg, tater) {
-	if(client.nick !== args.n) {
-	    //client.send('NICK', args.n);
-	}
-	processMsg(to, from, msg, 'irc');
-    });
+  client.addListener('message', function (from, to, msg, tater) {
+    if (client.nick !== args.n) {
+	    // client.send('NICK', args.n);
+    }
+    processMsg(to, from, msg, 'irc')
+  })
 
+  client.addListener('pm', function (from, msg) {
+    processMsg(null, from, args.n + ':' + msg, 'irc')
+  })
 
-    client.addListener('pm', function(from, msg) {
-	processMsg(null, from, args.n + ':' + msg, 'irc');
-    });
-
-    client.addListener('invite', function(chan, from) {
-	channels.push(chan);
-	client.join(chan, function() {
-	    console.log('joined ' + chan + ' because ' + from + ' invited me');
-	});
-    });
+  client.addListener('invite', function (chan, from) {
+    channels.push(chan)
+    client.join(chan, function () {
+	    console.log('joined ' + chan + ' because ' + from + ' invited me')
+    })
+  })
 }

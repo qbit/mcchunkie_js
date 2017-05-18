@@ -1,27 +1,27 @@
 // Desc: translate text to pigpen
-(function( helper, to, from, msg, store, sh_store, cb, proto ) {
-  'use strict';
-  var resp, i;
+(function (helper, to, from, msg, store, sh_store, cb, proto) {
+  'use strict'
+  var resp, i
 
-  if ( ! store.chars ) {
-    store.chars = { 
+  if (!store.chars) {
+    store.chars = {
       b: '␣',
       c: '∟',
       e: '☐',
       n: '☒'
-    };
+    }
   }
 
-  if ( msg.match( /^pigpen: / ) ) {
-    msg = msg.replace( /^pigpen: /, '' );
-    for ( i in store.chars ) {
-      if ( store.chars.hasOwnProperty( i ) ) {
-        msg = msg.replace( new RegExp(i, "g"), store.chars[i] );
+  if (msg.match(/^pigpen: /)) {
+    msg = msg.replace(/^pigpen: /, '')
+    for (i in store.chars) {
+      if (store.chars.hasOwnProperty(i)) {
+        msg = msg.replace(new RegExp(i, 'g'), store.chars[i])
       }
     }
-    resp = msg;
-    console.log( msg );
+    resp = msg
+    console.log(msg)
   }
 
-  cb.call( null, to, from, resp, proto );
-});
+  cb.call(null, to, from, resp, proto)
+})
