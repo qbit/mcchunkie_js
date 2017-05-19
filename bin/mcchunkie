@@ -145,7 +145,8 @@ if (stat.size > 0) {
 function loadStorage (fn) {
   dlog('loading storage')
   storage.shared = {}
-  fs.stat(storageFile, function (st) {
+  fs.stat(storageFile, function (err, st) {
+    if (err) { throw err }
     if (st.isFile()) {
       fs.readFile(storageFile, 'utf8', function (err, data) {
         if (err) {
