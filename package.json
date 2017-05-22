@@ -29,7 +29,8 @@
   "devDependencies": {},
   "optionalDependencies": {},
   "scripts": {
-    "test": "node bin/mcchunkie -n testchunk"
+    "test": "node bin/mcchunkie -n testchunk",
+    "fmt": "standard --fix"
   },
   "engines": {
     "node": "*"
