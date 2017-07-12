@@ -286,10 +286,10 @@ helpers = {
       res.on('data', function (chunk) {
         d.push(chunk)
       }).on('end', function () {
-        cb(null, null, d.join(''))
+        cb(null, d.join(''))
       })
     }).on('error', function (er) {
-      cb(null, er)
+      cb(er)
     })
   },
   reds: require('reds'),
