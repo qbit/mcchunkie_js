@@ -1,0 +1,63 @@
+(function(helper, to, from, msg, store, sh_store, cb, proto) {
+  'use strict';
+  var resp;
+
+  if (!store.users) {
+    store.users = {}
+  }
+
+  if (msg.match(/^weather:/)) {
+    var zipURL = "http://api.openweathermap.org/data/2.5/weather?APPID=%T&zip=%S"
+    var locURL = "http://api.openweathermap.org/data/2.5/weather?APPID=%T&q=%S"
+    var location = msg.replace('weather:', '').trim()
+
+    if (location === "") {
+      location = store.users[from]
+    }
+
+    var url = ""
+    if (location.match(/^\d+$/)) {
+      url = zipURL
+    } else if (location.match(/^\w+/)) {
+      url = locURL
+    }
+
+    if (location === "") {
+      cb.call(null, to, from, 'gimme a location!', proto);
+    }
+
+    store.users[from] = location
+
+    url = url.replace("%T", store.token)
+    url = url.replace("%S", escape(location))
+
+    console.log(url);
+    helper.httpGet(url, {}, function (err, data) {
+      if (!err) {
+        data = JSON.parse(data)
+        if (data.cod === 200) {
+          var o = []
+          o.push(data.name)
+          o.push(':')
+          o.push(' ')
+          o.push(Math.ceil((data.main.temp - 273.15)*1.8000+32.00))
+          o.push('°F ')
+          o.push('(')
+          o.push(Math.ceil(data.main.temp - 273.15))
+          o.push('°C), ')
+          o.push('Humidity: ')
+          o.push(data.main.humidity)
+          o.push('%, ')
+          o.push(data.weather.description)
+          resp = o.join('')
+        } else {
+          resp = data.message
+        }
+      } else {
+        resp = err
+      }
+
+      cb.call(null, to, from, resp, proto);
+    })
+  }
+});
