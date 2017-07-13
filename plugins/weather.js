@@ -48,7 +48,16 @@
           o.push('Humidity: ')
           o.push(data.main.humidity)
           o.push('%, ')
-          o.push(data.weather.description)
+
+          var i
+          var l = data.weather.length
+          var desc = []
+
+          for (i = 0; i < l; i++) {
+            desc.push(data.weather[i].description)
+          }
+          o.push(desc.join(', '))
+
           resp = o.join('')
         } else {
           resp = data.message
