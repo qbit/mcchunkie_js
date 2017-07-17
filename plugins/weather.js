@@ -19,7 +19,7 @@
       url = baseURL + "&zip=%S"
     } else if (location.match(/^id:\d+/)) {
       url = baseURL + "&id=%S"
-      location = msg.replace('id:', '').trim()
+      location = location.replace('id:', '').trim()
     } else if (location.match(/^\w+/)) {
       url = baseURL + "&q=%S"
     }
