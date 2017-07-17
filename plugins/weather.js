@@ -15,7 +15,7 @@
     }
 
     var url = ""
-
+    var store_location = location
     if (location.match(/^\d+(,\w{2})?$/)) {
       url = baseURL + "&zip=%S"
     } else if (location.match(/^id:\d+/)) {
