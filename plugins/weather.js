@@ -7,8 +7,7 @@
   }
 
   if (msg.match(/^weather:/)) {
-    var zipURL = "http://api.openweathermap.org/data/2.5/weather?APPID=%T&zip=%S"
-    var locURL = "http://api.openweathermap.org/data/2.5/weather?APPID=%T&q=%S"
+    var baseURL = "http://api.openweathermap.org/data/2.5/weather?APPID=%T"
     var location = msg.replace('weather:', '').trim()
 
     if (location === "") {
@@ -17,9 +16,12 @@
 
     var url = ""
     if (location.match(/^\d+$/)) {
-      url = zipURL
+      url = baseURL + "&zip=%S"
     } else if (location.match(/^\w+/)) {
-      url = locURL
+      url = baseURL + "&q=%S"
+    } else if (location.match(/^id:\d+/)) {
+      url = baseURL + "&id=%S"
+      location = msg.replace('id:', '').trim()
     }
 
     if (location === "") {
