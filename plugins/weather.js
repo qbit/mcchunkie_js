@@ -15,10 +15,12 @@
     }
 
     var url = ""
+    var store_location = location
     if (location.match(/^\d+$/)) {
       url = baseURL + "&zip=%S"
     } else if (location.match(/^id:\d+/)) {
       url = baseURL + "&id=%S"
+      store_location = location
       location = location.replace('id:', '').trim()
     } else if (location.match(/^\w+/)) {
       url = baseURL + "&q=%S"
@@ -28,7 +30,7 @@
       cb.call(null, to, from, 'gimme a location!', proto);
     }
 
-    store.users[from] = location
+    store.users[from] = store_location
 
     url = url.replace("%T", store.token)
     url = url.replace("%S", escape(location))
