@@ -60,6 +60,10 @@
           }
           o.push(desc.join(', '))
 
+          if (data.id) {
+            o.push(' (http://openweathermap.org/city/' + data.id + ')')
+          }
+
           resp = o.join('')
         } else {
           resp = data.message
