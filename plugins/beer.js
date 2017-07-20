@@ -24,7 +24,7 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
     // glass data
 
     if (!store.get) {
-      store.get = function (url, to, from) {
+      store.get = function (url, t, f, p) {
         helper.httpGet(url, {}, function (err, data) {
           var result
           var resp
@@ -36,7 +36,7 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
           var bname
           var url
           if (err) {
-            cb(to, from, err, proto)
+            cb(t, f, err, p)
             return
           }
           if (data) {
@@ -77,10 +77,7 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
               // }
             }
 
-            if (to === helper.botname) {
-              to = from
-            }
-            cb(to, from, resp, proto)
+            cb(t, f, resp, p)
           }
         })
       }
@@ -92,7 +89,7 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       msg = msg.replace(/^\//, '')
       url += '&q=' + msg
       try {
-        store.get(url, to, from)
+        store.get(url, to, from, proto)
       } catch (e) {
         resp = 'oh shit...'
         cb(to, from, resp, proto)
