@@ -24,17 +24,17 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
     // glass data
 
     if (!store.get) {
-      store.get = function (url, t, f, p) {
-        helper.httpGet(url, {}, function (err, data) {
+      store.get = function (u, t, f, p) {
+        helper.httpGet(u, {}, function (err, data) {
           var result
-          var resp
+          var res
           var name
           var abv
           var ibu
           var desc
           var year
           var bname
-          var url
+          var burl
           if (err) {
             cb(t, f, err, p)
             return
@@ -47,15 +47,11 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
               result.errorMessage = e
             }
             if (result.errorMessage) {
-              resp = result.errorMessage
+              res = result.errorMessage
             }
 
             if (result.status === 'success' && result.data) {
-              // if ( result.data.length > 1 ) {
-              //   console.log( result );
-              //   resp = 'can you be more specific?';
-              // } else {
-              resp = ''
+              res = ''
 
               name = result.data[0].name
               abv = result.data[0].abv || '?'
@@ -65,27 +61,26 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
               if (result.data[0].breweries) {
                 year = result.data[0].breweries[0].established || '?'
                 bname = result.data[0].breweries[0].name || '?'
-                url = result.data[0].breweries[0].website || '?'
-                resp += bname + ' (' + year + ' : ' + url + ' ) '
+                burl = result.data[0].breweries[0].website || '?'
+                res += bname + ' (' + year + ' : ' + burl + ' ) '
               }
-              resp += name
-              resp += ' ( ABV: ' + abv + ' IBU: ' + ibu + ' ) - '
-              resp += desc
+              res += name
+              res += ' ( ABV: ' + abv + ' IBU: ' + ibu + ' ) - '
+              res += desc
                   .replace(/\n/, ' ')
                   .replace(/\n/g, '')
                   .replace(/\r/g, '')
-              // }
             }
 
-            cb(t, f, resp, p)
+            cb(t, f, res, p)
           }
         })
       }
     }
 
     if (msg.match(/^bdb:|^\/bdb/)) {
-      msg = msg.replace(/^beer:/, '')
-      msg = msg.replace(/^\/beer /, '')
+      msg = msg.replace(/^bdb:/, '')
+      msg = msg.replace(/^\/bdb /, '')
       msg = msg.replace(/^\//, '')
       url += '&q=' + msg
       try {
