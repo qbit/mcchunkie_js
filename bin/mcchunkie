@@ -1,24 +1,19 @@
 #!/usr/bin/env node
 'use strict'
-var irc = require('irc')
 var fs = require('fs')
 var path = require('path')
 var http = require('http')
 var https = require('https')
 var url = require('url')
-var nconf = require('nconf')
 var redis = require('redis')
 var LocalStore = require('node-localstorage').LocalStorage
 var rclient
 var xmpp
-var XmppClient = require('node-xmpp-client')
 var os = require('os')
     // pushover = require('pushover-notifications'),
 var helpers
 var apiKeys = path.join(__dirname, '/../api_keys.json')
 var plugins = path.join(__dirname, '/../plugins')
-var messages = path.join(__dirname, '/../messages')
-var storageFile = path.join(__dirname, '/../shared_storage.json')
 var teleURL = 'https://api.telegram.org/bot'
 var runningPlugins = {}
 var runningMessages = {}
@@ -32,9 +27,6 @@ var channels
 var chanCount = 0
 var tokens = {}
 var sdk = require('matrix-js-sdk')
-var dlog = function (msg) {
-  console.log(msg)
-}
 
 if (os.platform() === 'openbsd') {
   var pledge = require('node-pledge')
@@ -50,14 +42,14 @@ String.prototype.escapeHTML = function () {
     '>': '&gt;',
     '"': '&quot;'
   }
-  return this.replace(/[&<>"'\/]/g, function (s) {
+  return this.replace(/[&<>"'/]/g, function (s) {
     return htmlEntities[s]
   })
 }
 
 String.prototype.isHTML = function () {
   var isHTML = false
-  if (this.match(/[&<>"'\/]/)) {
+  if (this.match(/[&<>"'/]/)) {
     isHTML = true
   }
   return isHTML
@@ -73,67 +65,6 @@ if (process.env.REDIS_PASS) {
   })
 }
 
-function WebStore (opt) {
-  var self = this
-
-  this.prefix = opt.prefix || 'ecws'
-
-  this.connected = false
-  this.data = {}
-  this.rclient = redis.createClient(null, null, {})
-  this.rclient.on('error', function (err) {
-    throw err
-  })
-
-  this.rclient.on('connect', function () {
-    self.connected = true
-    self._sync(false)
-  })
-
-  setInterval(function () {
-    self._sync(true)
-  }, 1000)
-}
-
-WebStore.prototype._sync = function (purge) {
-  var self = this
-
-   // delete everything in redis
-  if (purge) {
-    this.rclient.del(this.prefix)
-
-// sync all memory to redis
-    for (var key in this.data) {
-      this.rclient.hset(this.prefix, key, this.data[key])
-    }
-  }
-
-    // sync all of redis to memory
-  this.rclient.hgetall(this.prefix, function (err, data) {
-    if (err) {
-      console.log(err)
-      return
-    }
-    for (var key in data) {
-      self.data[key] = data[key]
-    }
-  })
-}
-
-WebStore.prototype.getItem = function (item) {
-  return this.data[item] || null
-}
-
-WebStore.prototype.setItem = function (item, value) {
-  this.data[item] = value
-}
-
-WebStore.prototype.removeItem = function (item) {
-  this.rclient.hdel(this.prefix, item)
-}
-
-nconf.file({ file: storageFile })
-
 var stat = fs.statSync(apiKeys)
 if (stat.size > 0) {
   var data = fs.readFileSync(apiKeys, 'utf8')
@@ -142,114 +73,36 @@ if (stat.size > 0) {
   }
 }
 
-function loadStorage (fn) {
-  dlog('loading storage')
-  storage.shared = {}
-  fs.stat(storageFile, function (err, st) {
-    if (err) { throw err }
-    if (st.isFile()) {
-      fs.readFile(storageFile, 'utf8', function (err, data) {
-        if (err) {
-          throw err
-        }
-        if (data) {
-          storage.shared = JSON.parse(data.toString())
-          if (fn) {
-            fn.call()
-          }
-        }
-      })
-    } else {
-      storage.shared = {}
-      if (fn) {
-        fn.call()
-      }
-    }
-  })
-}
-/*
-function saveStorage (fn) {
-  dlog('saving storage')
-  fs.writeFile(storageFile, JSON.stringify(storage.shared), function (err) {
-    if (err) {
-      throw err
-    }
-    if (fn) {
-      fn.call()
-    }
-  })
-}
-*/
-loadStorage()
-
 rclient.on('error', function (err) {
   console.log('Error ' + err)
 })
 
 rclient.on('message', function (channel, data) {
-  dlog(' in message')
   var o = data.toString().split('^')
   var i
   var l
-  var value
   var msg
   var chan
   var proto
-  var str
 
-  value = o[o.length - 1]
-
-  str = data.toString()
-    .replace(value, '')
-    .replace(/\^/g, ':')
-    .trim()
-    .replace(/:$/, '')
-
-  if (!str.match('mcchat')) {
-    nconf.set(str + ':date', value)
+  if (runningMessages[o[0]]) {
+    msg = runningMessages[o[0]].message
+    chan = runningMessages[o[0]].channel
+    proto = runningMessages[o[0]].proto
+    for (i = 1, l = o.length; i < l; i++) {
+      msg = msg.replace('$' + i, o[i])
+    }
+    reply(chan, args.n, msg, proto)
   }
-  nconf.save(function () {
-    loadStorage(function () {
-      if (runningMessages[o[0]]) {
-        msg = runningMessages[o[0]].message
-        chan = runningMessages[o[0]].channel
-        proto = runningMessages[o[0]].proto
-        for (i = 1, l = o.length; i < l; i++) {
-          msg = msg.replace('$' + i, o[i])
-        }
-      }
-
-      if (proto === 'telegram') {
-        if (chan.match(/,/)) {
-          var parts = chan.split(',')
-          for (i = 0, l = parts.length; i < l; i++) {
-            teleSay(parts[i], msg)
-          }
-        } else {
-          teleSay(chan, msg)
-        }
-      }
-
-      if (proto === 'xmpp') {
-        if (chan.match('conference')) {
-          xmpp.send(chan, msg, true)
-        } else {
-          xmpp.send(chan, msg)
-        }
-      }
-
-      if (proto === 'irc') {
-        if (!chan) {
-          channels.forEach(function (c) {
-            client.say(c, msg)
-          })
-        } else {
-          client.say(chan, msg)
-        }
-      }
-    })
-  })
 })
+
+function safeCB (c) {
+  try {
+    c()
+  } catch (e) {
+    console.log(e, c.toString())
+  }
+}
 
 rclient.subscribe(args.n)
 
@@ -259,9 +112,6 @@ helpers = {
   rand: function (len) {
     return Math.floor(Math.random() * len)
   },
-    // pushover: new pushover({
-    //   token: tokens.pushover
-    // }),
   pHolder: function (str, array) {
     // lol - PHOLDER!
     var i
@@ -271,8 +121,8 @@ helpers = {
     }
     return str
   },
-  httpGet: function (u, opts, cb) {
-    u = url.parse(u)
+  httpGet: function (ur, opts, cb) {
+    var u = url.parse(ur)
     var i
     for (i in opts) {
       if (opts.hasOwnProperty(i)) {
@@ -281,20 +131,47 @@ helpers = {
         }
       }
     }
-    http.get(u, function (res) {
-      var d = []
-      res.on('data', function (chunk) {
-        d.push(chunk)
-      }).on('end', function () {
-        cb(null, d.join(''))
+    if (ur.match(/https/i)) {
+      https.get(u, function (res) {
+        if (res.statusCode === 200) {
+          var d = []
+          res.on('data', function (chunk) {
+            d.push(chunk)
+          }).on('end', function () {
+            safeCB(function () {
+              cb(null, d.join(''), res)
+            })
+          })
+        } else {
+          cb(new Error('not a real thing'))
+        }
+      }).on('error', function (er) {
+        safeCB(function () {
+          cb(er)
+        })
       })
-    }).on('error', function (er) {
-      cb(er)
-    })
+    } else {
+      http.get(u, function (res) {
+        if (res.statusCode === 200) {
+          var d = []
+          res.on('data', function (chunk) {
+            d.push(chunk)
+          }).on('end', function () {
+            safeCB(function () {
+              cb(null, d.join(''), res)
+            })
+          })
+        } else {
+          cb(new Error('not a real thing'))
+        }
+      }).on('error', function (er) {
+        safeCB(function () {
+          cb(er)
+        })
+      })
+    }
   },
-  reds: require('reds'),
   classifier: require('classifier'),
-  sqlite: require('sqlite3'),
   isRelevant: function (msg) {
     if (msg.indexOf(this.botname) > -1) {
       return true
@@ -311,45 +188,28 @@ if (args.c) {
   })
 }
 
-function loadPlugin (file, ismsg) {
-  dlog('loadPlugin')
-  fs.readFile(file, 'utf8', function (err, data) {
-    if (err) {
-      throw err
-    }
-    var t, n
-    if (data) {
-      try {
-        n = file.split('/')
-        n = n[n.length - 1]
-        if (ismsg) {
-          t = eval(data.toString())
-          runningMessages[n] = t()
-        } else {
-          runningPlugins[n] = eval(data.toString())
-          storage[n] = {}
-          if (tokens[n]) {
-            storage[n].token = tokens[n]
-          }
-        }
-      } catch (e) {
-        console.log('Syntax error in "' + file + '"\n' + e)
-      }
-    }
-  })
+function loadPlugin (file) {
+  var n = file.split('/')
+  n = n[n.length - 1]
+  runningPlugins[n] = null
+  require.cache[file] = null
+  storage[n] = storage[n] || {}
+  if (tokens[n]) {
+    storage[n].token = tokens[n]
+  }
+  try {
+    runningPlugins[n] = require(file)
+  } catch (e) {
+    console.log(file, e)
+  }
 }
 
-function loadPlugins (dir, harsh) {
-  dlog('load plugins')
-  if (harsh) {
-    runningPlugins = {}
-  } else {
-    runningMessages = {}
-  }
+function loadPlugins (dir) {
+  runningMessages = {}
 
   var results = []
 
-    // get all the files in the plugin dir recursively.
+  // get all the files in the plugin dir recursively.
   var walk = function (dir, done) {
     fs.readdir(dir, function (err, list) {
       if (err) return done(err)
@@ -384,24 +244,19 @@ function loadPlugins (dir, harsh) {
     for (i = 0; i < l; i++) {
       file = results[i]
       if (file.indexOf('~') === -1) {
-        if (harsh) {
-          if (file.indexOf('.js') > -1) {
-            loadPlugin(file)
-          }
-        } else {
-          loadPlugin(file, true)
+        if (file.indexOf('.js') > -1) {
+          loadPlugin(file)
         }
       }
     }
   })
 }
 
-loadPlugins(plugins, true)
-loadPlugins(messages, false)
+loadPlugins(plugins)
 
 fs.watch(plugins, function (e, file) {
-  loadPlugins(plugins, true)
-  loadPlugins(messages, false)
+  console.log('reloading plugins')
+  loadPlugins(plugins)
 })
 
 function teleSay (t, resp) {
@@ -449,7 +304,7 @@ function processMsg (to, from, msg, proto) {
   for (i in runningPlugins) {
     if (runningPlugins.hasOwnProperty(i) && msg) {
       try {
-        runningPlugins[i](helpers, to, from, msg, storage[i], storage.shared, reply, proto)
+        runningPlugins[i].fn(helpers, to, from, msg, storage[i], reply, proto)
       } catch (e) {
         console.log("Error running '" + i + "'\n" + e)
       }
@@ -503,7 +358,7 @@ if (args.m) {
 }
 
 if (args.x) {
-  // var srvr = tokens.xmpp_user.split('@')[1]
+  var XmppClient = require('node-xmpp-client')
 
   xmpp = new XmppClient({
     jid: tokens.xmpp_user,
@@ -575,9 +430,10 @@ if (args.t) {
 }
 
 if (args.i) {
+  var irc = require('irc')
   client = new irc.Client(args.s, args.n, {
     channels: channels,
-    debug: false,
+    debug: true,
     userName: args.n
   })
 
@@ -587,8 +443,8 @@ if (args.i) {
 
   client.addListener('message', function (from, to, msg, tater) {
     if (client.nick !== args.n) {
-      console.log('changing nick from %s to %s', client.nick, args.n)
-      client.send('NICK', args.n);
+      // console.log('changing nick from %s to %s', client.nick, args.n)
+      // client.send('NICK', args.n)
     }
     processMsg(to, from, msg, 'irc')
   })

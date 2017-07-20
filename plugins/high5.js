@@ -1,12 +1,12 @@
 // Desc: respond to high5's
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
   var resp
 
   if (msg.match(/^\/help$|^help:$/)) {
     resp = 'high5 - look for high5s in messages to the bot.. respond to them!'
 
-    cb.call(null, to, from, resp, proto)
+    cb(to, from, resp, proto)
     return
   }
 
@@ -20,5 +20,5 @@
     }
   }
 
-  cb.call(null, to, from, resp, proto)
-})
+  cb(to, from, resp, proto)
+}

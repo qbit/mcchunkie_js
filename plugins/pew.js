@@ -1,5 +1,5 @@
 // Desc: get shot with LASERS!
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
   var pews = [
     'pewpew',
@@ -14,5 +14,5 @@
       resp = pews[ helper.rand(pews.length) ]
     }
   }
-  cb.call(null, to, from, resp, proto)
-})
+  cb(to, from, resp, proto)
+}

@@ -1,16 +1,17 @@
 // Desc: query brewerydb for delicious delicious beer
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
-  var resp, url
+  var resp
+  var url
 
   if (msg.match(/^\/help$|^help:$/)) {
     if (proto === 'telegram') {
-                	resp = '/bdb [beer] - Returns BreweryDB info fora given beer.'
+      resp = '/bdb [beer] - Returns BreweryDB info fora given beer.'
     } else {
-                	resp = 'bdb: [beer] - Returns BreweryDB info fora given beer.'
+      resp = 'bdb: [beer] - Returns BreweryDB info fora given beer.'
     }
 
-    cb.call(null, to, from, resp, proto)
+    cb(to, from, resp, proto)
     return
   }
 
@@ -25,7 +26,19 @@
     if (!store.get) {
       store.get = function (url, to, from) {
         helper.httpGet(url, {}, function (err, data) {
-          var result, resp, name, abv, ibu, desc, year, bname, url
+          var result
+          var resp
+          var name
+          var abv
+          var ibu
+          var desc
+          var year
+          var bname
+          var url
+          if (err) {
+            cb(to, from, err, proto)
+            return
+          }
           if (data) {
             try {
               result = JSON.parse(data)
@@ -67,7 +80,7 @@
             if (to === helper.botname) {
               to = from
             }
-            cb.call(null, to, from, resp, proto)
+            cb(to, from, resp, proto)
           }
         })
       }
@@ -82,10 +95,10 @@
         store.get(url, to, from)
       } catch (e) {
         resp = 'oh shit...'
-        cb.call(null, to, from, resp, proto)
+        cb(to, from, resp, proto)
       }
     }
   } catch (e) {
     console.log(e)
   }
-})
+}

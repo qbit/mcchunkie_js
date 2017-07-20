@@ -1,7 +1,12 @@
 // Desc: tell $person $msg next time you see them
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
-  var resp, i, a = [], msgto, msgfrm, rest
+  var resp
+  var i
+  var a = []
+  var msgto
+  var msgfrm
+  var rest
 
   if (!store.msgs) {
     store.msgs = {}
@@ -20,7 +25,7 @@
 
     resp = 'I will tell ' + msgto + ' next time I see them!'
 
-    cb.call(null, to, from, resp)
+    cb(to, from, resp)
   } else {
     for (i in store.msgs) {
       console.log(i, from)
@@ -31,10 +36,10 @@
         // to = i;
 
         delete store.msgs[i]
-        cb.call(null, to, from, resp, proto)
+        cb(to, from, resp, proto)
       }
     }
   }
 
   // cb.call( null, to, from, resp );
-})
+}

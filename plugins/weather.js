@@ -1,41 +1,41 @@
-(function(helper, to, from, msg, store, sh_store, cb, proto) {
-  'use strict';
-  var resp;
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
+  'use strict'
+  var resp
 
   if (!store.users) {
     store.users = {}
   }
 
   if (msg.match(/^weather:/)) {
-    var baseURL = "http://api.openweathermap.org/data/2.5/weather?APPID=%T"
+    var baseURL = 'http://api.openweathermap.org/data/2.5/weather?APPID=%T'
     var location = msg.replace('weather:', '').trim()
 
-    if (location === "") {
+    if (location === '') {
       location = store.users[from]
     }
 
-    var url = ""
-    var store_location = location
+    var url = ''
+    var storeLocation = location
     if (location.match(/^\d+(,\w{2})?$/)) {
-      url = baseURL + "&zip=%S"
+      url = baseURL + '&zip=%S'
     } else if (location.match(/^id:\d+/)) {
-      url = baseURL + "&id=%S"
-      store_location = location
+      url = baseURL + '&id=%S'
+      storeLocation = location
       location = location.replace('id:', '').trim()
     } else if (location.match(/^\w+/)) {
-      url = baseURL + "&q=%S"
+      url = baseURL + '&q=%S'
     }
 
-    if (location === "") {
-      cb.call(null, to, from, 'gimme a location!', proto);
+    if (location === '') {
+      cb(to, from, 'gimme a location!', proto)
     }
 
-    store.users[from] = store_location
+    store.users[from] = storeLocation
 
-    url = url.replace("%T", store.token)
-    url = url.replace("%S", escape(location))
+    url = url.replace('%T', store.token)
+    url = url.replace('%S', escape(location))
 
-    console.log(url);
+    console.log(url)
     helper.httpGet(url, {}, function (err, data) {
       if (!err) {
         data = JSON.parse(data)
@@ -44,7 +44,7 @@
           o.push(data.name)
           o.push(':')
           o.push(' ')
-          o.push(Math.ceil((data.main.temp - 273.15)*1.8000+32.00))
+          o.push(Math.ceil((data.main.temp - 273.15) * 1.8000 + 32.00))
           o.push('°F ')
           o.push('(')
           o.push(Math.ceil(data.main.temp - 273.15))
@@ -74,7 +74,7 @@
         resp = err
       }
 
-      cb.call(null, to, from, resp, proto);
+      cb(to, from, resp, proto)
     })
   }
-});
+}

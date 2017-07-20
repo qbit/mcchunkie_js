@@ -1,4 +1,0 @@
-for p in $(ls ../plugins/*.js); do
-	lines=$(cat $p | grep "^\/\/ Desc:")
-	print "${p} : ${lines}";
-done

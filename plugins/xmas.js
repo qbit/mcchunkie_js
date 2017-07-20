@@ -1,5 +1,5 @@
 // Desc: ride the joly train on xmas!
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
   var resp
   // if ( helper.isRelevant( msg ) ) {
@@ -20,5 +20,5 @@
     resp = resp.join('\n')
   }
 
-  cb.call(null, to, from, resp, proto)
-})
+  cb(to, from, resp, proto)
+}

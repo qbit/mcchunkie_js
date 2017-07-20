@@ -1,7 +1,8 @@
 // Desc: translate text to pigpen
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
-  var resp, i
+  var resp
+  var i
 
   if (!store.chars) {
     store.chars = {
@@ -20,8 +21,7 @@
       }
     }
     resp = msg
-    console.log(msg)
   }
 
-  cb.call(null, to, from, resp, proto)
-})
+  cb(to, from, resp, proto)
+}

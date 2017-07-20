@@ -1,54 +1,78 @@
 // Desc: uses the pubsub / storage features and an external app ( openbsd_mon to keep track of openbsd snapshot releases.
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
 
-  String.prototype.ucFirst = function () {
-    return this.charAt(0).toUpperCase() + this.substr(1)
-  }
+  if (msg.match(/^openbsd: /i)) {
+    var snapURL = 'https://ftp3.usa.openbsd.org/pub/OpenBSD/snapshots/%A/BUILDINFO'
+    var pkgURL = 'https://ftp3.usa.openbsd.org/pub/OpenBSD/snapshots/packages/%A/SHA256'
 
-  var resp = [], parts, list, p, base, cat, scat, s, a, b, c, d
-
-  if (msg.match(/^openbsd:|^\/openbsd |^bitrig:|^\/bitrig /i)) {
     msg = msg.replace(':', '')
     msg = msg.replace(/^\//, '')
     msg = msg.trim()
 
-    parts = msg.split(' ')
+    var parts = msg.split(' ')
+    var arch = parts[1]
 
-    base = parts[0]
-    cat = parts[1]
-    scat = parts[2]
-
-    s = store[base] || sh_store[base]
-
-    resp.push(base)
-
-    if (s[cat] && !scat) {
-	    for (a in s[cat]) {
-      resp.push(a, '=>', s[cat][a].date + '.')
-	    }
-    } else if (s[cat] && scat) {
-	    resp.push(scat, '=>', s[cat][scat].date + '.')
-    } else {
-	    if (!cat) {
-      for (cat in s) {
-		    for (a in s[cat]) {
-      resp.push(cat, a, '=>', s[cat][a].date + '.')
-		    }
-		    resp.push('\n')
-      }
-	    } else {
-      for (c in s) {
-		    if (c.length === cat.length) {
-      resp.push("did you mean '" + c + "'?")
-		    }
-      }
-      if (resp.length === 0) {
-		    resp.push('not sure what that is..')
-      }
-	    }
+    var pkgMap = {
+      alpha: 'alpha',
+      amd64: 'amd64',
+      arm64: 'aarch64',
+      armish: 'arm',
+      armv7: 'arm',
+      hppa: '',
+      i386: 'i386',
+      landisk: '',
+      loongson: '',
+      luna88k: '',
+      macppc: 'powerpc',
+      octeon: '',
+      sgi: '',
+      socppc: '',
+      sparc: '',
+      sparc64: 'sparc64',
+      zaurus: ''
     }
-  }
 
-  cb.call(null, to, from, resp.join(' ').toString(), proto)
-})
+    if (typeof pkgMap[arch] === 'undefined') {
+      cb(to, from, 'That\'s not a real arch!', proto)
+      return
+    }
+
+    snapURL = snapURL.replace('%A', arch)
+    pkgURL = pkgURL.replace('%A', pkgMap[arch])
+
+    var resp = []
+    helper.httpGet(snapURL, {}, function (err, data, res) {
+      if (err) {
+        cb(to, from, err, proto)
+        return
+      }
+      var setDate = new Date(data.replace(/Build date:\s\d+\s-\s/, ''))
+      resp.push('sets ->')
+      resp.push(setDate)
+
+      if (pkgMap[arch] !== '') {
+        helper.httpGet(pkgURL, {}, function (err, data, res) {
+          if (err) {
+            cb(to, from, err, proto)
+            return
+          }
+
+          var pkgDate = new Date(res.headers['last-modified'])
+          resp.push('packages ->')
+          resp.push(pkgDate)
+
+          if (pkgDate > setDate) {
+            resp.unshift('✓ :')
+          } else {
+            resp.unshift('✗ :')
+          }
+          cb(to, from, resp.join(' '), proto)
+        })
+      } else {
+        resp.push(': no packages for ' + arch)
+        cb(to, from, resp.join(' '), proto)
+      }
+    })
+  }
+}

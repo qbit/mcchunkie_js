@@ -1,7 +1,7 @@
 // Title: ham.js
 // Usage: ham: <callsign>|<string>
 // Desc: query the FCC license database for license info.
-(function (helper, to, from, msg, store, sh_store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, cb, proto) {
   'use strict'
   var resp
 
@@ -12,7 +12,7 @@
       resp = 'ham: [callsign] - Returns data from the FCC database about a given callsign (ham or otherwise).'
     }
 
-    cb.call(null, to, from, resp, proto)
+    cb(to, from, resp, proto)
     return
   }
 
@@ -71,9 +71,9 @@
         }
         if (data.status === 'OK') {
           resp = store.fcc.buildList(data.Licenses.License)
-          cb.call(null, t, frm, resp, proto)
+          cb(t, frm, resp, proto)
         } else {
-          cb.call(null, t, frm, data.status, proto)
+          cb(t, frm, data.status, proto)
         }
       })
     }
@@ -84,4 +84,4 @@
     msg = msg.replace(/^\/ham /, '')
     store.fcc.get(msg, to, from, proto)
   }
-})
+}
