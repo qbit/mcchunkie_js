@@ -433,7 +433,7 @@ if (args.i) {
   var irc = require('irc')
   client = new irc.Client(args.s, args.n, {
     channels: channels,
-    debug: true,
+    debug: false,
     userName: args.n
   })
 
@@ -443,8 +443,8 @@ if (args.i) {
 
   client.addListener('message', function (from, to, msg, tater) {
     if (client.nick !== args.n) {
-      // console.log('changing nick from %s to %s', client.nick, args.n)
-      // client.send('NICK', args.n)
+      console.log('changing nick from %s to %s', client.nick, args.n)
+      client.send('NICK', args.n)
     }
     processMsg(to, from, msg, 'irc')
   })

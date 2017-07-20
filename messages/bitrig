@@ -1,7 +1,0 @@
-(function() {
-  return {
-    'message': 'New $4 $2 for $1! ($3)',
-    'channel': '-14533490,69950133',
-    'proto': 'telegram'
-  };
-});
