@@ -1,5 +1,5 @@
 // Desc: watch incoming messages for possible twts jokes. Can be trained.
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
   var responses = [
@@ -116,4 +116,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       console.log(e)
     }
   }
+  return {}
 }

@@ -1,5 +1,5 @@
 // Desc: print version information
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
   var os = require('os')
@@ -20,4 +20,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
     }
     cb(to, from, resp, proto)
   }
+  return {}
 }

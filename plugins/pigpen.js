@@ -1,5 +1,5 @@
 // Desc: translate text to pigpen
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
   var i
@@ -24,4 +24,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
   }
 
   cb(to, from, resp, proto)
+  return {}
 }

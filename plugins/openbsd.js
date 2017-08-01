@@ -1,5 +1,5 @@
 // Desc: uses the pubsub / storage features and an external app ( openbsd_mon to keep track of openbsd snapshot releases.
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
 
   if (msg.match(/^openbsd: /i)) {
@@ -75,4 +75,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       }
     })
   }
+  return {}
 }

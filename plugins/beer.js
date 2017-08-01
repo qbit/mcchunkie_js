@@ -1,5 +1,5 @@
 // Desc: query brewerydb for delicious delicious beer
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
   var url
@@ -93,4 +93,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
   } catch (e) {
     console.log(e)
   }
+  return {}
 }

@@ -1,5 +1,5 @@
 // Desc: query the FCC license database for license info. *requires api key for aprs.fi*
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
   var what
@@ -112,4 +112,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       store.aprs.get(what, who, to, from, proto)
     }
   }
+  return {}
 }

@@ -1,5 +1,5 @@
 // Desc: return random snapplefacts
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
 
   if (!store.rclient) {
@@ -23,4 +23,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       })
     }
   }
+  return {}
 }

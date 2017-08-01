@@ -1,5 +1,5 @@
 // Desc: reverse a string
-exports.fn = function (helpers, to, from, msg, storage, cb, proto) {
+exports.fn = function (helpers, to, from, msg, storage, pstore, cb, proto) {
   // Plugin to reverse every msg that is passed in.
   'use strict'
   if (msg.indexOf('reverse:') > -1) {
@@ -10,4 +10,5 @@ exports.fn = function (helpers, to, from, msg, storage, cb, proto) {
     var resp = msg.split('').reverse().join('')
     cb(to, from, resp, proto)
   }
+  return {}
 }

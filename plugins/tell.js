@@ -1,5 +1,5 @@
 // Desc: tell $person $msg next time you see them
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
   var i
@@ -42,4 +42,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
   }
 
   // cb.call( null, to, from, resp );
+  return {}
 }

@@ -16,7 +16,6 @@ var apiKeys = path.join(__dirname, '/../api_keys.json')
 var plugins = path.join(__dirname, '/../plugins')
 var teleURL = 'https://api.telegram.org/bot'
 var runningPlugins = {}
-var runningMessages = {}
 var storage = {}
 var args = require('optimist')
     .usage('$0 [-i,-t,-x,-m] -n <nick> -s <server> -c <chan1>,<chan2>')
@@ -77,25 +76,6 @@ rclient.on('error', function (err) {
   console.log('Error ' + err)
 })
 
-rclient.on('message', function (channel, data) {
-  var o = data.toString().split('^')
-  var i
-  var l
-  var msg
-  var chan
-  var proto
-
-  if (runningMessages[o[0]]) {
-    msg = runningMessages[o[0]].message
-    chan = runningMessages[o[0]].channel
-    proto = runningMessages[o[0]].proto
-    for (i = 1, l = o.length; i < l; i++) {
-      msg = msg.replace('$' + i, o[i])
-    }
-    reply(chan, args.n, msg, proto)
-  }
-})
-
 function safeCB (c) {
   try {
     c()
@@ -103,8 +83,6 @@ function safeCB (c) {
     console.log(e, c.toString())
   }
 }
-
-rclient.subscribe(args.n)
 
 helpers = {
   botname: args.n,
@@ -205,8 +183,6 @@ function loadPlugin (file) {
 }
 
 function loadPlugins (dir) {
-  runningMessages = {}
-
   var results = []
 
   // get all the files in the plugin dir recursively.
@@ -299,17 +275,23 @@ function reply (t, frm, resp, proto) {
 }
 
 function processMsg (to, from, msg, proto) {
-  var i
   proto = proto || 'irc'
-  for (i in runningPlugins) {
-    if (runningPlugins.hasOwnProperty(i) && msg) {
-      try {
-        runningPlugins[i].fn(helpers, to, from, msg, storage[i], reply, proto)
-      } catch (e) {
-        console.log("Error running '" + i + "'\n" + e)
-      }
+  Object.keys(runningPlugins).forEach(function (i) {
+    try {
+      rclient.hgetall(i, function (err, pstorage) {
+        var key = i
+        var pstore = {}
+        if (!err) {
+          pstore = runningPlugins[i].fn(helpers, to, from, msg, storage[i], pstorage, reply, proto)
+          if (pstore && Object.keys(pstore).length > 0) {
+            rclient.hmset(key, pstore)
+          }
+        }
+      })
+    } catch (e) {
+      console.log("Error running '" + i + "'\n" + e)
     }
-  }
+  })
 }
 
 var authedClient

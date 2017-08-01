@@ -1,5 +1,5 @@
 // Desc: return random protips
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
 
   if (!store.rclient) {
@@ -50,8 +50,8 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
   }
 
   if (msg.match(/^getpt:\d+$/)) {
-    id = msg.replace('getpt:', '')
-    getByIDX(id, function (s) {
+    var ix = msg.replace('getpt:', '')
+    getByIDX(ix, function (s) {
       cb(to, from, s, proto)
     })
   }
@@ -73,4 +73,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       store.rclient.rpush('l_protips', msg)
     }
   }
+  return {}
 }

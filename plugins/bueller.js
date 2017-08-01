@@ -1,5 +1,5 @@
 // Desc: Bueller!!
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
 
@@ -15,4 +15,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
     }
   }
   cb(to, from, resp, proto)
+  return {}
 }

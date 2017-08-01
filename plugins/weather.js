@@ -1,18 +1,24 @@
-exports.fn = function (helper, to, from, msg, store, cb, proto) {
+exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
+  pstore = pstore || {}
 
+	/*
   if (!store.users) {
     store.users = {}
   }
+  */
 
   if (msg.match(/^weather:/)) {
     var baseURL = 'http://api.openweathermap.org/data/2.5/weather?APPID=%T'
     var location = msg.replace('weather:', '').trim()
 
     if (location === '') {
-      location = store.users[from]
+      //location = store.users[from]
+      location = pstore[from] || ''
     }
+
+    console.log('weather.js', pstore)
 
     var url = ''
     var storeLocation = location
@@ -30,7 +36,8 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       cb(to, from, 'gimme a location!', proto)
     }
 
-    store.users[from] = storeLocation
+    //store.users[from] = storeLocation
+    pstore[from] = storeLocation
 
     url = url.replace('%T', store.token)
     url = url.replace('%S', escape(location))
@@ -77,4 +84,5 @@ exports.fn = function (helper, to, from, msg, store, cb, proto) {
       cb(to, from, resp, proto)
     })
   }
+  return pstore
 }
