@@ -112,5 +112,4 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
       store.aprs.get(what, who, to, from, proto)
     }
   }
-  return {}
 }

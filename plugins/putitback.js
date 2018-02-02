@@ -4,7 +4,7 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   var resp
 
   if (msg.match(/@tableflip/)) {
-    resp = '┬──┬﻿ ¯\_(ツ)'
+    resp = '┬──┬﻿ ¯_(ツ)'
   }
 
   setTimeout(function () {

@@ -1,24 +1,15 @@
 exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   'use strict'
   var resp
-  pstore = pstore || {}
-
-	/*
-  if (!store.users) {
-    store.users = {}
-  }
-  */
+  store = store || {}
 
   if (msg.match(/^weather:/)) {
     var baseURL = 'http://api.openweathermap.org/data/2.5/weather?APPID=%T'
     var location = msg.replace('weather:', '').trim()
 
     if (location === '') {
-      //location = store.users[from]
-      location = pstore[from] || ''
+      location = pstore.getItem(from) || ''
     }
-
-    console.log('weather.js', pstore)
 
     var url = ''
     var storeLocation = location
@@ -34,15 +25,14 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
 
     if (location === '') {
       cb(to, from, 'gimme a location!', proto)
+      return
     }
 
-    //store.users[from] = storeLocation
-    pstore[from] = storeLocation
+    pstore.setItem(from, storeLocation)
 
-    url = url.replace('%T', store.token)
+    url = url.replace('%T', pstore.getItem('token'))
     url = url.replace('%S', escape(location))
 
-    console.log(url)
     helper.httpGet(url, {}, function (err, data) {
       if (!err) {
         data = JSON.parse(data)
@@ -78,11 +68,10 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
           resp = data.message
         }
       } else {
-        resp = err
+        resp = err.message
       }
 
       cb(to, from, resp, proto)
     })
   }
-  return pstore
 }

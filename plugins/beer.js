@@ -93,5 +93,4 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   } catch (e) {
     console.log(e)
   }
-  return {}
 }

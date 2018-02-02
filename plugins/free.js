@@ -8,5 +8,4 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
   }
 
   cb(to, from, resp, proto)
-  return {}
 }

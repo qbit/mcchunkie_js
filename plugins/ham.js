@@ -36,7 +36,8 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
       'expiredDate': 'Expires'
     }
     store.fcc.parseLicense = function (license) {
-      var l, text = []
+      var l
+      var text = []
       for (l in license) {
         if (license.hasOwnProperty(l)) {
           if (store.fcc.lfields[l] && license[l] !== '') {
@@ -48,7 +49,7 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
       return text.join(', ')
     }
     store.fcc.buildList = function (licenses) {
-      var i, l, r, list
+      var r
 
       if (licenses.length > 1) {
         r = 'I found %d licenses, here is the first: %l'
@@ -63,6 +64,10 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
     store.fcc.get = function (param, t, frm, proto) {
       var u = store.fcc.query_url.replace('%S', param)
       helper.httpGet(u, {}, function (err, data) {
+        if (err) {
+          cb(t, frm, err, proto)
+          return
+        }
         try {
           data = JSON.parse(data)
         } catch (e) {

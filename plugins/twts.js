@@ -24,14 +24,14 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
     'go on...'
   ]
 
-  if (!store.msgs) {
+  if (!store.hasOwnProperty('msgs')) {
     store.msgs = {}
     store.spokenTwsses = {}
   }
 
   to = to || 'notsupported'
 
-  if (!store.spokenTwsses[proto]) {
+  if (!store.spokenTwsses.hasOwnProperty(proto)) {
     store.spokenTwsses[proto] = {}
     store.msgs[proto] = {}
   }
@@ -88,7 +88,6 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
             cb(to, from, 'que?', proto)
           }
         } if (msg === helper.botname + ': no') {
-	  console.log('received no', proto, store.msgs)
           if (store.spokenTwsses[proto][to].length > 0) {
             store.bays.train(store.spokenTwsses[proto][to][ store.spokenTwsses[proto][to].length - 1 ], 'notfunny', function () {
               resp = 'Sorry: "' + store.spokenTwsses[proto][to][ store.spokenTwsses[proto][to].length - 1 ] + '"'

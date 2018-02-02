@@ -13,9 +13,12 @@ pids
 logs
 results
 
-node_modules
+node_modules/
 npm-debug.log
 
 pushover.json
 shared_storage.json
 api_keys.json
+
+.pluginStorage*
+emoji.js

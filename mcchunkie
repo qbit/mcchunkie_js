@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 'use strict'
-var fs = require('fs')
-var path = require('path')
-var http = require('http')
-var https = require('https')
-var url = require('url')
-var redis = require('redis')
-var LocalStore = require('node-localstorage').LocalStorage
+const fs = require('fs')
+const path = require('path')
+const http = require('http')
+const https = require('https')
+const url = require('url')
+const redis = require('redis')
+const LocalStore = require('node-localstorage').LocalStorage
 var rclient
 var xmpp
-var os = require('os')
-    // pushover = require('pushover-notifications'),
+const os = require('os')
 var helpers
-var apiKeys = path.join(__dirname, '/../api_keys.json')
-var plugins = path.join(__dirname, '/../plugins')
+var apiKeys = path.join(__dirname, 'api_keys.json')
+var plugins = path.join(__dirname, 'plugins')
 var teleURL = 'https://api.telegram.org/bot'
 var runningPlugins = {}
 var storage = {}
-var args = require('optimist')
+var pstorage = {}
+const args = require('optimist')
     .usage('$0 [-i,-t,-x,-m] -n <nick> -s <server> -c <chan1>,<chan2>')
     .demand(['n'])
     .argv
@@ -25,7 +25,7 @@ var client
 var channels
 var chanCount = 0
 var tokens = {}
-var sdk = require('matrix-js-sdk')
+const sdk = require('matrix-js-sdk')
 
 if (os.platform() === 'openbsd') {
   var pledge = require('node-pledge')
@@ -171,9 +171,10 @@ function loadPlugin (file) {
   n = n[n.length - 1]
   runningPlugins[n] = null
   require.cache[file] = null
+  pstorage[n] = pstorage[n] || new LocalStore('./.pluginStorage_' + n)
   storage[n] = storage[n] || {}
   if (tokens[n]) {
-    storage[n].token = tokens[n]
+    pstorage[n].setItem('token', tokens[n])
   }
   try {
     runningPlugins[n] = require(file)
@@ -231,7 +232,6 @@ function loadPlugins (dir) {
 loadPlugins(plugins)
 
 fs.watch(plugins, function (e, file) {
-  console.log('reloading plugins')
   loadPlugins(plugins)
 })
 
@@ -275,19 +275,15 @@ function reply (t, frm, resp, proto) {
 }
 
 function processMsg (to, from, msg, proto) {
+  if (to.match(args.n)) {
+    return
+  }
   proto = proto || 'irc'
+  console.log("to:\t%s\nfrom:\t%s\nmsg:\t%s\nproto:\t%s", to, from, msg, proto)
   Object.keys(runningPlugins).forEach(function (i) {
     try {
-      rclient.hgetall(i, function (err, pstorage) {
-        var key = i
-        var pstore = {}
-        if (!err) {
-          pstore = runningPlugins[i].fn(helpers, to, from, msg, storage[i], pstorage, reply, proto)
-          if (pstore && Object.keys(pstore).length > 0) {
-            rclient.hmset(key, pstore)
-          }
-        }
-      })
+      msg = msg || ''
+      runningPlugins[i].fn(helpers, to, from, msg, storage[i], pstorage[i], reply, proto)
     } catch (e) {
       console.log("Error running '" + i + "'\n" + e)
     }
@@ -412,11 +408,15 @@ if (args.t) {
 }
 
 if (args.i) {
-  var irc = require('irc')
+  const irc = require('irc')
   client = new irc.Client(args.s, args.n, {
     channels: channels,
     debug: false,
     userName: args.n
+  })
+
+  client.addListener('raw', function (msg, err) {
+    //console.log(msg)
   })
 
   client.addListener('error', function (err) {
@@ -424,6 +424,7 @@ if (args.i) {
   })
 
   client.addListener('message', function (from, to, msg, tater) {
+    console.log(client.nick, from, args.n, to)
     if (client.nick !== args.n) {
       console.log('changing nick from %s to %s', client.nick, args.n)
       client.send('NICK', args.n)
