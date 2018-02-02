@@ -279,7 +279,7 @@ function processMsg (to, from, msg, proto) {
     return
   }
   proto = proto || 'irc'
-  console.log("to:\t%s\nfrom:\t%s\nmsg:\t%s\nproto:\t%s", to, from, msg, proto)
+  //console.log("to:\t%s\nfrom:\t%s\nmsg:\t%s\nproto:\t%s", to, from, msg, proto)
   Object.keys(runningPlugins).forEach(function (i) {
     try {
       msg = msg || ''
