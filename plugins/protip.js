@@ -23,16 +23,29 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
 
   if (msg.match(/^\d+\+\+/)) {
     id = getID(msg)
-    store.rclient.hincrby('protip_votes', id, 1, function () {})
+    getByIDX(id, function(e, d) {
+      if (e === null && d !== null) {
+        store.rclient.hincrby('protip_votes', d, 1, function () {})
+      }
+    })
   }
 
   if (msg.match(/^\d+--/)) {
     id = getID(msg)
-    store.rclient.hincrby('protip_votes', id, -1, function () {})
+    getByIDX(id, function(e, d) {
+      if (e === null && d !== null) {
+        store.rclient.hincrby('protip_votes', id, -1, function () {})
+      }
+    })
   }
 
   function getByIDX (idx, fn) {
     store.rclient.lindex('l_protips', idx, function (e, d) {
+      if (e !== null || d === null) {
+        e = e || "Invalid tip!"
+        fn(null, e)
+        return
+      }
       if (d) {
         d = d.replace(/^\s+/, '')
       }
@@ -41,9 +54,11 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
         if (count === null) {
           d = '(0:' + idx + ') ' + d
           fn(d)
+          return
         } else {
           d = '(' + count + ':' + idx + ') ' + d
           fn(d)
+          return
         }
       })
     })
@@ -51,8 +66,12 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
 
   if (msg.match(/^getpt:\d+$/)) {
     var ix = msg.replace('getpt:', '')
-    getByIDX(ix, function (s) {
+    getByIDX(ix, function (s, e) {
+      if (e) {
+        s = e
+      }
       cb(to, from, s, proto)
+      return
     })
   }
 
@@ -60,8 +79,12 @@ exports.fn = function (helper, to, from, msg, store, pstore, cb, proto) {
     if (store.authed) {
       store.rclient.llen('l_protips', function (e, max) {
         var idx = helper.rand(parseInt(Math.ceil(max), 10))
-        getByIDX(idx, function (s) {
+        getByIDX(idx, function (s, e) {
+          if (e) {
+            s = e
+          }
           cb(to, from, s, proto)
+          return
         })
       })
     }
