@@ -430,7 +430,6 @@ if (args.i) {
   })
 
   client.addListener('message', function (from, to, msg, tater) {
-    console.log(client.nick, from, args.n, to)
     if (client.nick !== args.n) {
       console.log('changing nick from %s to %s', client.nick, args.n)
       client.send('NICK', args.n)
