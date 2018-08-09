@@ -416,6 +416,7 @@ if (args.i) {
   const irc = require('irc')
   client = new irc.Client(args.s, args.n, {
     channels: channels,
+    secure: true,
     debug: false,
     userName: args.n
   })
