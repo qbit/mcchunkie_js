@@ -275,9 +275,14 @@ function reply (t, frm, resp, proto) {
 }
 
 function processMsg (to, from, msg, proto) {
+  if (! to) {
+    to = from
+  }
+
   if (to.match(args.n)) {
     return
   }
+
   proto = proto || 'irc'
   //console.log("to:\t%s\nfrom:\t%s\nmsg:\t%s\nproto:\t%s", to, from, msg, proto)
   Object.keys(runningPlugins).forEach(function (i) {
